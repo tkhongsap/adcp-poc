@@ -8,6 +8,8 @@ import ReportArtifact from "@/components/artifacts/ReportArtifact";
 
 interface ArtifactPanelProps {
   artifact: Artifact | null;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const artifactTypeConfig = {
@@ -16,95 +18,97 @@ const artifactTypeConfig = {
   chart: { icon: "📈", label: "Chart" },
 } as const;
 
-function EmptyState() {
+export default function ArtifactPanel({ artifact, isOpen, onClose }: ArtifactPanelProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.4 }}
-      className="h-full bg-card rounded-xl border border-border flex items-center justify-center"
-    >
-      <div className="text-center px-8 max-w-sm">
-        {/* Subtle illustration */}
-        <div className="w-16 h-16 mx-auto mb-5 rounded-xl bg-muted flex items-center justify-center">
-          <svg
-            className="w-8 h-8 text-muted-foreground"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.5}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"
-            />
-          </svg>
-        </div>
-        <h3 className="text-base font-medium text-foreground mb-2">
-          Artifacts appear here
-        </h3>
-        <p className="text-sm text-muted-foreground">
-          Tables, reports, and visualizations will be displayed when generated during conversation.
-        </p>
-      </div>
-    </motion.div>
-  );
-}
-
-export default function ArtifactPanel({ artifact }: ArtifactPanelProps) {
-  return (
-    <AnimatePresence mode="wait">
-      {!artifact ? (
-        <EmptyState key="empty" />
-      ) : (
-        <motion.div
-          key={artifact.title}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          className="h-full bg-card rounded-xl border border-border flex flex-col overflow-hidden"
-        >
-          {/* Artifact header */}
-          <div className="px-4 py-3 border-b border-border flex items-center gap-3">
-            <span className="text-lg">
-              {artifactTypeConfig[artifact.type]?.icon || "📄"}
-            </span>
-            <h2 className="flex-1 text-sm font-medium text-foreground truncate">
-              {artifact.title}
-            </h2>
-            {/* Type badge */}
-            <span className={cn(
-              "px-2 py-0.5 text-xs font-medium rounded-full",
-              "bg-primary/10 text-primary"
-            )}>
-              {artifactTypeConfig[artifact.type]?.label || artifact.type}
-            </span>
-          </div>
-
-          {/* Artifact content area */}
+    <AnimatePresence>
+      {isOpen && artifact && (
+        <>
+          {/* Backdrop overlay */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="flex-1 overflow-auto p-4"
-          >
-            {/* Render artifact based on type */}
-            {artifact.type === "table" && isTableArtifactData(artifact.data) ? (
-              <TableArtifact data={artifact.data} />
-            ) : artifact.type === "report" && isReportArtifactData(artifact.data) ? (
-              <ReportArtifact data={artifact.data} />
-            ) : (
-              // Fallback for other artifact types (chart) - will be replaced with ChartArtifact in future stories
-              <div className="text-muted-foreground text-sm">
-                <pre className="whitespace-pre-wrap font-mono text-xs bg-muted p-4 rounded-lg">
-                  {JSON.stringify(artifact.data, null, 2)}
-                </pre>
-              </div>
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/20 z-40"
+            onClick={onClose}
+          />
+
+          {/* Slide-in panel */}
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            className={cn(
+              "fixed right-0 top-0 h-full w-[50%] min-w-[400px] max-w-[800px]",
+              "bg-card border-l border-border shadow-2xl z-50",
+              "flex flex-col"
             )}
+          >
+            {/* Panel header with close button */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+              <div className="flex items-center gap-3">
+                <span className="text-lg">
+                  {artifactTypeConfig[artifact.type]?.icon || "📄"}
+                </span>
+                <h2 className="text-sm font-medium text-foreground truncate max-w-[300px]">
+                  {artifact.title}
+                </h2>
+                {/* Type badge */}
+                <span
+                  className={cn(
+                    "px-2 py-0.5 text-xs font-medium rounded-full",
+                    "bg-primary/10 text-primary"
+                  )}
+                >
+                  {artifactTypeConfig[artifact.type]?.label || artifact.type}
+                </span>
+              </div>
+
+              {/* Close button */}
+              <button
+                onClick={onClose}
+                className={cn(
+                  "p-2 rounded-lg",
+                  "text-muted-foreground hover:text-foreground",
+                  "hover:bg-muted transition-colors"
+                )}
+                aria-label="Close artifact panel"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Artifact content area */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.1 }}
+              className="flex-1 overflow-auto p-4"
+            >
+              {/* Render artifact based on type */}
+              {artifact.type === "table" && isTableArtifactData(artifact.data) ? (
+                <TableArtifact data={artifact.data} />
+              ) : artifact.type === "report" && isReportArtifactData(artifact.data) ? (
+                <ReportArtifact data={artifact.data} />
+              ) : (
+                // Fallback for other artifact types (chart)
+                <div className="text-muted-foreground text-sm">
+                  <pre className="whitespace-pre-wrap font-mono text-xs bg-muted p-4 rounded-lg">
+                    {JSON.stringify(artifact.data, null, 2)}
+                  </pre>
+                </div>
+              )}
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </>
       )}
     </AnimatePresence>
   );

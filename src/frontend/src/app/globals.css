@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  /* CSS Variables for layout */
+  :root {
+    --sidebar-width: 260px;
+    --content-max-width: 768px;
+  }
+
   /* Light theme (default) */
   :root {
     --background: #F5F4EF;
@@ -71,4 +77,22 @@ html.transitioning *:before,
 html.transitioning *:after {
   transition: all 150ms !important;
   transition-delay: 0 !important;
+}
+
+/* Custom scrollbar for sidebar and panels */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
 }

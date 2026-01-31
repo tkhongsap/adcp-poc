@@ -7,9 +7,90 @@ import { cn } from "@/lib/utils";
 interface MessageInputProps {
   onSendMessage: (content: string) => void;
   disabled?: boolean;
+  placeholder?: string;
 }
 
-export default function MessageInput({ onSendMessage, disabled = false }: MessageInputProps) {
+// Model selector dropdown (visual only)
+function ModelSelector() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={cn(
+          "flex items-center gap-1 px-2 py-1 text-xs rounded-lg",
+          "text-muted-foreground hover:text-foreground",
+          "hover:bg-muted/50 transition-colors"
+        )}
+      >
+        <span className="font-medium">Opus 4.5</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          className={cn(
+            "w-3 h-3 transition-transform",
+            isOpen && "rotate-180"
+          )}
+        >
+          <path
+            fillRule="evenodd"
+            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </button>
+
+      {/* Dropdown (visual only) */}
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -5 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={cn(
+            "absolute bottom-full right-0 mb-2",
+            "bg-card border border-border rounded-lg shadow-lg",
+            "py-1 min-w-[140px]"
+          )}
+        >
+          <button
+            onClick={() => setIsOpen(false)}
+            className={cn(
+              "w-full px-3 py-2 text-left text-sm",
+              "text-foreground bg-muted/50"
+            )}
+          >
+            Opus 4.5
+          </button>
+          <button
+            onClick={() => setIsOpen(false)}
+            className={cn(
+              "w-full px-3 py-2 text-left text-sm",
+              "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+            )}
+          >
+            Sonnet 4
+          </button>
+          <button
+            onClick={() => setIsOpen(false)}
+            className={cn(
+              "w-full px-3 py-2 text-left text-sm",
+              "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+            )}
+          >
+            Haiku 3.5
+          </button>
+        </motion.div>
+      )}
+    </div>
+  );
+}
+
+export default function MessageInput({
+  onSendMessage,
+  disabled = false,
+  placeholder = "How can I help you today?",
+}: MessageInputProps) {
   const [inputValue, setInputValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -47,78 +128,142 @@ export default function MessageInput({ onSendMessage, disabled = false }: Messag
   return (
     <div
       className={cn(
-        "flex items-end gap-3 rounded-2xl border px-4 py-2",
+        "flex flex-col rounded-3xl border",
         "bg-card transition-all duration-200",
         isFocused
-          ? "border-primary ring-2 ring-primary/20"
+          ? "border-primary/50 ring-2 ring-primary/20 shadow-lg"
           : "border-border hover:border-muted-foreground/30"
       )}
     >
-      <textarea
-        ref={textareaRef}
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={handleKeyDown}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        placeholder="Message AdCP Agent..."
-        disabled={disabled}
-        rows={1}
-        className={cn(
-          "flex-1 bg-transparent outline-none resize-none",
-          "text-sm text-foreground placeholder:text-muted-foreground",
-          "min-h-[24px] max-h-[120px] py-1.5",
-          "disabled:opacity-50 disabled:cursor-not-allowed"
-        )}
-      />
-      <motion.button
-        onClick={handleSend}
-        disabled={!canSend}
-        whileHover={canSend ? { scale: 1.05 } : {}}
-        whileTap={canSend ? { scale: 0.95 } : {}}
-        className={cn(
-          "flex items-center justify-center w-9 h-9 rounded-full",
-          "transition-all duration-200",
-          canSend
-            ? "bg-primary text-primary-foreground hover:bg-primary/90"
-            : "bg-muted text-muted-foreground cursor-not-allowed"
-        )}
-        aria-label="Send message"
-      >
-        {disabled ? (
-          // Loading spinner
-          <svg
-            className="w-4 h-4 animate-spin"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
+      {/* Main input area */}
+      <div className="flex items-end gap-2 px-4 py-3">
+        <textarea
+          ref={textareaRef}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          placeholder={placeholder}
+          disabled={disabled}
+          rows={1}
+          className={cn(
+            "flex-1 bg-transparent outline-none resize-none",
+            "text-sm text-foreground placeholder:text-muted-foreground",
+            "min-h-[24px] max-h-[120px] py-0.5",
+            "disabled:opacity-50 disabled:cursor-not-allowed"
+          )}
+        />
+      </div>
+
+      {/* Bottom toolbar */}
+      <div className="flex items-center justify-between px-3 pb-3">
+        {/* Left side: Attachment and clock icons */}
+        <div className="flex items-center gap-1">
+          {/* Attachment button (visual only) */}
+          <button
+            type="button"
+            className={cn(
+              "p-2 rounded-lg",
+              "text-muted-foreground hover:text-foreground",
+              "hover:bg-muted transition-colors"
+            )}
+            aria-label="Add attachment"
           >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            />
-            <path
-              className="opacity-75"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
               fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            />
-          </svg>
-        ) : (
-          // Send arrow
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="w-4 h-4"
+              className="w-5 h-5"
+            >
+              <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+            </svg>
+          </button>
+
+          {/* Clock/history button (visual only) */}
+          <button
+            type="button"
+            className={cn(
+              "p-2 rounded-lg",
+              "text-muted-foreground hover:text-foreground",
+              "hover:bg-muted transition-colors"
+            )}
+            aria-label="View history"
           >
-            <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
-          </svg>
-        )}
-      </motion.button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="w-5 h-5"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* Right side: Model selector and send button */}
+        <div className="flex items-center gap-2">
+          <ModelSelector />
+
+          {/* Send button */}
+          <motion.button
+            onClick={handleSend}
+            disabled={!canSend}
+            whileHover={canSend ? { scale: 1.05 } : {}}
+            whileTap={canSend ? { scale: 0.95 } : {}}
+            className={cn(
+              "flex items-center justify-center w-8 h-8 rounded-full",
+              "transition-all duration-200",
+              canSend
+                ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                : "bg-muted text-muted-foreground cursor-not-allowed"
+            )}
+            aria-label="Send message"
+          >
+            {disabled ? (
+              // Loading spinner
+              <svg
+                className="w-4 h-4 animate-spin"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                />
+              </svg>
+            ) : (
+              // Send arrow (up arrow like Claude.ai)
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            )}
+          </motion.button>
+        </div>
+      </div>
     </div>
   );
 }

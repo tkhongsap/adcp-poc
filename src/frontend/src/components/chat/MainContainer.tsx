@@ -4,7 +4,10 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Message, Artifact } from "@/types/chat";
 import { cn } from "@/lib/utils";
-import ChatPanel from "./ChatPanel";
+import ChatSidebar from "./ChatSidebar";
+import WelcomeScreen from "./WelcomeScreen";
+import ConversationView from "./ConversationView";
+import MessageInput from "./MessageInput";
 import ArtifactPanel from "./ArtifactPanel";
 import ThemeToggle from "../ui/ThemeToggle";
 import { detectArtifact, ToolCallData } from "@/utils/artifactDetection";
@@ -20,9 +23,9 @@ function OpenDashboardButton() {
     <button
       onClick={handleOpenDashboard}
       className={cn(
-        "flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg",
-        "bg-claude-sidebar text-white",
-        "hover:bg-opacity-90 hover:scale-[1.02]",
+        "flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg",
+        "bg-muted text-foreground",
+        "hover:bg-muted/80 hover:scale-[1.02]",
         "active:scale-[0.98]",
         "transition-all duration-200"
       )}
@@ -36,7 +39,7 @@ function OpenDashboardButton() {
         <path d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" />
         <path d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" />
       </svg>
-      Open Dashboard
+      Dashboard
     </button>
   );
 }
@@ -45,17 +48,16 @@ export default function MainContainer() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [artifact, setArtifact] = useState<Artifact | null>(null);
-  const [headerShadow, setHeaderShadow] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [artifactPanelOpen, setArtifactPanelOpen] = useState(false);
   const conversationIdRef = useRef<string | null>(null);
 
-  // Track scroll to show header shadow
+  // Auto-open artifact panel when artifact is detected
   useEffect(() => {
-    const handleScroll = () => {
-      setHeaderShadow(window.scrollY > 0);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    if (artifact) {
+      setArtifactPanelOpen(true);
+    }
+  }, [artifact]);
 
   const handleSendMessage = useCallback(async (content: string) => {
     // Add user message immediately
@@ -213,48 +215,62 @@ export default function MainContainer() {
     }
   }, []);
 
+  const hasMessages = messages.length > 0;
+
   return (
-    <div className="h-screen bg-background flex flex-col">
-      {/* Header Bar */}
-      <motion.header
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className={cn(
-          "flex-shrink-0 h-14 border-b bg-card flex items-center justify-between px-4",
-          "transition-shadow duration-200",
-          headerShadow && "shadow-sm"
-        )}
-      >
-        <div className="flex items-center gap-3">
-          <span className="text-lg font-semibold text-foreground">
-            AdCP Demo
-          </span>
-          <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
-            Sales Agent
-          </span>
-        </div>
-        <div className="flex items-center gap-3">
+    <div className="h-screen bg-background flex">
+      {/* Sidebar */}
+      <ChatSidebar
+        isCollapsed={sidebarCollapsed}
+        onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+      />
+
+      {/* Main content area */}
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Minimal header */}
+        <motion.header
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={cn(
+            "flex-shrink-0 h-12 flex items-center justify-end px-4 gap-3",
+            "bg-background"
+          )}
+        >
           <ThemeToggle />
           <OpenDashboardButton />
-        </div>
-      </motion.header>
+        </motion.header>
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* Chat Panel - 40% width */}
-        <div className="w-[40%] min-w-[320px] h-full border-r border-border">
-          <ChatPanel
-            messages={messages}
-            onSendMessage={handleSendMessage}
-            isLoading={isLoading}
-          />
-        </div>
+        {/* Chat content area */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {!hasMessages ? (
+            /* Empty state: Welcome screen with centered input */
+            <WelcomeScreen onSendMessage={handleSendMessage} disabled={isLoading} />
+          ) : (
+            /* Conversation state: Messages + sticky bottom input */
+            <>
+              <ConversationView messages={messages} isLoading={isLoading} />
 
-        {/* Artifact Panel - 60% width */}
-        <div className="w-[60%] min-w-[480px] h-full p-4">
-          <ArtifactPanel artifact={artifact} />
+              {/* Sticky bottom input */}
+              <div className="flex-shrink-0 border-t border-border bg-background">
+                <div className="max-w-3xl mx-auto px-4 py-4">
+                  <MessageInput
+                    onSendMessage={handleSendMessage}
+                    disabled={isLoading}
+                    placeholder="Reply to AdCP Agent..."
+                  />
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
+
+      {/* Artifact panel (slide-in overlay) */}
+      <ArtifactPanel
+        artifact={artifact}
+        isOpen={artifactPanelOpen}
+        onClose={() => setArtifactPanelOpen(false)}
+      />
     </div>
   );
 }
