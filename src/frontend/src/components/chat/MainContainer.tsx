@@ -1,9 +1,12 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Message, Artifact } from "@/types/chat";
+import { cn } from "@/lib/utils";
 import ChatPanel from "./ChatPanel";
 import ArtifactPanel from "./ArtifactPanel";
+import ThemeToggle from "../ui/ThemeToggle";
 import { detectArtifact, ToolCallData } from "@/utils/artifactDetection";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
@@ -16,7 +19,13 @@ function OpenDashboardButton() {
   return (
     <button
       onClick={handleOpenDashboard}
-      className="flex items-center gap-2 px-4 py-2 bg-claude-sidebar text-white text-sm font-medium rounded-lg hover:bg-opacity-90 transition-colors"
+      className={cn(
+        "flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg",
+        "bg-claude-sidebar text-white",
+        "hover:bg-opacity-90 hover:scale-[1.02]",
+        "active:scale-[0.98]",
+        "transition-all duration-200"
+      )}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +45,17 @@ export default function MainContainer() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [artifact, setArtifact] = useState<Artifact | null>(null);
+  const [headerShadow, setHeaderShadow] = useState(false);
   const conversationIdRef = useRef<string | null>(null);
+
+  // Track scroll to show header shadow
+  useEffect(() => {
+    const handleScroll = () => {
+      setHeaderShadow(window.scrollY > 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleSendMessage = useCallback(async (content: string) => {
     // Add user message immediately
@@ -195,24 +214,35 @@ export default function MainContainer() {
   }, []);
 
   return (
-    <div className="h-screen bg-claude-cream flex flex-col">
+    <div className="h-screen bg-background flex flex-col">
       {/* Header Bar */}
-      <header className="flex-shrink-0 h-14 border-b border-claude-border bg-white flex items-center justify-between px-4">
-        <div className="flex items-center gap-2">
-          <span className="text-lg font-semibold text-claude-text-primary">
+      <motion.header
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className={cn(
+          "flex-shrink-0 h-14 border-b bg-card flex items-center justify-between px-4",
+          "transition-shadow duration-200",
+          headerShadow && "shadow-sm"
+        )}
+      >
+        <div className="flex items-center gap-3">
+          <span className="text-lg font-semibold text-foreground">
             AdCP Demo
           </span>
-          <span className="text-xs text-claude-text-secondary bg-claude-cream px-2 py-0.5 rounded">
+          <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
             Sales Agent
           </span>
         </div>
-        <OpenDashboardButton />
-      </header>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <OpenDashboardButton />
+        </div>
+      </motion.header>
 
       {/* Main Content Area */}
       <div className="flex-1 flex overflow-hidden">
         {/* Chat Panel - 40% width */}
-        <div className="w-[40%] min-w-[320px] h-full border-r border-claude-border">
+        <div className="w-[40%] min-w-[320px] h-full border-r border-border">
           <ChatPanel
             messages={messages}
             onSendMessage={handleSendMessage}

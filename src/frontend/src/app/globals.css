@@ -2,19 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #F5F4EF;
-  --foreground: #1A1915;
-}
+@layer base {
+  /* Light theme (default) */
+  :root {
+    --background: #F5F4EF;
+    --foreground: #1A1915;
+    --card: #FFFFFF;
+    --card-foreground: #1A1915;
+    --primary: #DA7756;
+    --primary-foreground: #FFFFFF;
+    --secondary: #F5F4EF;
+    --secondary-foreground: #1A1915;
+    --muted: #E8E7E2;
+    --muted-foreground: #5D5D5A;
+    --accent: #DA7756;
+    --accent-foreground: #FFFFFF;
+    --border: #E5E4DF;
+    --input: #E5E4DF;
+    --ring: #DA7756;
+  }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Dark theme */
+  .dark {
+    --background: #1A1915;
+    --foreground: #F5F4EF;
+    --card: #262522;
+    --card-foreground: #F5F4EF;
+    --primary: #DA7756;
+    --primary-foreground: #FFFFFF;
+    --secondary: #262522;
+    --secondary-foreground: #F5F4EF;
+    --muted: #3D3A36;
+    --muted-foreground: #A8A8A5;
+    --accent: #DA7756;
+    --accent-foreground: #FFFFFF;
+    --border: #3D3A36;
+    --input: #3D3A36;
+    --ring: #DA7756;
+  }
+
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    font-family: var(--font-geist-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Smooth transition for theme changes */
+html.transitioning,
+html.transitioning *,
+html.transitioning *:before,
+html.transitioning *:after {
+  transition: all 150ms !important;
+  transition-delay: 0 !important;
 }

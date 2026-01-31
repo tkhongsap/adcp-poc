@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 type NavItem = {
   id: string;
@@ -77,25 +79,34 @@ interface NavLinkProps {
 function NavLink({ item, isActive, onClick }: NavLinkProps) {
   return (
     <li>
-      <button
+      <motion.button
         onClick={onClick}
-        className={`
-          relative w-full flex items-center gap-3 px-3 py-2 text-sm rounded-md
-          transition-colors duration-150 cursor-pointer text-left
-          ${
-            isActive
-              ? "text-claude-orange bg-white/5"
-              : "text-white/70 hover:text-white hover:bg-white/10"
-          }
-        `}
+        whileHover={{ x: 2 }}
+        whileTap={{ scale: 0.98 }}
+        className={cn(
+          "relative w-full flex items-center gap-3 px-3 py-2 text-sm rounded-md",
+          "transition-colors duration-150 cursor-pointer text-left",
+          isActive
+            ? "text-primary bg-white/5"
+            : "text-white/70 hover:text-white hover:bg-white/10"
+        )}
       >
         {/* Left accent bar for active state */}
         {isActive && (
-          <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 bg-claude-orange rounded-r" />
+          <motion.span
+            layoutId="activeIndicator"
+            className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 bg-primary rounded-r"
+            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+          />
         )}
-        {item.icon}
+        <span className={cn(
+          "transition-colors duration-150",
+          isActive ? "text-primary" : ""
+        )}>
+          {item.icon}
+        </span>
         <span>{item.label}</span>
-      </button>
+      </motion.button>
     </li>
   );
 }
@@ -106,9 +117,13 @@ export default function Sidebar() {
   return (
     <aside className="w-[220px] flex-shrink-0 bg-claude-sidebar h-full flex flex-col">
       {/* Branding */}
-      <div className="px-4 py-5 border-b border-white/10">
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="px-4 py-5 border-b border-white/10"
+      >
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-claude-orange rounded-lg flex items-center justify-center">
+          <div className="w-7 h-7 bg-primary rounded-lg flex items-center justify-center">
             <svg
               className="w-4 h-4 text-white"
               fill="none"
@@ -127,14 +142,24 @@ export default function Sidebar() {
             AdCP Demo
           </span>
         </div>
-      </div>
+      </motion.div>
 
       {/* Trading Section */}
       <nav className="flex-1 px-3 py-4">
-        <div className="text-white/40 text-xs uppercase tracking-wider mb-3 px-3 font-medium">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          className="text-white/40 text-xs uppercase tracking-wider mb-3 px-3 font-medium"
+        >
           Trading
-        </div>
-        <ul className="space-y-1">
+        </motion.div>
+        <motion.ul
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="space-y-1"
+        >
           {tradingNavItems.map((item) => (
             <NavLink
               key={item.id}
@@ -143,13 +168,18 @@ export default function Sidebar() {
               onClick={() => setActiveItem(item.id)}
             />
           ))}
-        </ul>
+        </motion.ul>
       </nav>
 
       {/* Footer */}
-      <div className="px-4 py-3 border-t border-white/10">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+        className="px-4 py-3 border-t border-white/10"
+      >
         <div className="text-white/30 text-xs">Adform AdCP</div>
-      </div>
+      </motion.div>
     </aside>
   );
 }

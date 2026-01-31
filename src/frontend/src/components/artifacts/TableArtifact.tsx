@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 // Types for table data
 export interface TableColumn {
@@ -38,13 +40,15 @@ function PacingBar({ value, max }: { value: number; max: number }) {
 
   return (
     <div className="flex items-center gap-2">
-      <div className="flex-1 h-1.5 bg-claude-border-light rounded-full overflow-hidden min-w-[60px]">
-        <div
-          className={`h-full ${barColor} rounded-full transition-all duration-300`}
-          style={{ width: `${percentage}%` }}
+      <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden min-w-[60px]">
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: `${percentage}%` }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className={cn("h-full rounded-full", barColor)}
         />
       </div>
-      <span className="text-xs text-claude-text-secondary whitespace-nowrap">
+      <span className="text-xs text-muted-foreground whitespace-nowrap">
         {percentage.toFixed(0)}%
       </span>
     </div>
@@ -77,10 +81,10 @@ function HealthDot({ status }: { status: "good" | "warning" | "poor" | string })
   return (
     <div className="flex items-center gap-2">
       <div
-        className={`w-2.5 h-2.5 rounded-full ${dotColor}`}
+        className={cn("w-2.5 h-2.5 rounded-full", dotColor)}
         title={statusLabel}
       />
-      <span className="text-xs text-claude-text-secondary capitalize">
+      <span className="text-xs text-muted-foreground capitalize">
         {statusLabel}
       </span>
     </div>
@@ -93,7 +97,7 @@ function formatCellValue(
   column: TableColumn
 ): React.ReactNode {
   if (value === null || value === undefined) {
-    return <span className="text-claude-text-secondary">—</span>;
+    return <span className="text-muted-foreground">—</span>;
   }
 
   switch (column.type) {
@@ -114,24 +118,32 @@ function formatCellValue(
 
     case "currency":
       if (typeof value === "number") {
-        return new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0,
-        }).format(value);
+        return (
+          <span className="font-medium tabular-nums">
+            {new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            }).format(value)}
+          </span>
+        );
       }
       return String(value);
 
     case "percentage":
       if (typeof value === "number") {
-        return `${value.toFixed(2)}%`;
+        return <span className="tabular-nums">{value.toFixed(2)}%</span>;
       }
       return String(value);
 
     case "number":
       if (typeof value === "number") {
-        return new Intl.NumberFormat("en-US").format(value);
+        return (
+          <span className="tabular-nums">
+            {new Intl.NumberFormat("en-US").format(value)}
+          </span>
+        );
       }
       return String(value);
 
@@ -145,7 +157,7 @@ export default function TableArtifact({ data }: TableArtifactProps) {
 
   if (!columns || !rows || columns.length === 0) {
     return (
-      <div className="text-center text-claude-text-secondary py-8">
+      <div className="text-center text-muted-foreground py-8">
         No data available
       </div>
     );
@@ -155,18 +167,17 @@ export default function TableArtifact({ data }: TableArtifactProps) {
     <div className="overflow-x-auto">
       <table className="w-full">
         <thead>
-          <tr>
+          <tr className="border-b border-border">
             {columns.map((column) => (
               <th
                 key={column.key}
-                className={`
-                  px-4 py-3 text-left
-                  text-xs uppercase tracking-wider font-medium
-                  text-claude-text-secondary
-                  border-b border-claude-border-light
-                  ${column.align === "right" ? "text-right" : ""}
-                  ${column.align === "center" ? "text-center" : ""}
-                `}
+                className={cn(
+                  "px-4 py-3 text-left",
+                  "text-xs uppercase tracking-wider font-medium",
+                  "text-muted-foreground bg-muted/30",
+                  column.align === "right" && "text-right",
+                  column.align === "center" && "text-center"
+                )}
               >
                 {column.label}
               </th>
@@ -175,28 +186,30 @@ export default function TableArtifact({ data }: TableArtifactProps) {
         </thead>
         <tbody>
           {rows.map((row, rowIndex) => (
-            <tr
+            <motion.tr
               key={row.id || rowIndex}
-              className="
-                hover:bg-claude-cream
-                transition-colors duration-150
-              "
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2, delay: rowIndex * 0.03 }}
+              className={cn(
+                "border-b border-border last:border-b-0",
+                "hover:bg-muted/30 transition-colors duration-150"
+              )}
             >
               {columns.map((column) => (
                 <td
                   key={column.key}
-                  className={`
-                    px-4 py-3
-                    text-sm text-claude-text-primary
-                    border-b border-claude-border-light
-                    ${column.align === "right" ? "text-right" : ""}
-                    ${column.align === "center" ? "text-center" : ""}
-                  `}
+                  className={cn(
+                    "px-4 py-3",
+                    "text-sm text-foreground",
+                    column.align === "right" && "text-right",
+                    column.align === "center" && "text-center"
+                  )}
                 >
                   {formatCellValue(row[column.key], column)}
                 </td>
               ))}
-            </tr>
+            </motion.tr>
           ))}
         </tbody>
       </table>
