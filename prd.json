@@ -1,0 +1,524 @@
+{
+  "project": "AdCP Sales Demo",
+  "branchName": "ralph/adcp-sales-demo",
+  "description": "AdCP Sales Agent Demo - Two-window Claude.ai-style chat with artifacts + live dashboard for Adform executive demonstration",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Project setup with Next.js and Express",
+      "description": "As a developer, I need the project scaffolded with Next.js frontend and Express backend so I can build the demo application.",
+      "acceptanceCriteria": [
+        "Next.js 14 app created in src/frontend with App Router",
+        "Express server created in src/backend",
+        "Tailwind CSS configured",
+        "TypeScript configured for both frontend and backend",
+        "Both frontend and backend can start without errors",
+        "package.json scripts for dev, build, start",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Load mock data layer",
+      "description": "As a developer, I need the mock data loaded from data/adcp_demo_complete_data.json so tools can access it.",
+      "acceptanceCriteria": [
+        "Data loader module created in backend",
+        "JSON data loaded on server startup",
+        "Data accessible via exported functions",
+        "In-memory state for updates during demo",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Implement get_products tool",
+      "description": "As an AI agent, I need the get_products tool to discover available advertising inventory.",
+      "acceptanceCriteria": [
+        "Tool accepts optional category and max_cpm parameters",
+        "Returns products array with product_id, name, description, category, pricing_options",
+        "Filters by category when provided",
+        "Filters by max_cpm when provided",
+        "Returns all products when no filters",
+        "Typecheck passes"
+      ],
+      "priority": 3,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Implement list_creative_formats tool",
+      "description": "As an AI agent, I need the list_creative_formats tool to get available ad format specifications.",
+      "acceptanceCriteria": [
+        "Tool accepts optional type parameter (display, video, native, audio)",
+        "Returns formats array with format_id, name, type, dimensions, specs",
+        "Filters by type when provided",
+        "Returns all formats when no filter",
+        "Typecheck passes"
+      ],
+      "priority": 4,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Implement list_authorized_properties tool",
+      "description": "As an AI agent, I need the list_authorized_properties tool to get accessible publishers.",
+      "acceptanceCriteria": [
+        "Tool takes no parameters",
+        "Returns properties array with property_id, name, domain, category, monthly_uniques",
+        "Includes authorization_level and available_formats",
+        "Typecheck passes"
+      ],
+      "priority": 5,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Implement create_media_buy tool",
+      "description": "As an AI agent, I need the create_media_buy tool to launch new campaigns.",
+      "acceptanceCriteria": [
+        "Tool accepts brand_name, product_id, budget, targeting, start_time, end_time",
+        "Creates new media buy in mock data",
+        "Returns media_buy_id, status submitted, estimated_impressions",
+        "Generates unique media_buy_id",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Implement get_media_buy_delivery tool",
+      "description": "As an AI agent, I need the get_media_buy_delivery tool to get performance metrics.",
+      "acceptanceCriteria": [
+        "Tool accepts optional media_buy_id parameter",
+        "Returns single media buy metrics when id provided",
+        "Returns all media buy metrics when id omitted",
+        "Includes total_budget, total_spend, pacing, health, summary, by_device, by_geo, recommendations",
+        "Typecheck passes"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Implement update_media_buy tool",
+      "description": "As an AI agent, I need the update_media_buy tool to modify existing campaigns.",
+      "acceptanceCriteria": [
+        "Tool accepts media_buy_id and updates object",
+        "Supports remove_geo, add_geo operations",
+        "Supports adjust_bid with device and change_percent",
+        "Supports set_daily_cap and shift_budget operations",
+        "Returns success, changes_applied, estimated_impact",
+        "Updates mock data state",
+        "Typecheck passes"
+      ],
+      "priority": 8,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-009",
+      "title": "Implement provide_performance_feedback tool",
+      "description": "As an AI agent, I need the provide_performance_feedback tool to submit conversion data.",
+      "acceptanceCriteria": [
+        "Tool accepts media_buy_id, feedback_type, and data object",
+        "Supports feedback_type: conversion_data, lead_quality, brand_lift",
+        "Returns feedback_id, status processed, impact",
+        "Logs feedback to performance_feedback_log",
+        "Typecheck passes"
+      ],
+      "priority": 9,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-010",
+      "title": "Add WebSocket broadcasting",
+      "description": "As a developer, I need Socket.io broadcasting so both windows can sync state.",
+      "acceptanceCriteria": [
+        "Socket.io integrated with Express server",
+        "Broadcasts initial_state event on client connect",
+        "Broadcasts media_buy_updated when update_media_buy called",
+        "Broadcasts media_buy_created when create_media_buy called",
+        "Broadcasts feedback_submitted when provide_performance_feedback called",
+        "Supports multiple connected clients",
+        "Typecheck passes"
+      ],
+      "priority": 10,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-011",
+      "title": "Create REST API endpoints for tools",
+      "description": "As a developer, I need REST API endpoints that wrap the tools so the frontend can call them.",
+      "acceptanceCriteria": [
+        "POST /api/tools/:toolName endpoint created",
+        "Routes to appropriate tool handler",
+        "Returns tool results as JSON",
+        "Handles errors gracefully",
+        "CORS configured for frontend",
+        "Typecheck passes"
+      ],
+      "priority": 11,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-012",
+      "title": "Create chat page layout with 40/60 split",
+      "description": "As a user, I want a Claude.ai-style layout with chat on left and artifact panel on right.",
+      "acceptanceCriteria": [
+        "Chat page at / or /chat route",
+        "40% width chat panel on left",
+        "60% width artifact panel on right",
+        "Responsive container with min-widths",
+        "Claude.ai-inspired warm cream background (#F5F4EF)",
+        "Typecheck passes"
+      ],
+      "priority": 12,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-013",
+      "title": "Build ChatPanel with message history",
+      "description": "As a user, I want to see a scrollable message history in the chat panel.",
+      "acceptanceCriteria": [
+        "ChatPanel component created",
+        "Displays user messages right-aligned with warm gray background",
+        "Displays Claude messages left-aligned with no bubble",
+        "Auto-scrolls to latest message",
+        "Supports markdown rendering in messages",
+        "Typecheck passes"
+      ],
+      "priority": 13,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-014",
+      "title": "Build MessageInput component",
+      "description": "As a user, I want an input field to type messages to the AI agent.",
+      "acceptanceCriteria": [
+        "MessageInput component created",
+        "Pill-shaped input field (24px radius) at bottom of chat",
+        "Send button with Claude orange (#DA7756)",
+        "Enter key submits message",
+        "Placeholder text: Message AdCP Agent...",
+        "Typecheck passes"
+      ],
+      "priority": 14,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-015",
+      "title": "Integrate Claude API with tool calling",
+      "description": "As a developer, I need Claude API integration so the chat can call tools.",
+      "acceptanceCriteria": [
+        "Claude API client configured with API key from env",
+        "Tool definitions for all 7 AdCP tools",
+        "Handles tool_use responses and executes tools",
+        "Returns tool results to Claude for final response",
+        "Handles streaming responses",
+        "Typecheck passes"
+      ],
+      "priority": 15,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-016",
+      "title": "Build ArtifactPanel container",
+      "description": "As a user, I want an artifact panel that displays rich content from Claude responses.",
+      "acceptanceCriteria": [
+        "ArtifactPanel component created",
+        "White background with subtle border (#E5E4DF)",
+        "12px border radius",
+        "Shows empty state when no artifact",
+        "Persists artifact until replaced",
+        "Typecheck passes"
+      ],
+      "priority": 16,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-017",
+      "title": "Build TableArtifact component",
+      "description": "As a user, I want to see campaign data in beautifully formatted tables.",
+      "acceptanceCriteria": [
+        "TableArtifact component created",
+        "Styled headers (12px, uppercase, #5D5D5A)",
+        "Row dividers with #EEEEE8",
+        "Row hover state with warm cream background",
+        "Supports pacing bars and health dots in cells",
+        "Typecheck passes"
+      ],
+      "priority": 17,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-018",
+      "title": "Build ReportArtifact component",
+      "description": "As a user, I want to see performance reports with sections, metrics, and recommendations.",
+      "acceptanceCriteria": [
+        "ReportArtifact component created",
+        "Supports title with icon",
+        "Sections with headers",
+        "Metrics display with labels and values",
+        "Recommendations as bullet list",
+        "Typecheck passes"
+      ],
+      "priority": 18,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-019",
+      "title": "Add artifact detection logic",
+      "description": "As a developer, I need logic to determine when to show artifacts vs inline responses.",
+      "acceptanceCriteria": [
+        "Simple confirmations (Pause Germany) stay inline",
+        "Single values (What's the CTR?) stay inline",
+        "Tables (Show all campaigns) go to artifact panel",
+        "Reports (Give me a performance report) go to artifact panel",
+        "Comparison queries go to artifact panel",
+        "Typecheck passes"
+      ],
+      "priority": 19,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-020",
+      "title": "Add Open Dashboard button",
+      "description": "As a user, I want a button to open the live dashboard in a new window.",
+      "acceptanceCriteria": [
+        "Button visible in chat page header or artifact panel",
+        "Opens /dashboard in new window/tab",
+        "Styled with Claude orange or secondary dark",
+        "Typecheck passes"
+      ],
+      "priority": 20,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-021",
+      "title": "Create dashboard page layout",
+      "description": "As a user, I want a live dashboard page for real-time campaign monitoring.",
+      "acceptanceCriteria": [
+        "Dashboard page at /dashboard route",
+        "Dark sidebar (220px) on left",
+        "Main content area with warm cream background",
+        "Full-width layout optimized for projector/second screen",
+        "Typecheck passes"
+      ],
+      "priority": 21,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-022",
+      "title": "Build sidebar navigation",
+      "description": "As a user, I want a Claude.ai-style dark sidebar for dashboard navigation.",
+      "acceptanceCriteria": [
+        "Sidebar component with #1A1915 background",
+        "AdCP Demo branding at top",
+        "Trading section with Media Buys, Products, Formats links",
+        "Active state with #DA7756 text or left accent",
+        "Typecheck passes"
+      ],
+      "priority": 22,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-023",
+      "title": "Build CampaignCard component",
+      "description": "As a user, I want campaign cards showing key metrics for each media buy.",
+      "acceptanceCriteria": [
+        "CampaignCard component created",
+        "Shows campaign name and advertiser",
+        "Shows budget and spend with progress bar",
+        "Shows key metrics: CTR, CPM, CPA",
+        "White background with subtle border",
+        "Typecheck passes"
+      ],
+      "priority": 23,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-024",
+      "title": "Add HealthBadge component",
+      "description": "As a user, I want to see campaign health status at a glance.",
+      "acceptanceCriteria": [
+        "HealthBadge component with colored dot",
+        "Green (#22863A) for good",
+        "Amber (#D97706) for warning",
+        "Red (#DC2626) for poor",
+        "10px dot with tooltip on hover",
+        "Typecheck passes"
+      ],
+      "priority": 24,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-025",
+      "title": "Add GeoChips with animation",
+      "description": "As a user, I want to see targeted countries as visual chips that animate on change.",
+      "acceptanceCriteria": [
+        "GeoChips component displays country codes as pills",
+        "Fade out animation when geo is removed",
+        "Fade in animation when geo is added",
+        "300ms transition duration",
+        "Typecheck passes"
+      ],
+      "priority": 25,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-026",
+      "title": "Add DeviceChips component",
+      "description": "As a user, I want to see device targeting as visual chips.",
+      "acceptanceCriteria": [
+        "DeviceChips component displays devices as pills",
+        "Shows Desktop, Mobile, Tablet as applicable",
+        "Consistent styling with GeoChips",
+        "Typecheck passes"
+      ],
+      "priority": 26,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-027",
+      "title": "Add BudgetBar component",
+      "description": "As a user, I want to see budget spend as a progress bar with pacing colors.",
+      "acceptanceCriteria": [
+        "BudgetBar component with 6px height",
+        "Green fill for 0-80% spent",
+        "Amber fill for 80-100% spent",
+        "Red fill for over 100% spent",
+        "Shows percentage text",
+        "Typecheck passes"
+      ],
+      "priority": 27,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-028",
+      "title": "Add ConnectionStatus indicator",
+      "description": "As a user, I want to see if the dashboard is connected to the backend.",
+      "acceptanceCriteria": [
+        "ConnectionStatus component at bottom of dashboard",
+        "Green dot and Connected text when connected",
+        "Red dot and Disconnected when disconnected",
+        "Shows last updated timestamp",
+        "Typecheck passes"
+      ],
+      "priority": 28,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-029",
+      "title": "Connect dashboard to WebSocket",
+      "description": "As a developer, I need the dashboard to receive WebSocket events.",
+      "acceptanceCriteria": [
+        "useWebSocket hook created",
+        "Connects to backend Socket.io server",
+        "Handles initial_state event to populate data",
+        "Handles media_buy_updated event",
+        "Handles media_buy_created event",
+        "Handles feedback_submitted event",
+        "Updates local state on events",
+        "Typecheck passes"
+      ],
+      "priority": 29,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-030",
+      "title": "Add data table view for media buys",
+      "description": "As a user, I want to see media buys in a table format on the dashboard.",
+      "acceptanceCriteria": [
+        "MediaBuysTable component created",
+        "Columns: Status, ID, Advertiser, Campaign, Spend/Budget, Health",
+        "Row hover state",
+        "Status toggle switch styled like Claude.ai",
+        "Pacing bar in spend column",
+        "Typecheck passes"
+      ],
+      "priority": 30,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-031",
+      "title": "Add row highlight animation on updates",
+      "description": "As a user, I want to see which rows were just updated.",
+      "acceptanceCriteria": [
+        "Row flashes yellow (#FEF3C7) when updated",
+        "400ms animation duration",
+        "Fades back to white",
+        "Works for metric changes, geo changes, bid changes",
+        "Typecheck passes"
+      ],
+      "priority": 31,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-032",
+      "title": "Add typing indicator to chat",
+      "description": "As a user, I want to see when Claude is processing my request.",
+      "acceptanceCriteria": [
+        "TypingIndicator component with animated dots",
+        "Shows while waiting for Claude API response",
+        "Hides when response arrives",
+        "Positioned where next message would appear",
+        "Typecheck passes"
+      ],
+      "priority": 32,
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": "US-033",
+      "title": "End-to-end demo flow test",
+      "description": "As Tim, I want to verify the complete demo flow works.",
+      "acceptanceCriteria": [
+        "Chat page loads and accepts messages",
+        "Claude responds with tool calls",
+        "Tables appear in artifact panel",
+        "Dashboard shows all 5 campaigns",
+        "Pausing Germany removes DE chip from dashboard",
+        "Connection status shows connected",
+        "Typecheck passes"
+      ],
+      "priority": 33,
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}
