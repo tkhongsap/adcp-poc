@@ -3,6 +3,7 @@ import cors from 'cors';
 import { createServer } from 'http';
 import { loadData, isDataLoaded } from './data/loader.js';
 import { initializeWebSocket, getIO } from './websocket/socket.js';
+import toolsRouter from './routes/tools.js';
 
 const app = express();
 const httpServer = createServer(app);
@@ -20,6 +21,9 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json());
+
+// API Routes
+app.use('/api/tools', toolsRouter);
 
 // Health check endpoint
 app.get('/health', (_req, res) => {
