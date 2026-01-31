@@ -10,10 +10,25 @@ Started: 2026-01-31
 - Data types are defined in `src/backend/src/types/data.ts`
 - Data loader module is at `src/backend/src/data/loader.ts`
 - Data is loaded via `loadData()` function on server startup
-- Access data through exported functions: `getProducts()`, `getMediaBuys()`, `getDeliveryMetrics()`, etc.
+- Access data through exported functions: `getProducts()`, `getMediaBuys()`, `getDeliveryMetrics()`, `getCreativeFormats()`, etc.
 - Tools are implemented in `src/backend/src/tools/` with individual files per tool
 - Export all tools from `src/backend/src/tools/index.ts`
+- Creative formats are static reference data stored in the loader (not in JSON file)
 
+---
+
+## 2026-01-31 - US-004
+- What was implemented: list_creative_formats tool for retrieving ad format specifications
+- Files changed:
+  - Modified `src/backend/src/types/data.ts` (Added CreativeFormat and CreativeFormatSpecs interfaces)
+  - Modified `src/backend/src/data/loader.ts` (Added creativeFormats static data and getCreativeFormats(), getCreativeFormatById() functions)
+  - Created `src/backend/src/tools/listCreativeFormats.ts` (Tool implementation with type definitions)
+  - Modified `src/backend/src/tools/index.ts` (Added listCreativeFormats export)
+- **Learnings for future iterations:**
+  - Creative formats are static reference data, not in the JSON file - they're defined directly in the loader
+  - Supports 4 format types: display, video, native, audio
+  - Includes 13 formats total: 6 display, 4 video, 2 native, 1 audio
+  - Specs vary by format type (display has dimensions/file_size, video has duration/skip_after, native has headline/description limits)
 ---
 
 ## 2026-01-31 - US-003
