@@ -21,7 +21,7 @@ This is a Claude.ai-style chat interface with artifacts and a live dashboard for
 - Both together: `npm run dev`
 
 ## Environment Variables
-- `NEXT_PUBLIC_API_URL`: Backend API URL for frontend to connect to
+- `NEXT_PUBLIC_API_URL`: Backend API URL for frontend to connect to (in Replit this must include `:3001`, e.g. `https://<your-replit-domain>:3001`)
 - `BACKEND_PORT`: Port for the backend server (default: 3001)
 
 ## Key Features
