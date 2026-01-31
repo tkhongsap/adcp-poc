@@ -38,6 +38,21 @@ Started: 2026-01-31
 
 ---
 
+## 2026-01-31 - US-014
+- What was implemented: MessageInput component with pill-shaped input field and send button
+- Files changed:
+  - Created `src/frontend/src/components/chat/MessageInput.tsx` (Input component with send functionality)
+  - Modified `src/frontend/src/components/chat/ChatPanel.tsx` (Integrated MessageInput, added onSendMessage prop)
+  - Modified `src/frontend/src/components/chat/ChatContainer.tsx` (Added handleSendMessage callback)
+- **Learnings for future iterations:**
+  - MessageInput uses rounded-3xl for pill shape (larger than 24px radius, but matches design intent)
+  - Send button is circular (w-8 h-8 rounded-full) with bg-claude-orange
+  - Enter key submission handled via onKeyDown event
+  - Button disabled state when input is empty or component is disabled
+  - Send icon uses inline SVG (paper plane icon from Heroicons)
+  - ChatPanel now requires onSendMessage prop - must pass through from ChatContainer
+---
+
 ## 2026-01-31 - US-013
 - What was implemented: ChatPanel with message history, markdown rendering, and auto-scroll
 - Files changed:
