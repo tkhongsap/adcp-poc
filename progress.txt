@@ -16,7 +16,31 @@ Started: 2026-01-31
 - Creative formats are static reference data stored in the loader (not in JSON file)
 - Authorized properties are also static reference data stored in the loader
 - Access authorized properties through `getAuthorizedProperties()` and `getAuthorizedPropertyById()`
+- WebSocket module is at `src/backend/src/websocket/socket.ts`
+- Use `initializeWebSocket(httpServer)` to initialize Socket.io
+- Use `getIO()` to get the Socket.io server instance
+- Broadcast functions: `broadcastMediaBuyUpdated()`, `broadcastMediaBuyCreated()`, `broadcastFeedbackSubmitted()`
+- WebSocket events: `initial_state`, `media_buy_updated`, `media_buy_created`, `feedback_submitted`
 
+---
+
+## 2026-01-31 - US-010
+- What was implemented: WebSocket broadcasting with Socket.io for real-time state synchronization
+- Files changed:
+  - Created `src/backend/src/websocket/socket.ts` (Socket.io module with event types and broadcast functions)
+  - Modified `src/backend/src/index.ts` (Integrated Socket.io with Express using http.createServer)
+  - Modified `src/backend/src/tools/updateMediaBuy.ts` (Added broadcastMediaBuyUpdated call)
+  - Modified `src/backend/src/tools/createMediaBuy.ts` (Added broadcastMediaBuyCreated call)
+  - Modified `src/backend/src/tools/providePerformanceFeedback.ts` (Added broadcastFeedbackSubmitted call)
+  - Modified `src/backend/package.json` (Added socket.io dependency)
+- **Learnings for future iterations:**
+  - Socket.io requires wrapping Express app with http.createServer
+  - CORS configured for localhost:3000 (frontend) with credentials: true
+  - On client connect, initial_state event is emitted with getFullState() data
+  - All broadcast functions include timestamp in payload
+  - Tools now automatically broadcast state changes to all connected clients
+  - Event payloads include full media_buy and delivery_metrics for UI updates
+  - Supports multiple connected clients (for chat + dashboard windows)
 ---
 
 ## 2026-01-31 - US-009
