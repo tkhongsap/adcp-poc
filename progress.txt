@@ -56,6 +56,31 @@ Started: 2026-01-31
 - Report artifact data uses `ReportArtifactData` type with `sections`, `recommendations`, `summary`, and `icon` fields
 - Use `isReportArtifactData()` type guard to check if artifact data is report type
 
+- Artifact detection utility is at `src/frontend/src/utils/artifactDetection.ts`
+- Use `detectArtifact(toolCalls, userMessage)` to determine if an artifact should be shown
+- `ToolCallData` type defines tool call structure: `{name, input, result}`
+- Detection returns `{shouldShowArtifact: boolean, artifact: Artifact | null}`
+- Table-producing tools: get_products, list_creative_formats, list_authorized_properties
+- Report-producing tools: get_media_buy_delivery (for single campaign)
+- Inline responses for: update_media_buy, create_media_buy, provide_performance_feedback
+- MainContainer collects tool calls from SSE events and calls detectArtifact after stream completes
+
+---
+
+## 2026-01-31 - US-019
+- What was implemented: Artifact detection logic to determine when to show artifacts vs inline responses
+- Files changed:
+  - Created `src/frontend/src/utils/artifactDetection.ts` (Detection utility with table/report creation functions)
+  - Modified `src/frontend/src/components/chat/MainContainer.tsx` (Integrated artifact detection with SSE handling)
+- **Learnings for future iterations:**
+  - Artifact detection analyzes tool calls and their results to determine artifact type
+  - Simple confirmations (pause, update, create) stay inline - matched by tool name
+  - Single value queries matched by regex patterns (e.g., /^what('s| is) the\s+(ctr|cpm|...)\??$/i)
+  - Tables created for: products (>1), formats (>1), properties (>1), campaigns (>1)
+  - Reports created for: single campaign delivery metrics
+  - Tool calls collected during SSE stream via tool_call and tool_result events
+  - Done event may include complete toolCalls array as fallback
+  - Detection runs after stream completes to avoid partial data issues
 ---
 
 ## 2026-01-31 - US-018
