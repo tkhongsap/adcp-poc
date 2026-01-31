@@ -47,7 +47,28 @@ Started: 2026-01-31
 - Artifact types: table, report, chart (defined in `src/frontend/src/types/chat.ts`)
 - ArtifactPanel accepts artifact prop, shows empty state when null
 - Artifact persists until explicitly replaced with new artifact
+- Artifact components are in `src/frontend/src/components/artifacts/`
+- TableArtifact component renders tables with columns, rows, pacing bars, and health dots
+- Table artifact data uses `TableArtifactData` type with `columns` and `rows` arrays
+- Column types: text, number, pacing, health, currency, percentage
+- Use `isTableArtifactData()` type guard to check if artifact data is table type
 
+---
+
+## 2026-01-31 - US-017
+- What was implemented: TableArtifact component with styled headers, row dividers, pacing bars, and health dots
+- Files changed:
+  - Created `src/frontend/src/components/artifacts/TableArtifact.tsx` (Table component with PacingBar and HealthDot subcomponents)
+  - Modified `src/frontend/src/types/chat.ts` (Added TableColumn, TableRow, TableArtifactData types and isTableArtifactData type guard)
+  - Modified `src/frontend/src/components/chat/ArtifactPanel.tsx` (Integrated TableArtifact for table type artifacts)
+- **Learnings for future iterations:**
+  - TableArtifact uses 12px uppercase headers with claude-text-secondary color
+  - Row dividers use claude-border-light (#EEEEE8)
+  - Hover state uses hover:bg-claude-cream for warm cream background
+  - PacingBar shows percentage with color-coded progress (green < 80%, amber 80-100%, red > 100%)
+  - HealthDot shows status as colored dot (green=good, amber=warning, red=poor)
+  - Column type determines cell rendering: pacing expects {value, max}, health expects string status
+  - formatCellValue function handles currency, percentage, number formatting with Intl.NumberFormat
 ---
 
 ## 2026-01-31 - US-016
