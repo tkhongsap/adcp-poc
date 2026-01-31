@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 import {
   ReportArtifactData,
   ReportSection,
@@ -12,84 +14,131 @@ interface ReportArtifactProps {
 }
 
 // Metric card component for displaying individual metrics
-function MetricCard({ metric }: { metric: ReportMetric }) {
+function MetricCard({ metric, index }: { metric: ReportMetric; index: number }) {
   // Determine change indicator color
-  let changeColorClass = "text-claude-text-secondary";
+  let changeColorClass = "text-muted-foreground";
   if (metric.changeType === "positive") {
-    changeColorClass = "text-green-600";
+    changeColorClass = "text-green-600 dark:text-green-400";
   } else if (metric.changeType === "negative") {
-    changeColorClass = "text-red-500";
+    changeColorClass = "text-red-500 dark:text-red-400";
   }
 
   return (
-    <div className="bg-claude-cream rounded-lg p-4">
-      <div className="text-xs uppercase tracking-wider text-claude-text-secondary mb-1">
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.05 }}
+      className="bg-muted/50 rounded-lg p-4 border border-border/50"
+    >
+      <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">
         {metric.label}
       </div>
       <div className="flex items-baseline gap-2">
-        <span className="text-2xl font-semibold text-claude-text-primary">
+        <span className="text-2xl font-semibold text-foreground tabular-nums">
           {typeof metric.value === "number"
             ? new Intl.NumberFormat("en-US").format(metric.value)
             : metric.value}
         </span>
         {metric.change && (
-          <span className={`text-sm font-medium ${changeColorClass}`}>
+          <span className={cn("text-sm font-medium", changeColorClass)}>
             {metric.change}
           </span>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 // Section component for rendering report sections
-function SectionBlock({ section }: { section: ReportSection }) {
+function SectionBlock({ section, index }: { section: ReportSection; index: number }) {
   return (
-    <div className="mb-6 last:mb-0">
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.1 }}
+      className="bg-card rounded-xl border border-border p-5 shadow-sm"
+    >
       {/* Section header */}
-      <h3 className="text-sm font-semibold text-claude-text-primary mb-3 pb-2 border-b border-claude-border-light">
+      <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
+        <div className="w-1 h-4 bg-primary rounded-full" />
         {section.title}
       </h3>
 
       {/* Metrics grid */}
       {section.metrics && section.metrics.length > 0 && (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          {section.metrics.map((metric, index) => (
-            <MetricCard key={index} metric={metric} />
+          {section.metrics.map((metric, metricIndex) => (
+            <MetricCard key={metricIndex} metric={metric} index={metricIndex} />
           ))}
         </div>
       )}
 
       {/* Text content */}
       {section.content && (
-        <p className="text-sm text-claude-text-primary leading-relaxed">
+        <p className="text-sm text-foreground leading-relaxed mt-3">
           {section.content}
         </p>
       )}
-    </div>
+    </motion.div>
   );
 }
 
 // Recommendations list component
 function RecommendationsList({ recommendations }: { recommendations: string[] }) {
   return (
-    <div className="mt-6 pt-4 border-t border-claude-border-light">
-      <h3 className="text-sm font-semibold text-claude-text-primary mb-3 flex items-center gap-2">
-        <span className="text-lg">💡</span>
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: 0.3 }}
+      className="bg-primary/5 rounded-xl border border-primary/20 p-5"
+    >
+      <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
+        <span className="w-6 h-6 rounded-lg bg-primary/10 flex items-center justify-center">
+          <svg
+            className="w-4 h-4 text-primary"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+            />
+          </svg>
+        </span>
         Recommendations
       </h3>
-      <ul className="space-y-2">
+      <ul className="space-y-3">
         {recommendations.map((recommendation, index) => (
-          <li
+          <motion.li
             key={index}
-            className="flex items-start gap-2 text-sm text-claude-text-primary"
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.2, delay: 0.4 + index * 0.05 }}
+            className="flex items-start gap-3 text-sm text-foreground"
           >
-            <span className="text-claude-orange mt-0.5 flex-shrink-0">•</span>
+            <span className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+              <svg
+                className="w-3 h-3 text-primary"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </span>
             <span className="leading-relaxed">{recommendation}</span>
-          </li>
+          </motion.li>
         ))}
       </ul>
-    </div>
+    </motion.div>
   );
 }
 
@@ -98,34 +147,42 @@ export default function ReportArtifact({ data }: ReportArtifactProps) {
 
   if (!sections || sections.length === 0) {
     return (
-      <div className="text-center text-claude-text-secondary py-8">
+      <div className="text-center text-muted-foreground py-8">
         No report data available
       </div>
     );
   }
 
   return (
-    <div className="report-artifact">
+    <div className="report-artifact space-y-5">
       {/* Report icon (if provided) */}
       {icon && (
-        <div className="text-center mb-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center"
+        >
           <span className="text-4xl">{icon}</span>
-        </div>
+        </motion.div>
       )}
 
       {/* Summary (if provided) */}
       {summary && (
-        <div className="mb-6 p-4 bg-claude-cream rounded-lg border border-claude-border-light">
-          <p className="text-sm text-claude-text-primary leading-relaxed">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-4 bg-muted/50 rounded-xl border border-border"
+        >
+          <p className="text-sm text-foreground leading-relaxed">
             {summary}
           </p>
-        </div>
+        </motion.div>
       )}
 
       {/* Report sections */}
-      <div className="space-y-6">
+      <div className="space-y-4">
         {sections.map((section, index) => (
-          <SectionBlock key={index} section={section} />
+          <SectionBlock key={index} section={section} index={index} />
         ))}
       </div>
 

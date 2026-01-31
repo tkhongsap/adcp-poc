@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export type ConnectionState = "connected" | "disconnected";
 
@@ -11,14 +13,16 @@ interface ConnectionStatusProps {
 
 const CONNECTION_CONFIG: Record<
   ConnectionState,
-  { color: string; label: string }
+  { color: string; pulseColor: string; label: string }
 > = {
   connected: {
-    color: "bg-[#22863A]",
+    color: "bg-green-600",
+    pulseColor: "bg-green-400",
     label: "Connected",
   },
   disconnected: {
-    color: "bg-[#DC2626]",
+    color: "bg-red-500",
+    pulseColor: "bg-red-400",
     label: "Disconnected",
   },
 };
@@ -53,20 +57,43 @@ export default function ConnectionStatus({
       role="status"
       aria-live="polite"
     >
-      {/* Status dot - 10px (w-2.5 h-2.5) */}
-      <div
-        className={`w-2.5 h-2.5 rounded-full ${config.color}`}
-        aria-hidden="true"
-      />
+      {/* Status dot with pulse animation for connected state */}
+      <div className="relative">
+        {isConnected && (
+          <motion.div
+            className={cn(
+              "absolute inset-0 w-2.5 h-2.5 rounded-full",
+              config.pulseColor
+            )}
+            animate={{
+              scale: [1, 1.8, 1],
+              opacity: [0.6, 0, 0.6],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        )}
+        <div
+          className={cn("w-2.5 h-2.5 rounded-full relative", config.color)}
+          aria-hidden="true"
+        />
+      </div>
 
       {/* Status text */}
-      <span className="text-claude-text-secondary">{config.label}</span>
+      <span className="text-muted-foreground">{config.label}</span>
 
       {/* Last updated timestamp */}
       {lastUpdated && isConnected && (
-        <span className="text-claude-text-secondary/60 text-xs">
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-muted-foreground/60 text-xs"
+        >
           · Last updated {formatLastUpdated(lastUpdated)}
-        </span>
+        </motion.span>
       )}
     </div>
   );

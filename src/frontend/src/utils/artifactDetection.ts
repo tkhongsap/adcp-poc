@@ -50,6 +50,7 @@ const TABLE_PRODUCING_TOOLS = [
 /**
  * Tool calls that typically produce report artifacts
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const REPORT_PRODUCING_TOOLS = ["get_media_buy_delivery"];
 
 /**
@@ -62,6 +63,7 @@ function isInlineQuery(userMessage: string): boolean {
 /**
  * Checks if the result contains multiple items suitable for a table
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function isTableData(result: unknown): result is {
   products?: unknown[];
   formats?: unknown[];
