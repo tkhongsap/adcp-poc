@@ -36,6 +36,34 @@ Started: 2026-01-31
 - Use `react-markdown` for rendering markdown in assistant messages
 - Use `@tailwindcss/typography` plugin for prose styling
 
+- Claude API client is at `src/backend/src/claude/client.ts`
+- Chat API routes are at `src/backend/src/routes/chat.ts`
+- POST `/api/chat` for non-streaming, POST `/api/chat/stream` for SSE streaming
+- ANTHROPIC_API_KEY env variable required for Claude API
+- Tool definitions in `TOOL_DEFINITIONS` array in claude/client.ts
+- `processChat()` for non-streaming, `processChatStream()` for streaming responses
+- Frontend uses SSE for streaming responses, parsing events: start, text, tool_call, tool_result, done
+
+---
+
+## 2026-01-31 - US-015
+- What was implemented: Claude API integration with tool calling and streaming support
+- Files changed:
+  - Created `src/backend/src/claude/client.ts` (Claude API client with tool definitions and execution)
+  - Created `src/backend/src/routes/chat.ts` (Chat API endpoints with SSE streaming)
+  - Modified `src/backend/src/index.ts` (Added chatRouter)
+  - Modified `src/backend/package.json` (Added @anthropic-ai/sdk dependency)
+  - Modified `src/frontend/src/components/chat/ChatContainer.tsx` (Integrated with chat API using streaming)
+  - Modified `src/frontend/src/components/chat/ChatPanel.tsx` (Added TypingIndicator and isLoading prop)
+- **Learnings for future iterations:**
+  - Claude API uses claude-sonnet-4-20250514 model
+  - Tool definitions use JSON Schema format with input_schema
+  - Tool execution handled in executeTool() function that maps tool names to tool functions
+  - Use `as unknown as` double-cast pattern for strict TypeScript tool input typing
+  - Streaming uses Server-Sent Events (SSE) with event types: start, text, tool_call, tool_result, done
+  - Frontend parses SSE by reading response body as stream and processing line-by-line
+  - Conversation history stored in-memory Map in backend keyed by conversationId
+  - API_BASE_URL defaults to http://localhost:3001, configurable via NEXT_PUBLIC_API_URL
 ---
 
 ## 2026-01-31 - US-014
