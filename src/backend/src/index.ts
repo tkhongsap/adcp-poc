@@ -4,6 +4,7 @@ import { createServer } from 'http';
 import { loadData, isDataLoaded } from './data/loader.js';
 import { initializeWebSocket, getIO } from './websocket/socket.js';
 import toolsRouter from './routes/tools.js';
+import chatRouter from './routes/chat.js';
 
 const app = express();
 const httpServer = createServer(app);
@@ -24,6 +25,7 @@ app.use(express.json());
 
 // API Routes
 app.use('/api/tools', toolsRouter);
+app.use('/api/chat', chatRouter);
 
 // Health check endpoint
 app.get('/health', (_req, res) => {

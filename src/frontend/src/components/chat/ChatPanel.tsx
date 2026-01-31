@@ -8,6 +8,7 @@ import MessageInput from "./MessageInput";
 interface ChatPanelProps {
   messages: Message[];
   onSendMessage: (content: string) => void;
+  isLoading?: boolean;
 }
 
 function MessageBubble({ message }: { message: Message }) {
@@ -38,7 +39,19 @@ function MessageBubble({ message }: { message: Message }) {
   );
 }
 
-export default function ChatPanel({ messages, onSendMessage }: ChatPanelProps) {
+function TypingIndicator() {
+  return (
+    <div className="flex justify-start mb-4">
+      <div className="flex space-x-1.5 px-4 py-3">
+        <div className="w-2 h-2 bg-claude-text-secondary rounded-full animate-bounce [animation-delay:-0.3s]" />
+        <div className="w-2 h-2 bg-claude-text-secondary rounded-full animate-bounce [animation-delay:-0.15s]" />
+        <div className="w-2 h-2 bg-claude-text-secondary rounded-full animate-bounce" />
+      </div>
+    </div>
+  );
+}
+
+export default function ChatPanel({ messages, onSendMessage, isLoading = false }: ChatPanelProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -66,13 +79,14 @@ export default function ChatPanel({ messages, onSendMessage }: ChatPanelProps) {
             {messages.map((message) => (
               <MessageBubble key={message.id} message={message} />
             ))}
+            {isLoading && <TypingIndicator />}
           </>
         )}
         {/* Scroll anchor */}
         <div ref={messagesEndRef} />
       </div>
       <div className="p-4 border-t border-claude-border">
-        <MessageInput onSendMessage={onSendMessage} />
+        <MessageInput onSendMessage={onSendMessage} disabled={isLoading} />
       </div>
     </div>
   );
