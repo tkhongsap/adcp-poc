@@ -14,7 +14,23 @@ Started: 2026-01-31
 - Tools are implemented in `src/backend/src/tools/` with individual files per tool
 - Export all tools from `src/backend/src/tools/index.ts`
 - Creative formats are static reference data stored in the loader (not in JSON file)
+- Authorized properties are also static reference data stored in the loader
+- Access authorized properties through `getAuthorizedProperties()` and `getAuthorizedPropertyById()`
 
+---
+
+## 2026-01-31 - US-005
+- What was implemented: list_authorized_properties tool for retrieving accessible publisher properties
+- Files changed:
+  - Modified `src/backend/src/types/data.ts` (Added AuthorizedProperty interface)
+  - Modified `src/backend/src/data/loader.ts` (Added authorizedProperties static data and getAuthorizedProperties(), getAuthorizedPropertyById() functions)
+  - Created `src/backend/src/tools/listAuthorizedProperties.ts` (Tool implementation with type definitions)
+  - Modified `src/backend/src/tools/index.ts` (Added listAuthorizedProperties export)
+- **Learnings for future iterations:**
+  - Authorized properties are static reference data like creative formats (not in JSON file)
+  - Tool takes no parameters - returns all authorized properties
+  - 10 properties total: ESPN, CNN, Weather.com, TechCrunch, Sports Illustrated, Bleacher Report, Forbes, Automotive News, Spotify, NYT
+  - Each property includes authorization_level (standard/premium/exclusive), available_formats, and optional fields like discount_percent, audience_profile, special_capabilities
 ---
 
 ## 2026-01-31 - US-004
