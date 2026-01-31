@@ -1,0 +1,1239 @@
+{
+  "products": [
+    {
+      "product_id": "prod_espn_premium",
+      "name": "ESPN Premium Sports",
+      "description": "Premium placements across ESPN's sports content including live games, highlights, and sports news",
+      "category": "Sports",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_espn_standard",
+          "currency": "USD",
+          "cpm": 18.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_espn_premium",
+          "currency": "USD",
+          "cpm": 25.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "display_300x250_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "display_728x90_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "video_preroll_15s"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "device_type",
+        "sports_interest",
+        "demographics"
+      ],
+      "minimum_budget": 5000,
+      "available_inventory": 15000000
+    },
+    {
+      "product_id": "prod_cnn_homepage",
+      "name": "CNN News Homepage",
+      "description": "High-impact homepage placements on CNN's primary news page",
+      "category": "News",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_cnn_standard",
+          "currency": "USD",
+          "cpm": 22.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_cnn_takeover",
+          "currency": "USD",
+          "cpm": 30.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "display_970x250_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "display_300x600_image"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "device_type",
+        "news_interest"
+      ],
+      "minimum_budget": 10000,
+      "available_inventory": 8000000
+    },
+    {
+      "product_id": "prod_weather_geo",
+      "name": "Weather.com Geo-Targeted",
+      "description": "Location-based advertising on Weather.com with precise geographic targeting",
+      "category": "Weather/Local",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_weather_national",
+          "currency": "USD",
+          "cpm": 8.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_weather_local",
+          "currency": "USD",
+          "cpm": 12.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "display_300x250_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "display_320x50_image"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "geo_city",
+        "weather_conditions",
+        "device_type"
+      ],
+      "minimum_budget": 2500,
+      "available_inventory": 25000000
+    },
+    {
+      "product_id": "prod_techcrunch",
+      "name": "TechCrunch Innovation",
+      "description": "Premium tech-savvy audience on TechCrunch's startup and technology coverage",
+      "category": "Technology",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_tc_standard",
+          "currency": "USD",
+          "cpm": 35.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_tc_sponsored",
+          "currency": "USD",
+          "cpm": 45.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "display_300x250_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "native_article_card"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "device_type",
+        "tech_interest",
+        "job_function",
+        "company_size"
+      ],
+      "minimum_budget": 7500,
+      "available_inventory": 3000000
+    },
+    {
+      "product_id": "prod_si_sports",
+      "name": "Sports Illustrated",
+      "description": "Classic sports journalism audience across Sports Illustrated digital properties",
+      "category": "Sports",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_si_ros",
+          "currency": "USD",
+          "cpm": 15.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_si_premium",
+          "currency": "USD",
+          "cpm": 20.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "display_300x250_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "display_728x90_image"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "device_type",
+        "sports_interest"
+      ],
+      "minimum_budget": 3000,
+      "available_inventory": 12000000
+    },
+    {
+      "product_id": "prod_bleacher",
+      "name": "Bleacher Report",
+      "description": "Younger sports fan audience on Bleacher Report with strong mobile engagement",
+      "category": "Sports",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_br_standard",
+          "currency": "USD",
+          "cpm": 12.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_br_video",
+          "currency": "USD",
+          "cpm": 18.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "display_300x250_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "video_outstream_15s"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "device_type",
+        "sports_interest",
+        "age_range"
+      ],
+      "minimum_budget": 2000,
+      "available_inventory": 18000000
+    },
+    {
+      "product_id": "prod_forbes",
+      "name": "Forbes Business",
+      "description": "Business decision-makers and high-net-worth individuals on Forbes",
+      "category": "Business",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_forbes_standard",
+          "currency": "USD",
+          "cpm": 28.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_forbes_executive",
+          "currency": "USD",
+          "cpm": 38.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "display_300x250_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "native_article_card"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "device_type",
+        "job_function",
+        "income_level",
+        "company_size"
+      ],
+      "minimum_budget": 8000,
+      "available_inventory": 5000000
+    },
+    {
+      "product_id": "prod_auto_news",
+      "name": "Automotive News Network",
+      "description": "Auto enthusiasts and in-market car buyers across automotive publisher network",
+      "category": "Automotive",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_auto_standard",
+          "currency": "USD",
+          "cpm": 20.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_auto_inmarket",
+          "currency": "USD",
+          "cpm": 28.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "display_300x250_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "display_970x250_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "video_preroll_30s"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "device_type",
+        "auto_interest",
+        "purchase_intent",
+        "vehicle_ownership"
+      ],
+      "minimum_budget": 5000,
+      "available_inventory": 7000000
+    }
+  ],
+  "media_buys": [
+    {
+      "media_buy_id": "mb_apex_motors_q1",
+      "buyer_ref": "apex_q1_2026_001",
+      "brand_manifest": {
+        "name": "Apex Motors",
+        "url": "https://apexmotors.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_apex_001",
+          "product_id": "prod_auto_news",
+          "pricing_option_id": "po_auto_inmarket",
+          "budget": 30000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US",
+              "UK",
+              "DE"
+            ],
+            "device_type": [
+              "mobile",
+              "desktop"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_apex_002",
+          "product_id": "prod_espn_premium",
+          "pricing_option_id": "po_espn_standard",
+          "budget": 20000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US",
+              "UK"
+            ],
+            "sports_interest": [
+              "motorsports",
+              "football"
+            ]
+          }
+        }
+      ],
+      "start_time": "2026-01-01T00:00:00Z",
+      "end_time": "2026-03-31T23:59:59Z",
+      "status": "active",
+      "created_at": "2025-12-15T10:30:00Z"
+    },
+    {
+      "media_buy_id": "mb_techflow_saas",
+      "buyer_ref": "techflow_brand_2026",
+      "brand_manifest": {
+        "name": "TechFlow SaaS",
+        "url": "https://techflow.io"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_tf_001",
+          "product_id": "prod_techcrunch",
+          "pricing_option_id": "po_tc_standard",
+          "budget": 15000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "job_function": [
+              "IT",
+              "Engineering",
+              "Product"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_tf_002",
+          "product_id": "prod_forbes",
+          "pricing_option_id": "po_forbes_standard",
+          "budget": 10000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "job_function": [
+              "C-Suite",
+              "VP",
+              "Director"
+            ]
+          }
+        }
+      ],
+      "start_time": "2026-01-15T00:00:00Z",
+      "end_time": "2026-02-28T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-10T14:00:00Z"
+    },
+    {
+      "media_buy_id": "mb_sportmax_apparel",
+      "buyer_ref": "sportmax_spring_2026",
+      "brand_manifest": {
+        "name": "SportMax Apparel",
+        "url": "https://sportmax.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_sm_001",
+          "product_id": "prod_espn_premium",
+          "pricing_option_id": "po_espn_premium",
+          "budget": 20000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "sports_interest": [
+              "running",
+              "fitness",
+              "basketball"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_sm_002",
+          "product_id": "prod_bleacher",
+          "pricing_option_id": "po_br_video",
+          "budget": 15000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "age_range": "18-34"
+          }
+        }
+      ],
+      "start_time": "2026-01-01T00:00:00Z",
+      "end_time": "2026-04-30T23:59:59Z",
+      "status": "active",
+      "created_at": "2025-12-20T09:00:00Z"
+    },
+    {
+      "media_buy_id": "mb_financefirst",
+      "buyer_ref": "ff_awareness_q1",
+      "brand_manifest": {
+        "name": "FinanceFirst Bank",
+        "url": "https://financefirst.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_ff_001",
+          "product_id": "prod_forbes",
+          "pricing_option_id": "po_forbes_executive",
+          "budget": 25000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "income_level": "high"
+          }
+        },
+        {
+          "package_id": "pkg_ff_002",
+          "product_id": "prod_cnn_homepage",
+          "pricing_option_id": "po_cnn_standard",
+          "budget": 15000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "device_type": [
+              "desktop"
+            ]
+          }
+        }
+      ],
+      "start_time": "2026-01-01T00:00:00Z",
+      "end_time": "2026-03-31T23:59:59Z",
+      "status": "active",
+      "created_at": "2025-12-18T11:30:00Z"
+    },
+    {
+      "media_buy_id": "mb_greenenergy",
+      "buyer_ref": "ge_sustainability_2026",
+      "brand_manifest": {
+        "name": "GreenEnergy Co",
+        "url": "https://greenenergy.co"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_ge_001",
+          "product_id": "prod_weather_geo",
+          "pricing_option_id": "po_weather_local",
+          "budget": 12000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "geo_region_any_of": [
+              "California",
+              "Texas",
+              "Florida"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_ge_002",
+          "product_id": "prod_cnn_homepage",
+          "pricing_option_id": "po_cnn_standard",
+          "budget": 8000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ]
+          }
+        }
+      ],
+      "start_time": "2026-01-10T00:00:00Z",
+      "end_time": "2026-03-10T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-05T16:00:00Z"
+    }
+  ],
+  "delivery_metrics": {
+    "mb_apex_motors_q1": {
+      "media_buy_id": "mb_apex_motors_q1",
+      "brand": "Apex Motors",
+      "total_budget": 50000,
+      "total_spend": 32450,
+      "pacing": "behind",
+      "health": "poor",
+      "summary": {
+        "impressions": 3850000,
+        "clicks": 4620,
+        "conversions": 45,
+        "ctr": 0.12,
+        "cpm": 8.43,
+        "cpa": 721.11,
+        "viewability": 0.68,
+        "completion_rate": 0.72
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 2310000,
+          "clicks": 1848,
+          "ctr": 0.08,
+          "spend": 19470,
+          "cpm": 8.43
+        },
+        "desktop": {
+          "impressions": 1540000,
+          "clicks": 2772,
+          "ctr": 0.18,
+          "spend": 12980,
+          "cpm": 8.43
+        }
+      },
+      "by_geo": {
+        "US": {
+          "impressions": 1925000,
+          "clicks": 2695,
+          "ctr": 0.14,
+          "spend": 16225
+        },
+        "UK": {
+          "impressions": 1155000,
+          "clicks": 1617,
+          "ctr": 0.14,
+          "spend": 9735
+        },
+        "DE": {
+          "impressions": 770000,
+          "clicks": 308,
+          "ctr": 0.04,
+          "spend": 6490
+        }
+      },
+      "current_bids": {
+        "mobile_cpm": 8.5,
+        "desktop_cpm": 8.5
+      },
+      "recommendations": [
+        "Reduce mobile bid - CTR significantly below desktop",
+        "Consider pausing Germany - CTR well below other markets",
+        "Shift budget from mobile to desktop placements"
+      ]
+    },
+    "mb_techflow_saas": {
+      "media_buy_id": "mb_techflow_saas",
+      "brand": "TechFlow SaaS",
+      "total_budget": 25000,
+      "total_spend": 28200,
+      "pacing": "overspend",
+      "health": "warning",
+      "summary": {
+        "impressions": 890000,
+        "clicks": 5340,
+        "conversions": 89,
+        "ctr": 0.6,
+        "cpm": 31.69,
+        "cpa": 316.85,
+        "viewability": 0.82,
+        "completion_rate": null
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 267000,
+          "clicks": 1335,
+          "ctr": 0.5,
+          "spend": 8460,
+          "cpm": 31.69
+        },
+        "desktop": {
+          "impressions": 623000,
+          "clicks": 4005,
+          "ctr": 0.64,
+          "spend": 19740,
+          "cpm": 31.69
+        }
+      },
+      "by_geo": {
+        "US": {
+          "impressions": 890000,
+          "clicks": 5340,
+          "ctr": 0.6,
+          "spend": 28200
+        }
+      },
+      "current_bids": {
+        "techcrunch_cpm": 35.0,
+        "forbes_cpm": 28.0
+      },
+      "recommendations": [
+        "Campaign is overspending - consider reducing daily budget caps",
+        "Strong CTR indicates good creative performance",
+        "Review frequency caps to optimize spend efficiency"
+      ]
+    },
+    "mb_sportmax_apparel": {
+      "media_buy_id": "mb_sportmax_apparel",
+      "brand": "SportMax Apparel",
+      "total_budget": 35000,
+      "total_spend": 29800,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 1450000,
+        "clicks": 5075,
+        "conversions": 127,
+        "ctr": 0.35,
+        "cpm": 20.55,
+        "cpa": 234.65,
+        "viewability": 0.78,
+        "completion_rate": 0.85
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 870000,
+          "clicks": 2871,
+          "ctr": 0.33,
+          "spend": 17880,
+          "cpm": 20.55
+        },
+        "desktop": {
+          "impressions": 580000,
+          "clicks": 2204,
+          "ctr": 0.38,
+          "spend": 11920,
+          "cpm": 20.55
+        }
+      },
+      "by_geo": {
+        "US": {
+          "impressions": 1450000,
+          "clicks": 5075,
+          "ctr": 0.35,
+          "spend": 29800
+        }
+      },
+      "current_bids": {
+        "espn_cpm": 25.0,
+        "bleacher_cpm": 18.0
+      },
+      "recommendations": [
+        "Campaign performing well - maintain current strategy",
+        "Consider testing additional sports verticals",
+        "Video completion rate strong at 85%"
+      ]
+    },
+    "mb_financefirst": {
+      "media_buy_id": "mb_financefirst",
+      "brand": "FinanceFirst Bank",
+      "total_budget": 40000,
+      "total_spend": 22100,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 720000,
+        "clicks": 2520,
+        "conversions": 36,
+        "ctr": 0.35,
+        "cpm": 30.69,
+        "cpa": 613.89,
+        "viewability": 0.85,
+        "completion_rate": null
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 144000,
+          "clicks": 432,
+          "ctr": 0.3,
+          "spend": 4420,
+          "cpm": 30.69
+        },
+        "desktop": {
+          "impressions": 576000,
+          "clicks": 2088,
+          "ctr": 0.36,
+          "spend": 17680,
+          "cpm": 30.69
+        }
+      },
+      "by_geo": {
+        "US": {
+          "impressions": 720000,
+          "clicks": 2520,
+          "ctr": 0.35,
+          "spend": 22100
+        }
+      },
+      "current_bids": {
+        "forbes_cpm": 38.0,
+        "cnn_cpm": 22.0
+      },
+      "recommendations": [
+        "Campaign on track with strong viewability",
+        "Desktop focus aligning well with financial services audience",
+        "Consider expanding to business news sites"
+      ]
+    },
+    "mb_greenenergy": {
+      "media_buy_id": "mb_greenenergy",
+      "brand": "GreenEnergy Co",
+      "total_budget": 20000,
+      "total_spend": 14900,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 1120000,
+        "clicks": 3920,
+        "conversions": 56,
+        "ctr": 0.35,
+        "cpm": 13.3,
+        "cpa": 266.07,
+        "viewability": 0.72,
+        "completion_rate": null
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 672000,
+          "clicks": 2218,
+          "ctr": 0.33,
+          "spend": 8940,
+          "cpm": 13.3
+        },
+        "desktop": {
+          "impressions": 448000,
+          "clicks": 1702,
+          "ctr": 0.38,
+          "spend": 5960,
+          "cpm": 13.3
+        }
+      },
+      "by_geo": {
+        "California": {
+          "impressions": 448000,
+          "clicks": 1792,
+          "ctr": 0.4,
+          "spend": 5960
+        },
+        "Texas": {
+          "impressions": 392000,
+          "clicks": 1372,
+          "ctr": 0.35,
+          "spend": 5215
+        },
+        "Florida": {
+          "impressions": 280000,
+          "clicks": 756,
+          "ctr": 0.27,
+          "spend": 3725
+        }
+      },
+      "current_bids": {
+        "weather_cpm": 12.0,
+        "cnn_cpm": 22.0
+      },
+      "recommendations": [
+        "California performing best - consider increasing budget allocation",
+        "Florida underperforming - review creative messaging",
+        "Weather targeting providing good efficiency"
+      ]
+    }
+  },
+  "aggregations": {
+    "portfolio_summary": {
+      "as_of": "2026-01-30T23:59:59Z",
+      "total_active_campaigns": 5,
+      "total_budget": 170000,
+      "total_spend": 127450,
+      "total_remaining": 42550,
+      "total_impressions": 8030000,
+      "total_clicks": 21475,
+      "total_conversions": 353,
+      "overall_ctr": 0.27,
+      "overall_cpm": 15.87,
+      "overall_cpa": 360.99,
+      "campaigns_on_track": 3,
+      "campaigns_warning": 1,
+      "campaigns_poor": 1
+    },
+    "spend_by_category": {
+      "Sports": {
+        "spend": 42720,
+        "share": 0.34
+      },
+      "News": {
+        "spend": 35340,
+        "share": 0.28
+      },
+      "Technology": {
+        "spend": 28200,
+        "share": 0.22
+      },
+      "Automotive": {
+        "spend": 19470,
+        "share": 0.15
+      },
+      "Weather/Local": {
+        "spend": 1720,
+        "share": 0.01
+      }
+    },
+    "spend_by_format": {
+      "display": {
+        "spend": 89215,
+        "share": 0.7
+      },
+      "video": {
+        "spend": 25520,
+        "share": 0.2
+      },
+      "native": {
+        "spend": 12715,
+        "share": 0.1
+      }
+    },
+    "spend_by_device": {
+      "desktop": {
+        "spend": 76470,
+        "share": 0.6
+      },
+      "mobile": {
+        "spend": 50980,
+        "share": 0.4
+      }
+    },
+    "spend_by_geo": {
+      "US": {
+        "spend": 114705,
+        "share": 0.9
+      },
+      "UK": {
+        "spend": 9735,
+        "share": 0.08
+      },
+      "DE": {
+        "spend": 3010,
+        "share": 0.02
+      }
+    },
+    "top_performing_campaigns": [
+      {
+        "media_buy_id": "mb_techflow_saas",
+        "brand": "TechFlow SaaS",
+        "metric": "ctr",
+        "value": 0.6,
+        "reason": "Highest CTR across portfolio"
+      },
+      {
+        "media_buy_id": "mb_financefirst",
+        "brand": "FinanceFirst Bank",
+        "metric": "viewability",
+        "value": 0.85,
+        "reason": "Highest viewability"
+      },
+      {
+        "media_buy_id": "mb_sportmax_apparel",
+        "brand": "SportMax Apparel",
+        "metric": "completion_rate",
+        "value": 0.85,
+        "reason": "Best video completion rate"
+      }
+    ],
+    "underperforming_campaigns": [
+      {
+        "media_buy_id": "mb_apex_motors_q1",
+        "brand": "Apex Motors",
+        "metric": "ctr",
+        "value": 0.12,
+        "issue": "CTR 66% below target of 0.35"
+      },
+      {
+        "media_buy_id": "mb_techflow_saas",
+        "brand": "TechFlow SaaS",
+        "metric": "budget",
+        "value": 1.13,
+        "issue": "13% over budget with 29 days remaining"
+      }
+    ],
+    "monthly_trend": {
+      "january_2026": {
+        "week_1": {
+          "spend": 28500,
+          "impressions": 1800000,
+          "clicks": 4860,
+          "ctr": 0.27
+        },
+        "week_2": {
+          "spend": 32200,
+          "impressions": 2050000,
+          "clicks": 5535,
+          "ctr": 0.27
+        },
+        "week_3": {
+          "spend": 35100,
+          "impressions": 2200000,
+          "clicks": 5940,
+          "ctr": 0.27
+        },
+        "week_4": {
+          "spend": 31650,
+          "impressions": 1980000,
+          "clicks": 5140,
+          "ctr": 0.26
+        }
+      }
+    }
+  },
+  "performance_feedback_log": [
+    {
+      "feedback_id": "fb_001",
+      "media_buy_id": "mb_apex_motors_q1",
+      "submitted_at": "2026-01-15T10:00:00Z",
+      "feedback_type": "conversion_data",
+      "data": {
+        "conversions": 25,
+        "conversion_value": 125000,
+        "attribution_window": "30_day_click"
+      },
+      "status": "processed",
+      "impact": "CPA updated to reflect offline conversions"
+    },
+    {
+      "feedback_id": "fb_002",
+      "media_buy_id": "mb_techflow_saas",
+      "submitted_at": "2026-01-20T14:30:00Z",
+      "feedback_type": "lead_quality",
+      "data": {
+        "leads_submitted": 45,
+        "leads_qualified": 32,
+        "qualification_rate": 0.71,
+        "pipeline_value": 96000
+      },
+      "status": "processed",
+      "impact": "Lead scoring model updated"
+    },
+    {
+      "feedback_id": "fb_003",
+      "media_buy_id": "mb_sportmax_apparel",
+      "submitted_at": "2026-01-25T09:15:00Z",
+      "feedback_type": "brand_lift",
+      "data": {
+        "awareness_lift": 0.08,
+        "consideration_lift": 0.05,
+        "purchase_intent_lift": 0.03,
+        "sample_size": 2500
+      },
+      "status": "processed",
+      "impact": "Campaign marked as successful for brand metrics"
+    },
+    {
+      "feedback_id": "fb_004",
+      "media_buy_id": "mb_greenenergy",
+      "submitted_at": "2026-01-28T11:00:00Z",
+      "feedback_type": "conversion_data",
+      "data": {
+        "conversions": 56,
+        "conversion_value": 28000,
+        "lead_to_customer_rate": 0.12
+      },
+      "status": "processed",
+      "impact": "CPA tracking updated"
+    }
+  ],
+  "query_examples": {
+    "description": "Comprehensive list of questions Tim might ask during the demo and how to answer them",
+    "categories": {
+      "campaign_overview": [
+        {
+          "question": "Show me all active campaigns",
+          "tool": "get_media_buy_delivery",
+          "expected_response": "5 active campaigns: Apex Motors ($32,450 spent), TechFlow SaaS ($28,200), SportMax Apparel ($29,800), FinanceFirst Bank ($22,100), GreenEnergy Co ($14,900)"
+        },
+        {
+          "question": "What's our total spend this month?",
+          "tool": "get_media_buy_delivery",
+          "expected_response": "$127,450 across 5 active campaigns, with $42,550 remaining budget"
+        },
+        {
+          "question": "Give me a portfolio summary",
+          "tool": "get_media_buy_delivery",
+          "expected_response": "5 campaigns, $127,450 spent, 8M impressions, 21K clicks, 0.27% CTR, 353 conversions"
+        },
+        {
+          "question": "How are we pacing against budgets?",
+          "tool": "get_media_buy_delivery",
+          "expected_response": "3 on track, 1 warning (TechFlow overspending), 1 poor (Apex Motors underperforming)"
+        }
+      ],
+      "performance_analysis": [
+        {
+          "question": "Which campaigns are underperforming?",
+          "tool": "get_media_buy_delivery",
+          "expected_response": "2 flagged: Apex Motors (CTR 0.12% vs 0.35% target), TechFlow SaaS (13% over budget)"
+        },
+        {
+          "question": "Why is Apex Motors struggling?",
+          "tool": "get_media_buy_delivery",
+          "expected_response": "Mobile CTR 0.08% vs Desktop 0.18%, Germany CTR 0.04% vs US/UK 0.14%. Recommend reducing mobile bid and pausing Germany."
+        },
+        {
+          "question": "What's our best performing campaign?",
+          "tool": "get_media_buy_delivery",
+          "expected_response": "TechFlow SaaS has highest CTR at 0.60%, exceeding 0.50% target. CPA $316.85 beating $350 target."
+        },
+        {
+          "question": "Compare performance across all automotive campaigns",
+          "tool": "get_media_buy_delivery",
+          "expected_response": "Only Apex Motors in automotive. CTR 0.12%, spend $32,450, 45 conversions at $721 CPA."
+        },
+        {
+          "question": "Which geo is performing best?",
+          "tool": "get_media_buy_delivery",
+          "expected_response": "US generally performing best across campaigns. For GreenEnergy, California CTR 0.40% vs Texas 0.35% vs Florida 0.27%."
+        },
+        {
+          "question": "What's the best performing device type?",
+          "tool": "get_media_buy_delivery",
+          "expected_response": "Desktop outperforming mobile across most campaigns. Desktop viewability 78-87% vs mobile 62-75%."
+        },
+        {
+          "question": "How are video campaigns performing?",
+          "tool": "get_media_buy_delivery",
+          "expected_response": "SportMax video completion 85% (target 80%), Apex Motors video completion 72%. ESPN pre-roll outperforming outstream."
+        }
+      ],
+      "optimization_actions": [
+        {
+          "question": "What optimizations would you recommend?",
+          "tool": "get_media_buy_delivery + Claude analysis",
+          "expected_response": "High priority: Reduce Apex mobile bid 20%, pause Germany. Medium: Cap TechFlow daily spend. Low: Shift SportMax budget to running audience."
+        },
+        {
+          "question": "Reduce Apex Motors mobile bid by 20%",
+          "tool": "update_media_buy",
+          "expected_response": "Updated: Mobile bid reduced from $8.50 to $6.80 CPM. Change effective immediately."
+        },
+        {
+          "question": "Pause Germany targeting for Apex Motors",
+          "tool": "update_media_buy",
+          "expected_response": "Updated: Germany removed from geo targeting. Estimated savings $6,490. Budget reallocated to US/UK."
+        },
+        {
+          "question": "Increase TechFlow frequency cap",
+          "tool": "update_media_buy",
+          "expected_response": "Updated: Frequency cap increased from 2 to 3 impressions per user per day."
+        },
+        {
+          "question": "Shift 20% of SportMax budget from basketball to running audience",
+          "tool": "update_media_buy",
+          "expected_response": "Updated: Running audience allocation increased to 55%, basketball reduced to 20%."
+        }
+      ],
+      "inventory_discovery": [
+        {
+          "question": "Show me available premium inventory",
+          "tool": "get_products",
+          "expected_response": "10 products available: ESPN Premium ($18-35 CPM), CNN Homepage ($22-45), TechCrunch ($35-45), Forbes ($28-55), NYT ($32-42), plus 5 more."
+        },
+        {
+          "question": "Find sports audience inventory under $20 CPM",
+          "tool": "get_products",
+          "expected_response": "3 products: ESPN Standard ($18), Sports Illustrated ROS ($15), Bleacher Report Standard ($12)"
+        },
+        {
+          "question": "What B2B tech inventory do you have?",
+          "tool": "get_products",
+          "expected_response": "TechCrunch Innovation ($35-45 CPM) targeting tech professionals, startup founders, developers. Forbes Business ($28-55) targeting executives and decision-makers."
+        },
+        {
+          "question": "Show me CTV options",
+          "tool": "get_products + list_authorized_properties",
+          "expected_response": "CNN CTV ($45 CPM), Spotify podcast/audio. Properties with CTV: CNN Digital, Spotify."
+        },
+        {
+          "question": "What targeting options does ESPN offer?",
+          "tool": "get_products",
+          "expected_response": "Geo (country, region, DMA), Device (desktop, mobile, tablet, CTV), Audience (sports interest, team affinity, fantasy), Contextual (live games, highlights), Demographics."
+        },
+        {
+          "question": "What's the minimum budget for New York Times?",
+          "tool": "get_products",
+          "expected_response": "$15,000 minimum for NYT Premium ROS, $25,000 for Section Sponsorship. Requires creative approval (48h lead time)."
+        }
+      ],
+      "creative_formats": [
+        {
+          "question": "What ad formats are available?",
+          "tool": "list_creative_formats",
+          "expected_response": "14 formats: Display (300x250, 728x90, 970x250, 300x600, 320x50, 320x480), Video (15s/30s pre-roll, outstream, CTV), Native (article card, content rec), Audio (30s), Rich Media."
+        },
+        {
+          "question": "What video formats do you support?",
+          "tool": "list_creative_formats",
+          "expected_response": "5 video formats: Pre-roll 15s (non-skip), Pre-roll 30s (skip after 5s), Outstream 15s, CTV 30s. Avg completion 78-96%."
+        },
+        {
+          "question": "What are the specs for native ads?",
+          "tool": "list_creative_formats",
+          "expected_response": "Native Article Card: Headline (50 chars), Description (150 chars), Image (1200x628), CTA (15 chars). Content Rec: Headline (70 chars), Image (400x300)."
+        },
+        {
+          "question": "What mobile formats perform best?",
+          "tool": "list_creative_formats",
+          "expected_response": "Mobile Interstitial (320x480) highest CTR at 0.65%, followed by Pre-roll 15s at 0.85%. Mobile Leaderboard (320x50) at 0.22%."
+        },
+        {
+          "question": "Do you support audio ads?",
+          "tool": "list_creative_formats",
+          "expected_response": "Yes, Audio 30s format available via Spotify. MP3/WAV/OGG, max 5MB. 94% avg completion rate."
+        }
+      ],
+      "properties_access": [
+        {
+          "question": "What publishers can I access?",
+          "tool": "list_authorized_properties",
+          "expected_response": "10 properties: ESPN (85M uniques), CNN (120M), Weather.com (150M), TechCrunch (25M), Sports Illustrated (40M), Bleacher Report (60M), Forbes (70M), Automotive News (15M), Spotify (220M), NYT (90M)."
+        },
+        {
+          "question": "Which properties have premium deals?",
+          "tool": "list_authorized_properties",
+          "expected_response": "Premium authorization: ESPN (15% discount), TechCrunch (12% discount), Automotive News (10% discount), Forbes (8% discount), NYT (5% discount)."
+        },
+        {
+          "question": "What properties reach high-income audiences?",
+          "tool": "list_authorized_properties",
+          "expected_response": "Forbes (58% HHI $100K+, 72% college educated), NYT (85% college educated), CNN (high-income skew on business sections)."
+        },
+        {
+          "question": "Which properties support weather targeting?",
+          "tool": "list_authorized_properties",
+          "expected_response": "Weather.com has special capabilities: weather-triggered creative swap, real-time temperature targeting, severe weather exclusion."
+        }
+      ],
+      "campaign_creation": [
+        {
+          "question": "Launch a test campaign on ESPN with $5,000 budget",
+          "tool": "create_media_buy",
+          "expected_response": "Created media_buy_id: mb_20260130_001. ESPN Standard package, $5,000 budget, 300x250 display. Status: submitted. Estimated reach: 275,000 impressions."
+        },
+        {
+          "question": "Create a B2B campaign targeting tech executives",
+          "tool": "create_media_buy",
+          "expected_response": "Ready to create. Recommended: TechCrunch + Forbes combination. Targeting: IT/Engineering/C-Suite job functions. Suggest $20,000 minimum budget for meaningful reach."
+        },
+        {
+          "question": "Set up a weather-triggered campaign for GreenEnergy",
+          "tool": "create_media_buy",
+          "expected_response": "Created on Weather.com with temperature triggers. Ads serve when temp >85\u00b0F in target states. Budget: $5,000, estimated 400,000 impressions."
+        }
+      ],
+      "feedback_and_reporting": [
+        {
+          "question": "Submit conversion data for Apex Motors",
+          "tool": "provide_performance_feedback",
+          "expected_response": "Feedback submitted: 25 conversions, $125,000 value, 30-day click attribution. Status: processed. CPA model updated."
+        },
+        {
+          "question": "What feedback have we submitted?",
+          "tool": "provide_performance_feedback",
+          "expected_response": "4 feedback submissions: Apex Motors (conversions), TechFlow (lead quality), SportMax (brand lift), GreenEnergy (conversions)."
+        },
+        {
+          "question": "How did the brand lift study turn out?",
+          "tool": "provide_performance_feedback",
+          "expected_response": "SportMax brand lift: 8% awareness lift, 5% consideration lift, 3% purchase intent lift. Sample: 2,500 respondents."
+        }
+      ]
+    }
+  },
+  "_metadata": {
+    "version": "2.0",
+    "description": "Comprehensive mock data for AdCP Sales Agent Demo - supports all 7 implemented tools",
+    "last_updated": "2026-01-30",
+    "tools_supported": [
+      "get_products",
+      "create_media_buy",
+      "get_media_buy_delivery",
+      "update_media_buy",
+      "list_creative_formats",
+      "provide_performance_feedback",
+      "list_authorized_properties"
+    ]
+  }
+}
