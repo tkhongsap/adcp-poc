@@ -27,6 +27,29 @@ Started: 2026-01-31
 - GET `/api/tools` returns list of available tool names
 - Tool name mapping uses snake_case (e.g., `get_products`, `create_media_buy`)
 
+- Frontend components are in `src/frontend/src/components/`
+- Chat components are in `src/frontend/src/components/chat/`
+- Claude.ai color palette defined in `tailwind.config.ts` under `theme.extend.colors.claude`
+- Key colors: claude-cream (#F5F4EF), claude-orange (#DA7756), claude-border (#E5E4DF), claude-text-primary (#1A1915), claude-text-secondary (#5D5D5A)
+
+---
+
+## 2026-01-31 - US-012
+- What was implemented: Chat page layout with 40/60 split for Claude.ai-style chat and artifact panels
+- Files changed:
+  - Modified `src/frontend/tailwind.config.ts` (Added Claude.ai color palette)
+  - Modified `src/frontend/src/app/globals.css` (Updated background to warm cream #F5F4EF)
+  - Modified `src/frontend/src/app/layout.tsx` (Updated metadata title/description)
+  - Modified `src/frontend/src/app/page.tsx` (Created 40/60 split layout)
+  - Created `src/frontend/src/components/chat/ChatPanel.tsx` (Chat panel placeholder)
+  - Created `src/frontend/src/components/chat/ArtifactPanel.tsx` (Artifact panel placeholder)
+- **Learnings for future iterations:**
+  - Main page at `/` serves as chat page with 40/60 split layout
+  - ChatPanel is 40% width (min-width: 320px), ArtifactPanel is 60% (min-width: 480px)
+  - Components are placeholders to be fleshed out in subsequent user stories
+  - Use `bg-claude-cream` for warm cream background
+  - Use `border-claude-border` for subtle borders
+  - ArtifactPanel has white background with rounded corners (rounded-xl) and border
 ---
 
 ## 2026-01-31 - US-011
