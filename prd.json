@@ -517,8 +517,8 @@
         "Typecheck passes"
       ],
       "priority": 33,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Added GeoChips to dashboard (table and cards view) to show targeted countries. When update_media_buy removes a geo, the WebSocket broadcasts the change and GeoChips animates the removal."
     }
   ]
 }

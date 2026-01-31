@@ -4,6 +4,7 @@ import { useState } from "react";
 import Sidebar from "./Sidebar";
 import MediaBuysTable from "./MediaBuysTable";
 import ConnectionStatus from "../ui/ConnectionStatus";
+import GeoChips from "../ui/GeoChips";
 import { useWebSocket } from "../../hooks/useWebSocket";
 
 // CSS animation for card highlight flash effect
@@ -221,6 +222,20 @@ export default function DashboardLayout() {
                           </div>
                         </>
                       )}
+
+                      {/* Geo targeting */}
+                      <div className="mt-3 pt-3 border-t border-claude-border-light">
+                        <div className="text-xs text-claude-text-secondary uppercase tracking-wider mb-2">
+                          Targeted Geos
+                        </div>
+                        <GeoChips
+                          countries={
+                            mediaBuy.packages.flatMap(
+                              (pkg) => pkg.targeting_overlay?.geo_country_any_of || []
+                            ).filter((v, i, a) => a.indexOf(v) === i) // unique values
+                          }
+                        />
+                      </div>
                     </div>
                   );
                 })}

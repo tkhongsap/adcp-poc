@@ -3,6 +3,7 @@
 import React from "react";
 import type { MediaBuy, DeliveryMetrics } from "../../hooks/useWebSocket";
 import HealthBadge from "../ui/HealthBadge";
+import GeoChips from "../ui/GeoChips";
 
 // CSS animation for row highlight flash effect
 const rowHighlightAnimation = `
@@ -143,6 +144,9 @@ export default function MediaBuysTable({
               Spend/Budget
             </th>
             <th className="px-4 py-3 text-left text-xs uppercase tracking-wider font-medium text-claude-text-secondary">
+              Geos
+            </th>
+            <th className="px-4 py-3 text-left text-xs uppercase tracking-wider font-medium text-claude-text-secondary">
               Health
             </th>
           </tr>
@@ -206,6 +210,17 @@ export default function MediaBuysTable({
                   ) : (
                     <span className="text-claude-text-secondary text-sm">—</span>
                   )}
+                </td>
+
+                {/* Geos - targeted countries */}
+                <td className="px-4 py-3">
+                  <GeoChips
+                    countries={
+                      mediaBuy.packages.flatMap(
+                        (pkg) => pkg.targeting_overlay?.geo_country_any_of || []
+                      ).filter((v, i, a) => a.indexOf(v) === i) // unique values
+                    }
+                  />
                 </td>
 
                 {/* Health */}

@@ -602,3 +602,18 @@ Started: 2026-01-31
   - Shows when isLoading=true, hides when response completes
   - No changes needed - marked as passes: true in prd.json
 ---
+
+## 2026-01-31 - US-033
+- What was implemented: End-to-end demo flow verification with GeoChips integration
+- Files changed:
+  - Modified `src/frontend/src/components/dashboard/MediaBuysTable.tsx` (Added GeoChips column showing targeted countries)
+  - Modified `src/frontend/src/components/dashboard/DashboardLayout.tsx` (Added GeoChips to cards view showing targeted geos)
+- **Learnings for future iterations:**
+  - GeoChips component integrated into both table and cards view
+  - Countries extracted from mediaBuy.packages[].targeting_overlay.geo_country_any_of
+  - Used flatMap with unique filter to get all targeted countries across packages
+  - When update_media_buy tool removes a geo (e.g., DE for Germany), WebSocket broadcasts media_buy_updated event
+  - GeoChips component automatically animates the removal with fade-out effect (300ms)
+  - End-to-end flow: Chat -> Claude -> Tool Call -> Backend update -> WebSocket broadcast -> Dashboard update with animation
+  - All 5 campaigns (mb_apex_motors_q1, mb_techflow_saas, mb_sportmax_apparel, mb_financefirst, mb_greenenergy) are displayed
+---
