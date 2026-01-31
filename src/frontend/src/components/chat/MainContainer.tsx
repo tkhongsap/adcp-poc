@@ -8,6 +8,30 @@ import { detectArtifact, ToolCallData } from "@/utils/artifactDetection";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
+function OpenDashboardButton() {
+  const handleOpenDashboard = () => {
+    window.open("/dashboard", "_blank", "noopener,noreferrer");
+  };
+
+  return (
+    <button
+      onClick={handleOpenDashboard}
+      className="flex items-center gap-2 px-4 py-2 bg-claude-sidebar text-white text-sm font-medium rounded-lg hover:bg-opacity-90 transition-colors"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        className="w-4 h-4"
+      >
+        <path d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" />
+        <path d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" />
+      </svg>
+      Open Dashboard
+    </button>
+  );
+}
+
 export default function MainContainer() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -171,19 +195,35 @@ export default function MainContainer() {
   }, []);
 
   return (
-    <div className="h-screen bg-claude-cream flex">
-      {/* Chat Panel - 40% width */}
-      <div className="w-[40%] min-w-[320px] h-full border-r border-claude-border">
-        <ChatPanel
-          messages={messages}
-          onSendMessage={handleSendMessage}
-          isLoading={isLoading}
-        />
-      </div>
+    <div className="h-screen bg-claude-cream flex flex-col">
+      {/* Header Bar */}
+      <header className="flex-shrink-0 h-14 border-b border-claude-border bg-white flex items-center justify-between px-4">
+        <div className="flex items-center gap-2">
+          <span className="text-lg font-semibold text-claude-text-primary">
+            AdCP Demo
+          </span>
+          <span className="text-xs text-claude-text-secondary bg-claude-cream px-2 py-0.5 rounded">
+            Sales Agent
+          </span>
+        </div>
+        <OpenDashboardButton />
+      </header>
 
-      {/* Artifact Panel - 60% width */}
-      <div className="w-[60%] min-w-[480px] h-full p-4">
-        <ArtifactPanel artifact={artifact} />
+      {/* Main Content Area */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Chat Panel - 40% width */}
+        <div className="w-[40%] min-w-[320px] h-full border-r border-claude-border">
+          <ChatPanel
+            messages={messages}
+            onSendMessage={handleSendMessage}
+            isLoading={isLoading}
+          />
+        </div>
+
+        {/* Artifact Panel - 60% width */}
+        <div className="w-[60%] min-w-[480px] h-full p-4">
+          <ArtifactPanel artifact={artifact} />
+        </div>
       </div>
     </div>
   );
