@@ -19,6 +19,20 @@ Started: 2026-01-31
 
 ---
 
+## 2026-01-31 - US-007
+- What was implemented: get_media_buy_delivery tool for retrieving delivery/performance metrics
+- Files changed:
+  - Created `src/backend/src/tools/getMediaBuyDelivery.ts` (Tool implementation with input/output types)
+  - Modified `src/backend/src/tools/index.ts` (Added getMediaBuyDelivery export)
+- **Learnings for future iterations:**
+  - Tool accepts optional media_buy_id parameter
+  - When media_buy_id provided: returns single DeliveryMetricsOutput or error if not found
+  - When media_buy_id omitted: returns all metrics as array with count
+  - Output excludes current_bids from DeliveryMetrics (not in acceptance criteria)
+  - Uses union type GetMediaBuyDeliveryResult for single vs. all results
+  - Leverages existing getDeliveryMetrics(id?) from loader which handles both cases
+---
+
 ## 2026-01-31 - US-006
 - What was implemented: create_media_buy tool for launching new campaigns
 - Files changed:
