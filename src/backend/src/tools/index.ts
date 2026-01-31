@@ -27,3 +27,12 @@ export {
   type CreateMediaBuyOutput,
   type CreateMediaBuyResult,
 } from './createMediaBuy.js';
+
+export {
+  getMediaBuyDelivery,
+  type GetMediaBuyDeliveryInput,
+  type DeliveryMetricsOutput,
+  type GetMediaBuyDeliverySingleResult,
+  type GetMediaBuyDeliveryAllResult,
+  type GetMediaBuyDeliveryResult,
+} from './getMediaBuyDelivery.js';
