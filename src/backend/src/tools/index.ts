@@ -6,3 +6,10 @@ export {
   type GetProductsOutput,
   type GetProductsResult,
 } from './getProducts.js';
+
+export {
+  listCreativeFormats,
+  type ListCreativeFormatsInput,
+  type CreativeFormatOutput,
+  type ListCreativeFormatsResult,
+} from './listCreativeFormats.js';

@@ -181,6 +181,25 @@ export interface PerformanceFeedback {
   impact: string;
 }
 
+export interface CreativeFormatSpecs {
+  max_file_size?: string;
+  file_types?: string[];
+  max_duration?: number;
+  skip_after?: number;
+  headline_max?: number;
+  description_max?: number;
+  image_dimensions?: string;
+  cta_max?: number;
+}
+
+export interface CreativeFormat {
+  format_id: string;
+  name: string;
+  type: 'display' | 'video' | 'native' | 'audio';
+  dimensions?: string;
+  specs: CreativeFormatSpecs;
+}
+
 export interface AdCPData {
   products: Product[];
   media_buys: MediaBuy[];

@@ -7,10 +7,150 @@ import type {
   DeliveryMetrics,
   Aggregations,
   PerformanceFeedback,
+  CreativeFormat,
 } from '../types/data.js';
 
 // In-memory state for the demo data
 let data: AdCPData | null = null;
+
+// Creative formats are static reference data
+const creativeFormats: CreativeFormat[] = [
+  // Display formats
+  {
+    format_id: 'display_300x250_image',
+    name: 'Medium Rectangle',
+    type: 'display',
+    dimensions: '300x250',
+    specs: {
+      max_file_size: '150KB',
+      file_types: ['jpg', 'png', 'gif'],
+    },
+  },
+  {
+    format_id: 'display_728x90_image',
+    name: 'Leaderboard',
+    type: 'display',
+    dimensions: '728x90',
+    specs: {
+      max_file_size: '150KB',
+      file_types: ['jpg', 'png', 'gif'],
+    },
+  },
+  {
+    format_id: 'display_970x250_image',
+    name: 'Billboard',
+    type: 'display',
+    dimensions: '970x250',
+    specs: {
+      max_file_size: '200KB',
+      file_types: ['jpg', 'png', 'gif'],
+    },
+  },
+  {
+    format_id: 'display_300x600_image',
+    name: 'Half Page',
+    type: 'display',
+    dimensions: '300x600',
+    specs: {
+      max_file_size: '200KB',
+      file_types: ['jpg', 'png', 'gif'],
+    },
+  },
+  {
+    format_id: 'display_320x50_image',
+    name: 'Mobile Leaderboard',
+    type: 'display',
+    dimensions: '320x50',
+    specs: {
+      max_file_size: '100KB',
+      file_types: ['jpg', 'png', 'gif'],
+    },
+  },
+  {
+    format_id: 'display_320x480_image',
+    name: 'Mobile Interstitial',
+    type: 'display',
+    dimensions: '320x480',
+    specs: {
+      max_file_size: '200KB',
+      file_types: ['jpg', 'png', 'gif'],
+    },
+  },
+  // Video formats
+  {
+    format_id: 'video_preroll_15s',
+    name: 'Pre-roll 15s',
+    type: 'video',
+    specs: {
+      max_file_size: '10MB',
+      file_types: ['mp4', 'webm'],
+      max_duration: 15,
+    },
+  },
+  {
+    format_id: 'video_preroll_30s',
+    name: 'Pre-roll 30s',
+    type: 'video',
+    specs: {
+      max_file_size: '20MB',
+      file_types: ['mp4', 'webm'],
+      max_duration: 30,
+      skip_after: 5,
+    },
+  },
+  {
+    format_id: 'video_outstream_15s',
+    name: 'Outstream 15s',
+    type: 'video',
+    specs: {
+      max_file_size: '10MB',
+      file_types: ['mp4', 'webm'],
+      max_duration: 15,
+    },
+  },
+  {
+    format_id: 'video_ctv_30s',
+    name: 'CTV 30s',
+    type: 'video',
+    specs: {
+      max_file_size: '50MB',
+      file_types: ['mp4'],
+      max_duration: 30,
+    },
+  },
+  // Native formats
+  {
+    format_id: 'native_article_card',
+    name: 'Native Article Card',
+    type: 'native',
+    specs: {
+      headline_max: 50,
+      description_max: 150,
+      image_dimensions: '1200x628',
+      cta_max: 15,
+    },
+  },
+  {
+    format_id: 'native_content_rec',
+    name: 'Content Recommendation',
+    type: 'native',
+    specs: {
+      headline_max: 70,
+      image_dimensions: '400x300',
+    },
+  },
+  // Audio formats
+  {
+    format_id: 'audio_30s',
+    name: 'Audio 30s',
+    type: 'audio',
+    specs: {
+      max_file_size: '5MB',
+      file_types: ['mp3', 'wav', 'ogg'],
+      max_duration: 30,
+    },
+  },
+];
 
 /**
  * Load the demo data from the JSON file
@@ -80,6 +220,30 @@ export function getProducts(options?: { category?: string; max_cpm?: number }): 
 export function getProductById(productId: string): Product | undefined {
   const { products } = ensureDataLoaded();
   return products.find(p => p.product_id === productId);
+}
+
+// ============================================
+// Creative Format access functions
+// ============================================
+
+/**
+ * Get all creative formats, optionally filtered by type
+ */
+export function getCreativeFormats(options?: { type?: 'display' | 'video' | 'native' | 'audio' }): CreativeFormat[] {
+  let filtered = [...creativeFormats];
+
+  if (options?.type) {
+    filtered = filtered.filter(f => f.type === options.type);
+  }
+
+  return filtered;
+}
+
+/**
+ * Get a single creative format by ID
+ */
+export function getCreativeFormatById(formatId: string): CreativeFormat | undefined {
+  return creativeFormats.find(f => f.format_id === formatId);
 }
 
 // ============================================
