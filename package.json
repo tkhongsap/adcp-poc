@@ -1,0 +1,31 @@
+{
+  "name": "adcp-demo",
+  "version": "1.0.0",
+  "description": "AdCP Sales Agent Demo - Two-window Claude.ai-style chat with artifacts + live dashboard",
+  "private": true,
+  "workspaces": [
+    "src/frontend",
+    "src/backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "npm run dev --workspace=src/frontend",
+    "dev:backend": "npm run dev --workspace=src/backend",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "npm run build --workspace=src/frontend",
+    "build:backend": "npm run build --workspace=src/backend",
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "start:frontend": "npm run start --workspace=src/frontend",
+    "start:backend": "npm run start --workspace=src/backend",
+    "typecheck": "npm run typecheck:frontend && npm run typecheck:backend",
+    "typecheck:frontend": "npm run typecheck --workspace=src/frontend",
+    "typecheck:backend": "npm run typecheck --workspace=src/backend",
+    "lint": "npm run lint --workspace=src/frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
