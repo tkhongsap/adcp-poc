@@ -22,6 +22,26 @@ Started: 2026-01-31
 - Broadcast functions: `broadcastMediaBuyUpdated()`, `broadcastMediaBuyCreated()`, `broadcastFeedbackSubmitted()`
 - WebSocket events: `initial_state`, `media_buy_updated`, `media_buy_created`, `feedback_submitted`
 
+- REST API routes are in `src/backend/src/routes/tools.ts`
+- POST `/api/tools/:toolName` calls the appropriate tool with request body as input
+- GET `/api/tools` returns list of available tool names
+- Tool name mapping uses snake_case (e.g., `get_products`, `create_media_buy`)
+
+---
+
+## 2026-01-31 - US-011
+- What was implemented: REST API endpoints for tools to enable frontend integration
+- Files changed:
+  - Created `src/backend/src/routes/tools.ts` (Router with tool endpoint and handler mapping)
+  - Modified `src/backend/src/index.ts` (Added toolsRouter at `/api/tools`)
+- **Learnings for future iterations:**
+  - POST `/api/tools/:toolName` endpoint routes to appropriate tool handler
+  - Request body is passed directly as tool input
+  - Returns 404 with available_tools list if tool not found
+  - Returns 500 with error message if tool execution fails
+  - Tool handlers cast to ToolHandler type for unified interface
+  - GET `/api/tools` returns list of available tools
+  - CORS already configured in main app for localhost:3000
 ---
 
 ## 2026-01-31 - US-010
