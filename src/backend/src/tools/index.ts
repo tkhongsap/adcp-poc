@@ -20,3 +20,10 @@ export {
   type AuthorizedPropertyOutput,
   type ListAuthorizedPropertiesResult,
 } from './listAuthorizedProperties.js';
+
+export {
+  createMediaBuy,
+  type CreateMediaBuyInput,
+  type CreateMediaBuyOutput,
+  type CreateMediaBuyResult,
+} from './createMediaBuy.js';
