@@ -41,3 +41,31 @@ export function isTableArtifactData(data: unknown): data is TableArtifactData {
   const d = data as Record<string, unknown>;
   return Array.isArray(d.columns) && Array.isArray(d.rows);
 }
+
+// Report artifact data types
+export interface ReportMetric {
+  label: string;
+  value: string | number;
+  change?: string; // e.g., "+15%", "-5%"
+  changeType?: "positive" | "negative" | "neutral";
+}
+
+export interface ReportSection {
+  title: string;
+  metrics?: ReportMetric[];
+  content?: string; // For text content
+}
+
+export interface ReportArtifactData {
+  icon?: string; // Emoji or icon for the report
+  sections: ReportSection[];
+  recommendations?: string[]; // Bullet list of recommendations
+  summary?: string; // Overall summary text
+}
+
+// Type guard for report artifact data
+export function isReportArtifactData(data: unknown): data is ReportArtifactData {
+  if (!data || typeof data !== "object") return false;
+  const d = data as Record<string, unknown>;
+  return Array.isArray(d.sections);
+}

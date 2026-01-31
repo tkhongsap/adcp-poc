@@ -1,7 +1,8 @@
 "use client";
 
-import { Artifact, isTableArtifactData } from "@/types/chat";
+import { Artifact, isTableArtifactData, isReportArtifactData } from "@/types/chat";
 import TableArtifact from "@/components/artifacts/TableArtifact";
+import ReportArtifact from "@/components/artifacts/ReportArtifact";
 
 interface ArtifactPanelProps {
   artifact: Artifact | null;
@@ -43,8 +44,10 @@ export default function ArtifactPanel({ artifact }: ArtifactPanelProps) {
         {/* Render artifact based on type */}
         {artifact.type === "table" && isTableArtifactData(artifact.data) ? (
           <TableArtifact data={artifact.data} />
+        ) : artifact.type === "report" && isReportArtifactData(artifact.data) ? (
+          <ReportArtifact data={artifact.data} />
         ) : (
-          // Fallback for other artifact types - will be replaced with ReportArtifact, ChartArtifact in future stories
+          // Fallback for other artifact types (chart) - will be replaced with ChartArtifact in future stories
           <div className="text-claude-text-secondary text-sm">
             <pre className="whitespace-pre-wrap font-mono text-xs bg-claude-cream p-4 rounded-lg">
               {JSON.stringify(artifact.data, null, 2)}
