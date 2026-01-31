@@ -43,7 +43,27 @@ Started: 2026-01-31
 - Tool definitions in `TOOL_DEFINITIONS` array in claude/client.ts
 - `processChat()` for non-streaming, `processChatStream()` for streaming responses
 - Frontend uses SSE for streaming responses, parsing events: start, text, tool_call, tool_result, done
+- MainContainer is the parent component managing both chat and artifact state
+- Artifact types: table, report, chart (defined in `src/frontend/src/types/chat.ts`)
+- ArtifactPanel accepts artifact prop, shows empty state when null
+- Artifact persists until explicitly replaced with new artifact
 
+---
+
+## 2026-01-31 - US-016
+- What was implemented: ArtifactPanel container with empty state and content display
+- Files changed:
+  - Modified `src/frontend/src/types/chat.ts` (Added Artifact and ArtifactType types)
+  - Modified `src/frontend/src/components/chat/ArtifactPanel.tsx` (Added artifact prop, empty state, content display with header)
+  - Created `src/frontend/src/components/chat/MainContainer.tsx` (Parent component managing chat and artifact state)
+  - Modified `src/frontend/src/app/page.tsx` (Simplified to use MainContainer)
+  - Modified `src/frontend/src/components/chat/ChatContainer.tsx` (Fixed lint issue with unused eventType variable)
+- **Learnings for future iterations:**
+  - MainContainer combines chat and artifact management in one component
+  - ArtifactPanel uses bg-white, rounded-xl (12px border radius), border-claude-border for styling
+  - Empty state shows centered message with emoji icon
+  - Artifact display has header with type icon and title, plus scrollable content area
+  - Placeholder content uses JSON.stringify for now, will be replaced with TableArtifact/ReportArtifact in US-017/US-018
 ---
 
 ## 2026-01-31 - US-015
