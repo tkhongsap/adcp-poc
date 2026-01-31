@@ -19,6 +19,23 @@ Started: 2026-01-31
 
 ---
 
+## 2026-01-31 - US-009
+- What was implemented: provide_performance_feedback tool for submitting conversion data, lead quality, and brand lift feedback
+- Files changed:
+  - Created `src/backend/src/tools/providePerformanceFeedback.ts` (Tool implementation with input/output types)
+  - Modified `src/backend/src/tools/index.ts` (Added providePerformanceFeedback export)
+- **Learnings for future iterations:**
+  - Tool accepts media_buy_id, feedback_type ('conversion_data' | 'lead_quality' | 'brand_lift'), and data object (FeedbackData)
+  - Generates unique feedback_id using format: `fb_{media_buy_id}_{type_prefix}_{timestamp}`
+  - Validates media_buy exists before processing
+  - Calculates impact string based on feedback_type and data values:
+    - conversion_data: Calculates ROAS and provides budget recommendations
+    - lead_quality: Analyzes qualification rate and pipeline value
+    - brand_lift: Evaluates awareness, consideration, and purchase intent lift
+  - Uses addPerformanceFeedback() from loader to persist to performance_feedback_log
+  - Returns status: 'processed' for all feedback
+---
+
 ## 2026-01-31 - US-008
 - What was implemented: update_media_buy tool for modifying existing campaigns with optimization operations
 - Files changed:
