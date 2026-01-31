@@ -1,3 +1,56 @@
 # Ralph Progress Log
 Started: 2026-01-31
+
+## Codebase Patterns
+- Use npm workspaces: frontend at `src/frontend`, backend at `src/backend`
+- Run `npm run typecheck` from root to check both packages
+- Backend uses tsx for development, Express with TypeScript
+- Frontend uses Next.js 14 with App Router and Tailwind CSS
+
+- Data types are defined in `src/backend/src/types/data.ts`
+- Data loader module is at `src/backend/src/data/loader.ts`
+- Data is loaded via `loadData()` function on server startup
+- Access data through exported functions: `getProducts()`, `getMediaBuys()`, `getDeliveryMetrics()`, etc.
+- Tools are implemented in `src/backend/src/tools/` with individual files per tool
+- Export all tools from `src/backend/src/tools/index.ts`
+
+---
+
+## 2026-01-31 - US-003
+- What was implemented: get_products tool for discovering advertising inventory
+- Files changed:
+  - Created `src/backend/src/tools/getProducts.ts` (Tool implementation with type definitions)
+  - Created `src/backend/src/tools/index.ts` (Tool exports)
+- **Learnings for future iterations:**
+  - Tools wrap the data loader functions and provide a clean interface
+  - Tool result includes `success`, `count`, and `filters_applied` metadata
+  - Tools transform internal data types to output types for API consumers
+  - Use `.js` extension in imports for ESM compatibility (e.g., `from '../data/loader.js'`)
+---
+
+## 2026-01-31 - US-002
+- What was implemented: Mock data layer loading from JSON
+- Files changed:
+  - Created `src/backend/src/types/data.ts` (TypeScript types for all data structures)
+  - Created `src/backend/src/data/loader.ts` (Data loader with exported access functions)
+  - Modified `src/backend/src/index.ts` (Load data on startup)
+- **Learnings for future iterations:**
+  - Data is loaded from `data/adcp_demo_complete_data.json` relative to backend's CWD
+  - In-memory state allows mutations during demo via update functions
+  - Available access functions: `getProducts()`, `getProductById()`, `getMediaBuys()`, `getMediaBuyById()`, `addMediaBuy()`, `updateMediaBuy()`, `getDeliveryMetrics()`, `updateDeliveryMetrics()`, `addDeliveryMetrics()`, `getAggregations()`, `updateAggregations()`, `getPerformanceFeedback()`, `getFeedbackByMediaBuyId()`, `addPerformanceFeedback()`, `getFullState()`, `resetData()`, `isDataLoaded()`
+  - All functions return copies of data or directly modify the in-memory state
+---
+
+## 2026-01-31 - US-001
+- What was implemented: Project setup with Next.js 14 and Express backend
+- Files changed:
+  - Created `package.json` (root workspace config)
+  - Created `src/frontend/` (Next.js 14 with App Router, Tailwind, TypeScript)
+  - Created `src/backend/` (Express with TypeScript)
+  - Created `.gitignore`
+- **Learnings for future iterations:**
+  - Use `npm run dev` from root to start both servers concurrently
+  - Frontend runs on port 3000, backend on port 3001
+  - Both packages have individual `typecheck` scripts
+  - Next.js creates a `src/` folder inside frontend for app router structure
 ---
