@@ -1,14 +1,16 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
-import { Message } from "@/types/chat";
+import { Message, Artifact } from "@/types/chat";
 import ChatPanel from "./ChatPanel";
+import ArtifactPanel from "./ArtifactPanel";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
-export default function ChatContainer() {
+export default function MainContainer() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [artifact, setArtifact] = useState<Artifact | null>(null);
   const conversationIdRef = useRef<string | null>(null);
 
   const handleSendMessage = useCallback(async (content: string) => {
@@ -76,7 +78,6 @@ export default function ChatContainer() {
 
         for (const line of lines) {
           if (line.startsWith("event: ")) {
-            // Skip event type lines - we use data payload to determine event type
             continue;
           }
           if (line.startsWith("data: ")) {
@@ -133,11 +134,25 @@ export default function ChatContainer() {
     }
   }, []);
 
+  // Export setArtifact for future use by artifact detection logic (US-019)
+  // Artifact persists until explicitly replaced with a new artifact or null
+  void setArtifact; // Prevent unused variable warning - will be used in future stories
+
   return (
-    <ChatPanel
-      messages={messages}
-      onSendMessage={handleSendMessage}
-      isLoading={isLoading}
-    />
+    <div className="h-screen bg-claude-cream flex">
+      {/* Chat Panel - 40% width */}
+      <div className="w-[40%] min-w-[320px] h-full border-r border-claude-border">
+        <ChatPanel
+          messages={messages}
+          onSendMessage={handleSendMessage}
+          isLoading={isLoading}
+        />
+      </div>
+
+      {/* Artifact Panel - 60% width */}
+      <div className="w-[60%] min-w-[480px] h-full p-4">
+        <ArtifactPanel artifact={artifact} />
+      </div>
+    </div>
   );
 }
