@@ -19,6 +19,23 @@ Started: 2026-01-31
 
 ---
 
+## 2026-01-31 - US-008
+- What was implemented: update_media_buy tool for modifying existing campaigns with optimization operations
+- Files changed:
+  - Created `src/backend/src/tools/updateMediaBuy.ts` (Tool implementation with input/output types)
+  - Modified `src/backend/src/tools/index.ts` (Added updateMediaBuy export)
+- **Learnings for future iterations:**
+  - Tool accepts media_buy_id and updates object containing one or more operations
+  - Supported operations: remove_geo, add_geo, adjust_bid, set_daily_cap, shift_budget
+  - remove_geo/add_geo: modifies targeting_overlay.geo_country_any_of in packages
+  - adjust_bid: modifies current_bids in DeliveryMetrics (e.g., mobile_cpm, desktop_cpm)
+  - set_daily_cap: stores daily_cap in current_bids for simplicity
+  - shift_budget: adjusts spend between devices or audience segments
+  - Returns changes_applied array with operation, details, previous_value, new_value
+  - estimated_impact includes budget_change, reach_change_percent, efficiency_improvement, description
+  - Uses updateMediaBuy() and updateDeliveryMetrics() from loader to persist changes
+---
+
 ## 2026-01-31 - US-007
 - What was implemented: get_media_buy_delivery tool for retrieving delivery/performance metrics
 - Files changed:
