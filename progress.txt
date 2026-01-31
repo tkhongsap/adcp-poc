@@ -21,6 +21,15 @@ Started: 2026-01-31
 - Use `getIO()` to get the Socket.io server instance
 - Broadcast functions: `broadcastMediaBuyUpdated()`, `broadcastMediaBuyCreated()`, `broadcastFeedbackSubmitted()`
 - WebSocket events: `initial_state`, `media_buy_updated`, `media_buy_created`, `feedback_submitted`
+- Frontend WebSocket hook is at `src/frontend/src/hooks/useWebSocket.ts`
+- Hook returns: mediaBuys, deliveryMetrics, isConnected, lastUpdated, recentlyUpdatedIds, requestRefresh()
+- recentlyUpdatedIds is a Set<string> of media_buy_ids with 400ms highlight timeout
+- MediaBuysTable component is at `src/frontend/src/components/dashboard/MediaBuysTable.tsx`
+- MediaBuysTable uses Claude.ai-style toggle switch for status column
+- DashboardLayout supports viewMode toggle between "cards" and "table" views
+- Row highlight animation uses CSS keyframe `rowHighlight` for 400ms yellow (#FEF3C7) to white fade
+- Card highlight animation uses CSS keyframe `cardHighlight` with border-color transition
+- Animation applied via inline style when `isRecentlyUpdated` is true from recentlyUpdatedIds Set
 
 - REST API routes are in `src/backend/src/routes/tools.ts`
 - POST `/api/tools/:toolName` calls the appropriate tool with request body as input
@@ -65,6 +74,186 @@ Started: 2026-01-31
 - Inline responses for: update_media_buy, create_media_buy, provide_performance_feedback
 - MainContainer collects tool calls from SSE events and calls detectArtifact after stream completes
 
+- MainContainer now includes a header bar with AdCP Demo branding and Open Dashboard button
+- OpenDashboardButton component opens /dashboard in new tab with window.open()
+
+- Dashboard components are in `src/frontend/src/components/dashboard/`
+- Dashboard page is at `/dashboard` route (src/frontend/src/app/dashboard/page.tsx)
+- DashboardLayout is the main container with sidebar and content area
+- Sidebar component is 220px fixed width with dark background (claude-sidebar #1A1915)
+- Sidebar uses NavLink component for navigation items with active state styling
+- Active nav items: text-claude-orange + left accent bar (w-0.5 h-4 bg-claude-orange rounded-r)
+- Inactive nav items: text-white/70 with hover:text-white hover:bg-white/10
+- Trading section has section header (text-white/40 text-xs uppercase tracking-wider)
+
+- CampaignCard component is at `src/frontend/src/components/dashboard/CampaignCard.tsx`
+- CampaignCardData interface defines: media_buy_id, brand, campaign_name, total_budget, total_spend, health, metrics (ctr, cpm, cpa)
+- CampaignCard has BudgetProgressBar subcomponent with color-coded progress (green <80%, amber 80-100%, red >100%)
+- CampaignCard has HealthIndicator subcomponent showing health status dot and label
+- CampaignCard has MetricItem subcomponent for displaying individual metrics with label and value
+
+- Shared UI components are in `src/frontend/src/components/ui/`
+- HealthBadge component uses specific colors: #22863A (good), #D97706 (warning), #DC2626 (poor)
+- HealthBadge supports tooltip on hover, showLabel prop, and size variants (sm/md)
+- GeoChips component is at `src/frontend/src/components/ui/GeoChips.tsx`
+- GeoChips displays country codes as pills with blue styling (bg-blue-50, text-blue-700, border-blue-200)
+- GeoChips tracks previous countries using useRef and animates additions/removals
+- Uses CSS keyframe animations (fadeIn/fadeOut) with 300ms duration
+- Chips marked as isEntering or isExiting get animated, then state is cleaned up after timer
+- DeviceChips component is at `src/frontend/src/components/ui/DeviceChips.tsx`
+- DeviceChips displays device types (Desktop, Mobile, Tablet) as pills with purple styling
+- DeviceChips includes icons for each device type using inline SVG
+- BudgetBar component is at `src/frontend/src/components/ui/BudgetBar.tsx`
+- BudgetBar uses 6px height (h-1.5) with color thresholds: green <80%, amber 80-100%, red >100%
+- ConnectionStatus component is at `src/frontend/src/components/ui/ConnectionStatus.tsx`
+- ConnectionStatus shows green/red dot with Connected/Disconnected text
+- Connection state is managed in DashboardLayout (will be wired to WebSocket in US-029)
+- Last updated timestamp shows relative time (e.g., "just now", "5s ago", "2m ago")
+
+---
+
+## 2026-01-31 - US-030
+- What was implemented: MediaBuysTable component with data table view for media buys
+- Files changed:
+  - Created `src/frontend/src/components/dashboard/MediaBuysTable.tsx` (Table with status toggle, pacing bar, health badge)
+  - Modified `src/frontend/src/components/dashboard/DashboardLayout.tsx` (Added view mode toggle between cards and table)
+- **Learnings for future iterations:**
+  - MediaBuysTable uses Claude.ai-style toggle switch (StatusToggle component) for status column
+  - StatusToggle uses bg-claude-orange for active state, bg-gray-200 for inactive
+  - PacingBar shows spend/budget with same color thresholds as BudgetBar (green <80%, amber 80-100%, red >100%)
+  - Table columns: Status (toggle), ID (monospace), Advertiser, Campaign, Spend/Budget (pacing bar), Health (HealthBadge)
+  - Row highlight for recently updated items uses bg-[#FEF3C7] (yellow background per US-031 spec)
+  - DashboardLayout now has viewMode state to toggle between "cards" and "table" views
+  - View toggle buttons styled with claude-orange for active state
+  - Table uses rounded-xl border container with white background for Claude.ai consistency
+  - onStatusToggle prop available for future integration (currently optional)
+---
+
+## 2026-01-31 - US-028
+- What was implemented: ConnectionStatus indicator component for dashboard connection monitoring
+- Files changed:
+  - Created `src/frontend/src/components/ui/ConnectionStatus.tsx` (Connection status with dot, label, and timestamp)
+  - Modified `src/frontend/src/components/dashboard/DashboardLayout.tsx` (Integrated ConnectionStatus at bottom)
+- **Learnings for future iterations:**
+  - ConnectionStatus uses same color scheme as HealthBadge: #22863A (connected/green), #DC2626 (disconnected/red)
+  - Component accepts isConnected (boolean) and lastUpdated (Date | null) props
+  - formatLastUpdated function shows relative time: "just now" (<5s), "Xs ago" (<60s), "Xm ago" (<3600s), otherwise time string
+  - DashboardLayout changed from overflow-auto to flex-col with separate scrollable content area
+  - Connection status bar is fixed at bottom with border-t and white background
+  - Connection state currently defaults to false (disconnected) - will be managed by useWebSocket hook in US-029
+  - Uses aria-live="polite" for accessibility when connection status changes
+---
+
+## 2026-01-31 - US-027
+- What was implemented: BudgetBar component for displaying budget spend as a progress bar with pacing colors
+- Files changed:
+  - Created `src/frontend/src/components/ui/BudgetBar.tsx` (Progress bar with color-coded fill and percentage text)
+- **Learnings for future iterations:**
+  - BudgetBar uses 6px height (h-1.5 in Tailwind)
+  - Color thresholds defined in BUDGET_THRESHOLDS const: warning at 80%, danger at 100%
+  - Uses explicit `let barColor: string` type annotation to avoid TypeScript type narrowing issues
+  - Progress bar width is capped at 100% but percentage text can show >100%
+  - Includes accessibility attributes (role="progressbar", aria-valuenow, aria-valuemin, aria-valuemax, aria-label)
+  - showPercentage prop controls percentage text visibility (default: true)
+  - Similar pattern to existing PacingBar in TableArtifact and BudgetProgressBar in CampaignCard
+---
+
+## 2026-01-31 - US-026
+- What was implemented: DeviceChips component for displaying device targeting as visual pills
+- Files changed:
+  - Created `src/frontend/src/components/ui/DeviceChips.tsx` (Component with icons and purple styling)
+- **Learnings for future iterations:**
+  - DeviceChips follows similar pattern to GeoChips but simpler (no animations)
+  - Uses purple color scheme (bg-purple-50, text-purple-700, border-purple-200) to differentiate from GeoChips
+  - DeviceType is a union type limiting values to "Desktop" | "Mobile" | "Tablet"
+  - Each device type has an associated icon stored in DEVICE_ICONS object
+  - Icons are inline SVGs using Tailwind's w-3 h-3 for sizing
+  - Empty state shows "No devices targeted" italic text
+---
+
+## 2026-01-31 - US-025
+- What was implemented: GeoChips component displaying country codes as animated pills
+- Files changed:
+  - Created `src/frontend/src/components/ui/GeoChips.tsx` (Component with fade in/out animations)
+- **Learnings for future iterations:**
+  - GeoChips uses useRef to track previous countries for detecting additions/removals
+  - ChipState interface tracks: code, isEntering, isExiting for animation states
+  - First render shows all chips without animation (isFirstRender ref flag)
+  - CSS keyframe animations defined inline with styled-jsx
+  - Chips styled as rounded-full pills with blue color scheme
+  - After 300ms timer, exiting chips are removed and entering chips have animation state cleared
+  - Empty state shows "No geos targeted" italic text
+---
+
+## 2026-01-31 - US-024
+- What was implemented: HealthBadge component for displaying campaign health status
+- Files changed:
+  - Created `src/frontend/src/components/ui/HealthBadge.tsx` (Reusable component with tooltip, color coding, and size variants)
+- **Learnings for future iterations:**
+  - HealthBadge placed in `components/ui/` directory for shared components
+  - Uses exact hex colors from acceptance criteria: #22863A (good), #D97706 (warning), #DC2626 (poor)
+  - 10px dot achieved with `w-2.5 h-2.5` (Tailwind's 2.5 = 10px)
+  - Tooltip implemented with hover state and absolute positioning
+  - Component supports showLabel prop for optional text label
+  - Component supports size prop for sm (8px) or md (10px) dot
+  - Uses HEALTH_CONFIG object for centralized health status configuration
+  - Includes accessibility attributes (aria-label, role="status", role="tooltip")
+---
+
+## 2026-01-31 - US-023
+- What was implemented: CampaignCard component for displaying campaign metrics on dashboard
+- Files changed:
+  - Created `src/frontend/src/components/dashboard/CampaignCard.tsx` (Full implementation with BudgetProgressBar, HealthIndicator, MetricItem subcomponents)
+- **Learnings for future iterations:**
+  - CampaignCard uses white background with rounded-xl and border-claude-border for clean card styling
+  - Card has hover:shadow-md transition for interactive feedback
+  - BudgetProgressBar shows spend/budget with color-coded progress (matches TableArtifact PacingBar pattern)
+  - Health indicator shows colored dot (green/amber/red) with status label
+  - Metrics displayed in 3-column grid with CTR (%), CPM ($), CPA ($)
+  - Uses Intl.NumberFormat for currency formatting
+  - Card structure: header (name + health), progress bar, metrics grid
+---
+
+## 2026-01-31 - US-022
+- What was implemented: Claude.ai-style dark sidebar navigation with branding and active state styling
+- Files changed:
+  - Modified `src/frontend/src/components/dashboard/Sidebar.tsx` (Full implementation with NavLink component)
+- **Learnings for future iterations:**
+  - Sidebar uses useState to track active navigation item
+  - NavLink component handles click and displays active state with claude-orange text and left accent bar
+  - Branding section has logo icon (lightning bolt in claude-orange rounded-lg) + text
+  - Trading section contains Media Buys, Products, Formats links with icons
+  - Footer section shows "Adform AdCP" text in white/30
+  - Navigation items use icons from inline SVGs (chart, cube, layout)
+  - Active state: text-claude-orange + left accent bar (absolute positioned)
+  - Inactive state: text-white/70 with hover effects
+---
+
+## 2026-01-31 - US-021
+- What was implemented: Dashboard page layout with dark sidebar and warm cream content area
+- Files changed:
+  - Created `src/frontend/src/app/dashboard/page.tsx` (Dashboard route)
+  - Created `src/frontend/src/components/dashboard/DashboardLayout.tsx` (Layout with sidebar and main content)
+  - Created `src/frontend/src/components/dashboard/Sidebar.tsx` (220px dark sidebar placeholder)
+- **Learnings for future iterations:**
+  - Dashboard uses flex layout with fixed-width sidebar (w-[220px]) and flex-1 main content
+  - Sidebar has dark background (bg-claude-sidebar) for Claude.ai-style look
+  - Main content area uses bg-claude-cream for warm background
+  - Full-height layout with h-screen and overflow-hidden on container
+  - Sidebar navigation structure ready for US-022 expansion
+  - Main content uses overflow-auto for scrollable content area
+---
+
+## 2026-01-31 - US-020
+- What was implemented: Added "Open Dashboard" button to chat page header
+- Files changed:
+  - Modified `src/frontend/src/components/chat/MainContainer.tsx` (Added header bar with OpenDashboardButton component)
+- **Learnings for future iterations:**
+  - OpenDashboardButton uses window.open with "_blank" and security attributes (noopener, noreferrer)
+  - Button styled with bg-claude-sidebar (dark #1A1915) for contrast against white header
+  - Header bar is 56px (h-14) with white background and bottom border
+  - Layout changed from simple flex row to flex-col with header above main content
+  - Main content area uses flex-1 and overflow-hidden to contain chat and artifact panels
 ---
 
 ## 2026-01-31 - US-019
@@ -364,4 +553,52 @@ Started: 2026-01-31
   - Frontend runs on port 3000, backend on port 3001
   - Both packages have individual `typecheck` scripts
   - Next.js creates a `src/` folder inside frontend for app router structure
+---
+
+## 2026-01-31 - US-029
+- What was implemented: useWebSocket hook for Socket.io connection with real-time dashboard updates
+- Files changed:
+  - Created `src/frontend/src/hooks/useWebSocket.ts` (WebSocket hook with state management)
+  - Modified `src/frontend/src/components/dashboard/DashboardLayout.tsx` (Integrated WebSocket hook, added campaign cards)
+  - Modified `src/frontend/package.json` (Added socket.io-client dependency)
+- **Learnings for future iterations:**
+  - useWebSocket hook is at `src/frontend/src/hooks/useWebSocket.ts`
+  - Hook exports: mediaBuys, deliveryMetrics, isConnected, lastUpdated, recentlyUpdatedIds, requestRefresh()
+  - SOCKET_URL uses NEXT_PUBLIC_API_URL env var or defaults to http://localhost:3001
+  - Uses socket.io-client with websocket and polling transports
+  - Reconnection is automatic with infinite attempts
+  - recentlyUpdatedIds tracks media_buy_ids that were just updated (for highlight animation in US-031)
+  - Highlight timeout is 400ms per US-031 spec
+  - DashboardLayout now shows campaign cards grid with real-time data from WebSocket
+  - Campaign cards show: brand name, status badge, spend progress bar, health indicator, and key metrics (CTR, CPM, CPA)
+  - Cards use yellow highlight (bg-yellow-50 border-yellow-200) when recently updated
+---
+
+## 2026-01-31 - US-031
+- What was implemented: Row highlight animation on updates with yellow to white fade effect
+- Files changed:
+  - Modified `src/frontend/src/components/dashboard/MediaBuysTable.tsx` (Added rowHighlight keyframe animation)
+  - Modified `src/frontend/src/components/dashboard/DashboardLayout.tsx` (Added cardHighlight keyframe animation for cards view)
+- **Learnings for future iterations:**
+  - CSS keyframe animations defined as template literal strings and injected via <style> tag
+  - rowHighlight animation: 0% background-color #FEF3C7 -> 100% background-color white
+  - cardHighlight animation: also animates border-color from #FDE68A to #E5E4DF
+  - Animation duration is 400ms with ease-out timing and forwards fill mode
+  - Animation applied via inline style prop when isRecentlyUpdated is true
+  - The recentlyUpdatedIds Set is managed by useWebSocket hook with 400ms timeout
+  - Animation triggers for: media_buy_updated, media_buy_created, feedback_submitted events
+  - Works for both table view rows and cards view cards
+---
+
+## 2026-01-31 - US-032
+- What was implemented: Verified typing indicator already exists from US-015
+- Files examined:
+  - `src/frontend/src/components/chat/ChatPanel.tsx` (TypingIndicator component already present at lines 42-52)
+  - `src/frontend/src/components/chat/MainContainer.tsx` (isLoading state and prop passing already implemented)
+- **Notes:**
+  - TypingIndicator was implemented during US-015 (Claude API integration)
+  - Component uses three animated bouncing dots with staggered animation delays
+  - Positioned correctly after message list, where next message would appear
+  - Shows when isLoading=true, hides when response completes
+  - No changes needed - marked as passes: true in prd.json
 ---
