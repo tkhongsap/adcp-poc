@@ -31,7 +31,29 @@ Started: 2026-01-31
 - Chat components are in `src/frontend/src/components/chat/`
 - Claude.ai color palette defined in `tailwind.config.ts` under `theme.extend.colors.claude`
 - Key colors: claude-cream (#F5F4EF), claude-orange (#DA7756), claude-border (#E5E4DF), claude-text-primary (#1A1915), claude-text-secondary (#5D5D5A)
+- Chat types are in `src/frontend/src/types/chat.ts` (Message, MessageRole)
+- ChatContainer is the client component that manages message state, ChatPanel renders messages
+- Use `react-markdown` for rendering markdown in assistant messages
+- Use `@tailwindcss/typography` plugin for prose styling
 
+---
+
+## 2026-01-31 - US-013
+- What was implemented: ChatPanel with message history, markdown rendering, and auto-scroll
+- Files changed:
+  - Created `src/frontend/src/types/chat.ts` (Message and MessageRole types)
+  - Created `src/frontend/src/components/chat/ChatContainer.tsx` (Client component managing message state)
+  - Modified `src/frontend/src/components/chat/ChatPanel.tsx` (Full implementation with MessageBubble component)
+  - Modified `src/frontend/src/app/page.tsx` (Updated to use ChatContainer)
+  - Modified `src/frontend/tailwind.config.ts` (Added @tailwindcss/typography plugin)
+  - Modified `src/frontend/package.json` (Added react-markdown and @tailwindcss/typography)
+- **Learnings for future iterations:**
+  - User messages: right-aligned with `bg-claude-user-bubble`, rounded-2xl bubble
+  - Assistant messages: left-aligned without bubble, uses ReactMarkdown for rendering
+  - Auto-scroll implemented with useRef and scrollIntoView({ behavior: "smooth" })
+  - Prose classes used for markdown styling: `prose prose-sm` with custom overrides
+  - ChatContainer wraps ChatPanel to manage state (client component pattern)
+  - Demo messages included in ChatContainer for testing the UI
 ---
 
 ## 2026-01-31 - US-012
