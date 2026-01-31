@@ -8,7 +8,7 @@ channel = "stable-25_05"
 [userenv]
 
 [userenv.shared]
-NEXT_PUBLIC_API_URL = "https://aa2c1acb-ac2d-4f80-9118-a1dbd0ec50f4-00-1k7rnusp21r0y.pike.replit.dev"
+NEXT_PUBLIC_API_URL = "https://aa2c1acb-ac2d-4f80-9118-a1dbd0ec50f4-00-1k7rnusp21r0y.pike.replit.dev:3001"
 BACKEND_PORT = "3001"
 
 [workflows]

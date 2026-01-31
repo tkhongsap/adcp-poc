@@ -8,7 +8,7 @@ import chatRouter from './routes/chat.js';
 
 const app = express();
 const httpServer = createServer(app);
-const PORT = process.env.BACKEND_PORT || 3001;
+const PORT = process.env.BACKEND_PORT || process.env.PORT || 3001;
 
 // Load mock data on startup
 loadData();

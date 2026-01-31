@@ -116,6 +116,8 @@ export default function MainContainer() {
       }
 
       let buffer = "";
+      let currentEvent: string | null = null;
+      let stopStreaming = false;
 
       while (true) {
         const { done, value } = await reader.read();
@@ -129,6 +131,7 @@ export default function MainContainer() {
 
         for (const line of lines) {
           if (line.startsWith("event: ")) {
+            currentEvent = line.slice(7).trim();
             continue;
           }
           if (line.startsWith("data: ")) {
@@ -136,12 +139,10 @@ export default function MainContainer() {
             try {
               const parsed = JSON.parse(data);
 
-              // Handle different event types based on previous event line
-              if (parsed.conversationId && !parsed.text && !parsed.toolCalls) {
-                // Start event
+              // Primary: handle by SSE event type (preferred)
+              if (currentEvent === "start" && parsed.conversationId) {
                 conversationIdRef.current = parsed.conversationId;
-              } else if (parsed.text !== undefined) {
-                // Text chunk
+              } else if (currentEvent === "text" && parsed.text !== undefined) {
                 assistantContent += parsed.text;
                 setMessages((prev) =>
                   prev.map((msg) =>
@@ -150,14 +151,20 @@ export default function MainContainer() {
                       : msg
                   )
                 );
-              } else if (parsed.name !== undefined && parsed.input !== undefined) {
-                // Tool call event
+              } else if (
+                currentEvent === "tool_call" &&
+                parsed.name !== undefined &&
+                parsed.input !== undefined
+              ) {
                 currentToolCall = {
                   name: parsed.name,
                   input: parsed.input,
                 };
-              } else if (parsed.name !== undefined && parsed.result !== undefined) {
-                // Tool result event - combine with current tool call
+              } else if (
+                currentEvent === "tool_result" &&
+                parsed.name !== undefined &&
+                parsed.result !== undefined
+              ) {
                 if (currentToolCall && currentToolCall.name === parsed.name) {
                   collectedToolCalls.push({
                     name: parsed.name,
@@ -166,8 +173,7 @@ export default function MainContainer() {
                   });
                   currentToolCall = null;
                 }
-              } else if (parsed.toolCalls !== undefined) {
-                // Done event - use toolCalls from final response if available
+              } else if (currentEvent === "done") {
                 if (parsed.conversationId) {
                   conversationIdRef.current = parsed.conversationId;
                 }
@@ -177,12 +183,51 @@ export default function MainContainer() {
                   collectedToolCalls.length = 0;
                   collectedToolCalls.push(...parsed.toolCalls);
                 }
+              } else if (currentEvent === "error") {
+                const backendError =
+                  typeof parsed.error === "string" ? parsed.error : "Unknown backend error";
+
+                assistantContent =
+                  backendError.includes("apiKey") || backendError.includes("authToken")
+                    ? `Sorry — the backend is running, but it can't talk to Anthropic yet.\n\n${backendError}\n\nTip: set \`ANTHROPIC_API_KEY\` in Replit Secrets and restart the backend.`
+                    : `Sorry — the backend returned an error:\n\n${backendError}`;
+
+                setMessages((prev) =>
+                  prev.map((msg) =>
+                    msg.id === assistantMessageId
+                      ? { ...msg, content: assistantContent }
+                      : msg
+                  )
+                );
+
+                stopStreaming = true;
+                try {
+                  await reader.cancel();
+                } catch {
+                  // ignore
+                }
+                break;
+              } else if (parsed.conversationId && !parsed.text && !parsed.toolCalls) {
+                // Fallback: Start event (older parsing behavior)
+                conversationIdRef.current = parsed.conversationId;
+              } else if (parsed.text !== undefined) {
+                // Fallback: Text chunk
+                assistantContent += parsed.text;
+                setMessages((prev) =>
+                  prev.map((msg) =>
+                    msg.id === assistantMessageId
+                      ? { ...msg, content: assistantContent }
+                      : msg
+                  )
+                );
               }
             } catch {
               // Ignore parse errors for incomplete data
             }
           }
         }
+
+        if (stopStreaming) break;
       }
 
       // After stream completes, detect artifacts from collected tool calls

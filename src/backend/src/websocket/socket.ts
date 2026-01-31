@@ -54,7 +54,9 @@ let io: Server<ClientToServerEvents, ServerToClientEvents> | null = null;
 export function initializeWebSocket(httpServer: HttpServer): Server<ClientToServerEvents, ServerToClientEvents> {
   io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
     cors: {
-      origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+      // Allow connections from dev (localhost) and hosted environments (e.g. Replit).
+      // Express uses `origin: true` in `src/index.ts`; this mirrors that behavior.
+      origin: (_origin, callback) => callback(null, true),
       methods: ['GET', 'POST'],
       credentials: true,
     },
