@@ -3,6 +3,7 @@ import {
   addPerformanceFeedback,
   getDeliveryMetrics,
 } from '../data/loader.js';
+import { broadcastFeedbackSubmitted } from '../websocket/socket.js';
 import type { PerformanceFeedback, FeedbackData } from '../types/data.js';
 
 /**
@@ -187,6 +188,15 @@ export function providePerformanceFeedback(
 
   // Add to performance_feedback_log
   addPerformanceFeedback(feedback);
+
+  // Broadcast feedback to all connected clients
+  broadcastFeedbackSubmitted({
+    feedback_id: feedbackId,
+    media_buy_id: input.media_buy_id,
+    feedback_type: input.feedback_type,
+    impact: impact,
+    timestamp: new Date().toISOString(),
+  });
 
   return {
     success: true,

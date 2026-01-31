@@ -4,6 +4,7 @@ import {
   getProductById,
   getMediaBuys,
 } from '../data/loader.js';
+import { broadcastMediaBuyCreated } from '../websocket/socket.js';
 import type { MediaBuy, TargetingOverlay, DeliveryMetrics } from '../types/data.js';
 
 /**
@@ -176,6 +177,15 @@ export function createMediaBuy(input: CreateMediaBuyInput): CreateMediaBuyResult
   // Create initial delivery metrics for the new media buy
   const initialMetrics = createInitialDeliveryMetrics(mediaBuyId, input.brand_name, input.budget);
   addDeliveryMetrics(mediaBuyId, initialMetrics);
+
+  // Broadcast new media buy to all connected clients
+  broadcastMediaBuyCreated({
+    media_buy_id: mediaBuyId,
+    media_buy: mediaBuy,
+    delivery_metrics: initialMetrics,
+    estimated_impressions: estimatedImpressions,
+    timestamp: new Date().toISOString(),
+  });
 
   // Return success response
   return {

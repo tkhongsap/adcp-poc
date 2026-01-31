@@ -4,6 +4,7 @@ import {
   getDeliveryMetrics,
   updateDeliveryMetrics,
 } from '../data/loader.js';
+import { broadcastMediaBuyUpdated } from '../websocket/socket.js';
 import type { MediaBuy, DeliveryMetrics, TargetingOverlay } from '../types/data.js';
 
 /**
@@ -460,6 +461,17 @@ export function updateMediaBuy(input: UpdateMediaBuyInput): UpdateMediaBuyResult
 
   // Calculate estimated impact
   const estimatedImpact = calculateEstimatedImpact(mediaBuy, metrics, changesApplied);
+
+  // Broadcast update to all connected clients
+  if (changesApplied.length > 0) {
+    broadcastMediaBuyUpdated({
+      media_buy_id: input.media_buy_id,
+      media_buy: mediaBuy,
+      delivery_metrics: metrics,
+      changes_applied: changesApplied,
+      timestamp: new Date().toISOString(),
+    });
+  }
 
   return {
     success: true,
