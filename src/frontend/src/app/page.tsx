@@ -1,4 +1,4 @@
-import ChatPanel from "@/components/chat/ChatPanel";
+import ChatContainer from "@/components/chat/ChatContainer";
 import ArtifactPanel from "@/components/chat/ArtifactPanel";
 
 export default function ChatPage() {
@@ -6,7 +6,7 @@ export default function ChatPage() {
     <div className="h-screen bg-claude-cream flex">
       {/* Chat Panel - 40% width */}
       <div className="w-[40%] min-w-[320px] h-full border-r border-claude-border">
-        <ChatPanel />
+        <ChatContainer />
       </div>
 
       {/* Artifact Panel - 60% width */}
