@@ -4,6 +4,7 @@ import { useState, useRef, useCallback } from "react";
 import { Message, Artifact } from "@/types/chat";
 import ChatPanel from "./ChatPanel";
 import ArtifactPanel from "./ArtifactPanel";
+import { detectArtifact, ToolCallData } from "@/utils/artifactDetection";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
@@ -27,6 +28,11 @@ export default function MainContainer() {
     // Create a placeholder for the assistant message that will be streamed
     const assistantMessageId = `assistant_${Date.now()}`;
     let assistantContent = "";
+
+    // Track tool calls for artifact detection
+    const collectedToolCalls: ToolCallData[] = [];
+    let currentToolCall: { name: string; input: Record<string, unknown> } | null =
+      null;
 
     try {
       // Use streaming endpoint
@@ -99,16 +105,46 @@ export default function MainContainer() {
                       : msg
                   )
                 );
+              } else if (parsed.name !== undefined && parsed.input !== undefined) {
+                // Tool call event
+                currentToolCall = {
+                  name: parsed.name,
+                  input: parsed.input,
+                };
+              } else if (parsed.name !== undefined && parsed.result !== undefined) {
+                // Tool result event - combine with current tool call
+                if (currentToolCall && currentToolCall.name === parsed.name) {
+                  collectedToolCalls.push({
+                    name: parsed.name,
+                    input: currentToolCall.input,
+                    result: parsed.result,
+                  });
+                  currentToolCall = null;
+                }
               } else if (parsed.toolCalls !== undefined) {
-                // Done event - conversation ID already captured from start
+                // Done event - use toolCalls from final response if available
                 if (parsed.conversationId) {
                   conversationIdRef.current = parsed.conversationId;
+                }
+                // If we have toolCalls in done event, use those instead
+                if (parsed.toolCalls && Array.isArray(parsed.toolCalls)) {
+                  // Clear collected and use the complete tool calls
+                  collectedToolCalls.length = 0;
+                  collectedToolCalls.push(...parsed.toolCalls);
                 }
               }
             } catch {
               // Ignore parse errors for incomplete data
             }
           }
+        }
+      }
+
+      // After stream completes, detect artifacts from collected tool calls
+      if (collectedToolCalls.length > 0) {
+        const detection = detectArtifact(collectedToolCalls, content);
+        if (detection.shouldShowArtifact && detection.artifact) {
+          setArtifact(detection.artifact);
         }
       }
     } catch (error) {
@@ -133,10 +169,6 @@ export default function MainContainer() {
       setIsLoading(false);
     }
   }, []);
-
-  // Export setArtifact for future use by artifact detection logic (US-019)
-  // Artifact persists until explicitly replaced with a new artifact or null
-  void setArtifact; // Prevent unused variable warning - will be used in future stories
 
   return (
     <div className="h-screen bg-claude-cream flex">
