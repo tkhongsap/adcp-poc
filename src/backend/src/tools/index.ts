@@ -50,3 +50,10 @@ export {
   type UpdateMediaBuyOutput,
   type UpdateMediaBuyResult,
 } from './updateMediaBuy.js';
+
+export {
+  providePerformanceFeedback,
+  type ProvidePerformanceFeedbackInput,
+  type ProvidePerformanceFeedbackOutput,
+  type ProvidePerformanceFeedbackResult,
+} from './providePerformanceFeedback.js';
