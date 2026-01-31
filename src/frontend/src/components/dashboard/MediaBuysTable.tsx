@@ -4,6 +4,18 @@ import React from "react";
 import type { MediaBuy, DeliveryMetrics } from "../../hooks/useWebSocket";
 import HealthBadge from "../ui/HealthBadge";
 
+// CSS animation for row highlight flash effect
+const rowHighlightAnimation = `
+  @keyframes rowHighlight {
+    0% {
+      background-color: #FEF3C7;
+    }
+    100% {
+      background-color: white;
+    }
+  }
+`;
+
 interface MediaBuysTableProps {
   mediaBuys: MediaBuy[];
   deliveryMetrics: Record<string, DeliveryMetrics>;
@@ -110,6 +122,8 @@ export default function MediaBuysTable({
 
   return (
     <div className="overflow-x-auto bg-white rounded-xl border border-claude-border">
+      {/* Inject keyframe animation styles */}
+      <style>{rowHighlightAnimation}</style>
       <table className="w-full">
         <thead>
           <tr className="border-b border-claude-border-light">
@@ -142,11 +156,14 @@ export default function MediaBuysTable({
             return (
               <tr
                 key={mediaBuy.media_buy_id}
-                className={`
-                  border-b border-claude-border-light last:border-b-0
-                  hover:bg-claude-cream transition-colors duration-150
-                  ${isRecentlyUpdated ? "bg-[#FEF3C7]" : ""}
-                `}
+                className="border-b border-claude-border-light last:border-b-0 hover:bg-claude-cream"
+                style={
+                  isRecentlyUpdated
+                    ? {
+                        animation: "rowHighlight 400ms ease-out forwards",
+                      }
+                    : undefined
+                }
               >
                 {/* Status toggle */}
                 <td className="px-4 py-3">

@@ -6,6 +6,20 @@ import MediaBuysTable from "./MediaBuysTable";
 import ConnectionStatus from "../ui/ConnectionStatus";
 import { useWebSocket } from "../../hooks/useWebSocket";
 
+// CSS animation for card highlight flash effect
+const cardHighlightAnimation = `
+  @keyframes cardHighlight {
+    0% {
+      background-color: #FEF3C7;
+      border-color: #FDE68A;
+    }
+    100% {
+      background-color: white;
+      border-color: #E5E4DF;
+    }
+  }
+`;
+
 type ViewMode = "cards" | "table";
 
 export default function DashboardLayout() {
@@ -80,7 +94,10 @@ export default function DashboardLayout() {
                 recentlyUpdatedIds={recentlyUpdatedIds}
               />
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <>
+                {/* Inject keyframe animation styles for cards */}
+                <style>{cardHighlightAnimation}</style>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {mediaBuys.map((mediaBuy) => {
                   const metrics = deliveryMetrics[mediaBuy.media_buy_id];
                   const isRecentlyUpdated = recentlyUpdatedIds.has(
@@ -90,9 +107,14 @@ export default function DashboardLayout() {
                   return (
                     <div
                       key={mediaBuy.media_buy_id}
-                      className={`bg-white rounded-xl border border-claude-border p-4 shadow-sm transition-all duration-400 ${
-                        isRecentlyUpdated ? "bg-yellow-50 border-yellow-200" : ""
-                      }`}
+                      className="bg-white rounded-xl border border-claude-border p-4 shadow-sm"
+                      style={
+                        isRecentlyUpdated
+                          ? {
+                              animation: "cardHighlight 400ms ease-out forwards",
+                            }
+                          : undefined
+                      }
                     >
                       <div className="flex justify-between items-start mb-3">
                         <div>
@@ -203,6 +225,7 @@ export default function DashboardLayout() {
                   );
                 })}
               </div>
+              </>
             )
           ) : (
             <div className="bg-white rounded-xl border border-claude-border p-6 shadow-sm">
