@@ -3,9 +3,11 @@
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { Message } from "@/types/chat";
+import MessageInput from "./MessageInput";
 
 interface ChatPanelProps {
   messages: Message[];
+  onSendMessage: (content: string) => void;
 }
 
 function MessageBubble({ message }: { message: Message }) {
@@ -36,7 +38,7 @@ function MessageBubble({ message }: { message: Message }) {
   );
 }
 
-export default function ChatPanel({ messages }: ChatPanelProps) {
+export default function ChatPanel({ messages, onSendMessage }: ChatPanelProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -70,10 +72,7 @@ export default function ChatPanel({ messages }: ChatPanelProps) {
         <div ref={messagesEndRef} />
       </div>
       <div className="p-4 border-t border-claude-border">
-        {/* MessageInput will be implemented in US-014 */}
-        <div className="bg-white rounded-3xl border border-claude-border px-4 py-3 text-claude-text-secondary text-sm">
-          Message AdCP Agent...
-        </div>
+        <MessageInput onSendMessage={onSendMessage} />
       </div>
     </div>
   );

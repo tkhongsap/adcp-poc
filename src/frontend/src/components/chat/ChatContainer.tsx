@@ -47,7 +47,18 @@ Key metrics:
 ];
 
 export default function ChatContainer() {
-  const [messages] = useState<Message[]>(demoMessages);
+  const [messages, setMessages] = useState<Message[]>(demoMessages);
 
-  return <ChatPanel messages={messages} />;
+  const handleSendMessage = (content: string) => {
+    const newMessage: Message = {
+      id: Date.now().toString(),
+      role: "user",
+      content,
+      timestamp: new Date(),
+    };
+    setMessages((prev) => [...prev, newMessage]);
+    // TODO: Send to backend API and handle response (US-015)
+  };
+
+  return <ChatPanel messages={messages} onSendMessage={handleSendMessage} />;
 }
