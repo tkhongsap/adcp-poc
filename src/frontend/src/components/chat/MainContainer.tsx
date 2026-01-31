@@ -11,8 +11,7 @@ import MessageInput from "./MessageInput";
 import ArtifactPanel from "./ArtifactPanel";
 import ThemeToggle from "../ui/ThemeToggle";
 import { detectArtifact, ToolCallData } from "@/utils/artifactDetection";
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+import { API_BASE_URL } from "@/lib/apiBaseUrl";
 
 function OpenDashboardButton() {
   const handleOpenDashboard = () => {

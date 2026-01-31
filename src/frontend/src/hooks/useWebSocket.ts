@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { io, Socket } from "socket.io-client";
+import { API_BASE_URL } from "../lib/apiBaseUrl";
 
 // Mirror the backend types for the dashboard state
 export interface MediaBuy {
@@ -114,8 +115,7 @@ interface FeedbackSubmittedPayload {
   timestamp: string;
 }
 
-const SOCKET_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+const SOCKET_URL = API_BASE_URL;
 
 export function useWebSocket(): DashboardState & {
   requestRefresh: () => void;
