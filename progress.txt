@@ -19,6 +19,21 @@ Started: 2026-01-31
 
 ---
 
+## 2026-01-31 - US-006
+- What was implemented: create_media_buy tool for launching new campaigns
+- Files changed:
+  - Created `src/backend/src/tools/createMediaBuy.ts` (Tool implementation with input/output types)
+  - Modified `src/backend/src/tools/index.ts` (Added createMediaBuy export)
+- **Learnings for future iterations:**
+  - Tool accepts brand_name, product_id, budget, targeting (TargetingOverlay), start_time, end_time
+  - Generates unique media_buy_id using format: `mb_{sanitized_brand}_{number}`
+  - Validates product exists and budget meets product's minimum_budget
+  - Estimates impressions based on product's lowest CPM: `(budget / cpm) * 1000`
+  - Creates initial DeliveryMetrics with zero values for new media buy
+  - Uses addMediaBuy() and addDeliveryMetrics() from loader to persist to in-memory state
+  - Returns status: 'submitted' for new campaigns
+---
+
 ## 2026-01-31 - US-005
 - What was implemented: list_authorized_properties tool for retrieving accessible publisher properties
 - Files changed:
