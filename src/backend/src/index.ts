@@ -8,7 +8,7 @@ import chatRouter from './routes/chat.js';
 
 const app = express();
 const httpServer = createServer(app);
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.BACKEND_PORT || 3001;
 
 // Load mock data on startup
 loadData();
@@ -18,7 +18,7 @@ initializeWebSocket(httpServer);
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+  origin: true,
   credentials: true,
 }));
 app.use(express.json());
