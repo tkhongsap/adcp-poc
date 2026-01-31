@@ -334,7 +334,7 @@ export async function processChat(
 
   // Initial API call
   let response = await anthropic.messages.create({
-    model: 'claude-sonnet-4-20250514',
+    model: 'claude-opus-4-5-20250514',
     max_tokens: 4096,
     system: SYSTEM_PROMPT,
     tools: TOOL_DEFINITIONS,
@@ -381,7 +381,7 @@ export async function processChat(
 
     // Continue the conversation with tool results
     response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-opus-4-5-20250514',
       max_tokens: 4096,
       system: SYSTEM_PROMPT,
       tools: TOOL_DEFINITIONS,
@@ -429,7 +429,7 @@ export async function processChatStream(
   // Helper function to process streaming responses
   async function streamResponse(): Promise<Anthropic.Message> {
     const stream = anthropic.messages.stream({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-opus-4-5-20250514',
       max_tokens: 4096,
       system: SYSTEM_PROMPT,
       tools: TOOL_DEFINITIONS,
