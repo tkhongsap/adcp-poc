@@ -13,3 +13,10 @@ export {
   type CreativeFormatOutput,
   type ListCreativeFormatsResult,
 } from './listCreativeFormats.js';
+
+export {
+  listAuthorizedProperties,
+  type ListAuthorizedPropertiesInput,
+  type AuthorizedPropertyOutput,
+  type ListAuthorizedPropertiesResult,
+} from './listAuthorizedProperties.js';

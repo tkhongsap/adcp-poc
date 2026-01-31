@@ -200,6 +200,19 @@ export interface CreativeFormat {
   specs: CreativeFormatSpecs;
 }
 
+export interface AuthorizedProperty {
+  property_id: string;
+  name: string;
+  domain: string;
+  category: string;
+  monthly_uniques: number;
+  authorization_level: 'standard' | 'premium' | 'exclusive';
+  available_formats: string[];
+  discount_percent?: number;
+  audience_profile?: string;
+  special_capabilities?: string[];
+}
+
 export interface AdCPData {
   products: Product[];
   media_buys: MediaBuy[];

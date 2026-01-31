@@ -8,6 +8,7 @@ import type {
   Aggregations,
   PerformanceFeedback,
   CreativeFormat,
+  AuthorizedProperty,
 } from '../types/data.js';
 
 // In-memory state for the demo data
@@ -152,6 +153,118 @@ const creativeFormats: CreativeFormat[] = [
   },
 ];
 
+// Authorized properties are static reference data
+const authorizedProperties: AuthorizedProperty[] = [
+  {
+    property_id: 'prop_espn',
+    name: 'ESPN',
+    domain: 'espn.com',
+    category: 'Sports',
+    monthly_uniques: 85000000,
+    authorization_level: 'premium',
+    available_formats: ['display_300x250_image', 'display_728x90_image', 'video_preroll_15s', 'video_preroll_30s'],
+    discount_percent: 15,
+    audience_profile: 'Sports enthusiasts, 18-54, male-skewing',
+  },
+  {
+    property_id: 'prop_cnn',
+    name: 'CNN Digital',
+    domain: 'cnn.com',
+    category: 'News',
+    monthly_uniques: 120000000,
+    authorization_level: 'standard',
+    available_formats: ['display_970x250_image', 'display_300x600_image', 'display_300x250_image', 'video_ctv_30s'],
+    audience_profile: 'News consumers, broad demographics, high-income skew on business sections',
+  },
+  {
+    property_id: 'prop_weather',
+    name: 'Weather.com',
+    domain: 'weather.com',
+    category: 'Weather/Local',
+    monthly_uniques: 150000000,
+    authorization_level: 'standard',
+    available_formats: ['display_300x250_image', 'display_320x50_image'],
+    audience_profile: 'Broad reach, location-based targeting',
+    special_capabilities: ['weather-triggered creative swap', 'real-time temperature targeting', 'severe weather exclusion'],
+  },
+  {
+    property_id: 'prop_techcrunch',
+    name: 'TechCrunch',
+    domain: 'techcrunch.com',
+    category: 'Technology',
+    monthly_uniques: 25000000,
+    authorization_level: 'premium',
+    available_formats: ['display_300x250_image', 'native_article_card'],
+    discount_percent: 12,
+    audience_profile: 'Tech professionals, startup founders, developers',
+  },
+  {
+    property_id: 'prop_si',
+    name: 'Sports Illustrated',
+    domain: 'si.com',
+    category: 'Sports',
+    monthly_uniques: 40000000,
+    authorization_level: 'standard',
+    available_formats: ['display_300x250_image', 'display_728x90_image'],
+    audience_profile: 'Sports fans, classic sports journalism audience',
+  },
+  {
+    property_id: 'prop_bleacher',
+    name: 'Bleacher Report',
+    domain: 'bleacherreport.com',
+    category: 'Sports',
+    monthly_uniques: 60000000,
+    authorization_level: 'standard',
+    available_formats: ['display_300x250_image', 'video_outstream_15s'],
+    audience_profile: 'Younger sports fans 18-34, strong mobile engagement',
+  },
+  {
+    property_id: 'prop_forbes',
+    name: 'Forbes',
+    domain: 'forbes.com',
+    category: 'Business',
+    monthly_uniques: 70000000,
+    authorization_level: 'premium',
+    available_formats: ['display_300x250_image', 'native_article_card'],
+    discount_percent: 8,
+    audience_profile: '58% HHI $100K+, 72% college educated, business decision-makers',
+  },
+  {
+    property_id: 'prop_auto_news',
+    name: 'Automotive News Network',
+    domain: 'autonews.com',
+    category: 'Automotive',
+    monthly_uniques: 15000000,
+    authorization_level: 'premium',
+    available_formats: ['display_300x250_image', 'display_970x250_image', 'video_preroll_30s'],
+    discount_percent: 10,
+    audience_profile: 'Auto enthusiasts, in-market car buyers',
+  },
+  {
+    property_id: 'prop_spotify',
+    name: 'Spotify',
+    domain: 'spotify.com',
+    category: 'Audio/Music',
+    monthly_uniques: 220000000,
+    authorization_level: 'exclusive',
+    available_formats: ['audio_30s', 'video_preroll_15s'],
+    audience_profile: 'Music streamers, broad demographics, high engagement',
+    special_capabilities: ['podcast advertising', 'music genre targeting', 'playlist targeting'],
+  },
+  {
+    property_id: 'prop_nyt',
+    name: 'New York Times',
+    domain: 'nytimes.com',
+    category: 'News',
+    monthly_uniques: 90000000,
+    authorization_level: 'premium',
+    available_formats: ['display_300x250_image', 'display_970x250_image', 'native_article_card'],
+    discount_percent: 5,
+    audience_profile: '85% college educated, high-income, opinion leaders',
+    special_capabilities: ['section sponsorship', 'creative approval required (48h lead time)'],
+  },
+];
+
 /**
  * Load the demo data from the JSON file
  * This should be called on server startup
@@ -244,6 +357,24 @@ export function getCreativeFormats(options?: { type?: 'display' | 'video' | 'nat
  */
 export function getCreativeFormatById(formatId: string): CreativeFormat | undefined {
   return creativeFormats.find(f => f.format_id === formatId);
+}
+
+// ============================================
+// Authorized Property access functions
+// ============================================
+
+/**
+ * Get all authorized properties
+ */
+export function getAuthorizedProperties(): AuthorizedProperty[] {
+  return [...authorizedProperties];
+}
+
+/**
+ * Get a single authorized property by ID
+ */
+export function getAuthorizedPropertyById(propertyId: string): AuthorizedProperty | undefined {
+  return authorizedProperties.find(p => p.property_id === propertyId);
 }
 
 // ============================================
