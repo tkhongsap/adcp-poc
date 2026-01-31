@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import Sidebar from "./Sidebar";
 import MediaBuysTable from "./MediaBuysTable";
@@ -62,13 +63,23 @@ export default function DashboardLayout() {
         <div className="flex-1 overflow-auto p-6">
           {/* Header with view toggle */}
           <div className="flex justify-between items-center mb-6">
-            <motion.h1
+            <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-2xl font-semibold text-foreground"
+              className="flex items-center gap-4"
             >
-              Campaign Dashboard
-            </motion.h1>
+              <Link href="/">
+                <button className="flex items-center gap-2 px-3 py-1.5 text-sm rounded-lg bg-muted text-foreground hover:bg-muted/80 transition-colors">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                  </svg>
+                  Back to Chat
+                </button>
+              </Link>
+              <h1 className="text-2xl font-semibold text-foreground">
+                Campaign Dashboard
+              </h1>
+            </motion.div>
 
             <div className="flex items-center gap-3">
               {/* Theme toggle */}

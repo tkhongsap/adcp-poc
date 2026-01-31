@@ -2,12 +2,35 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 type NavItem = {
   id: string;
   label: string;
   icon: React.ReactNode;
+  href?: string;
+};
+
+const chatNavItem: NavItem = {
+  id: "chat",
+  label: "Chat with Agent",
+  href: "/",
+  icon: (
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+      />
+    </svg>
+  ),
 };
 
 const tradingNavItems: NavItem[] = [
@@ -77,50 +100,49 @@ interface NavLinkProps {
 }
 
 function NavLink({ item, isActive, onClick }: NavLinkProps) {
-  return (
-    <li>
-      <motion.button
-        onClick={onClick}
-        whileHover={{ x: 2 }}
-        whileTap={{ scale: 0.98 }}
-        className={cn(
-          "relative w-full flex items-center gap-3 px-3 py-2 text-sm rounded-md",
-          "transition-colors duration-150 cursor-pointer text-left",
-          isActive
-            ? "text-primary bg-white/5"
-            : "text-white/70 hover:text-white hover:bg-white/10"
-        )}
-      >
-        {/* Left accent bar for active state */}
-        {isActive && (
-          <motion.span
-            layoutId="activeIndicator"
-            className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 bg-primary rounded-r"
-            transition={{ type: "spring", stiffness: 500, damping: 30 }}
-          />
-        )}
-        <span className={cn(
-          "transition-colors duration-150",
-          isActive ? "text-primary" : ""
-        )}>
-          {item.icon}
-        </span>
-        <span>{item.label}</span>
-      </motion.button>
-    </li>
+  const content = (
+    <motion.button
+      onClick={onClick}
+      whileHover={{ x: 2 }}
+      whileTap={{ scale: 0.98 }}
+      className={cn(
+        "relative w-full flex items-center gap-3 px-3 py-2 text-sm rounded-lg",
+        "transition-colors duration-150 cursor-pointer text-left",
+        isActive
+          ? "bg-muted text-foreground"
+          : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+      )}
+    >
+      <span className="transition-colors duration-150">
+        {item.icon}
+      </span>
+      <span>{item.label}</span>
+    </motion.button>
   );
+
+  if (item.href) {
+    return (
+      <li>
+        <Link href={item.href}>
+          {content}
+        </Link>
+      </li>
+    );
+  }
+
+  return <li>{content}</li>;
 }
 
 export default function Sidebar() {
   const [activeItem, setActiveItem] = useState("media-buys");
 
   return (
-    <aside className="w-[220px] flex-shrink-0 bg-claude-sidebar h-full flex flex-col">
+    <aside className="w-[260px] flex-shrink-0 bg-background border-r border-border h-full flex flex-col">
       {/* Branding */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="px-4 py-5 border-b border-white/10"
+        className="px-4 py-4 border-b border-border"
       >
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 bg-primary rounded-lg flex items-center justify-center">
@@ -138,19 +160,34 @@ export default function Sidebar() {
               />
             </svg>
           </div>
-          <span className="text-white text-lg font-semibold tracking-tight">
-            AdCP Demo
+          <span className="text-foreground text-lg font-semibold tracking-tight">
+            AdCP
           </span>
         </div>
       </motion.div>
 
-      {/* Trading Section */}
+      {/* Navigation */}
       <nav className="flex-1 px-3 py-4">
+        {/* Chat link */}
+        <motion.ul
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="space-y-1 mb-4"
+        >
+          <NavLink
+            item={chatNavItem}
+            isActive={false}
+            onClick={() => {}}
+          />
+        </motion.ul>
+
+        {/* Trading Section */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="text-white/40 text-xs uppercase tracking-wider mb-3 px-3 font-medium"
+          transition={{ delay: 0.15 }}
+          className="text-muted-foreground text-xs uppercase tracking-wider mb-3 px-3 font-medium"
         >
           Trading
         </motion.div>
@@ -176,9 +213,9 @@ export default function Sidebar() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
-        className="px-4 py-3 border-t border-white/10"
+        className="px-4 py-3 border-t border-border"
       >
-        <div className="text-white/30 text-xs">Adform AdCP</div>
+        <div className="text-muted-foreground text-xs">Adform AdCP</div>
       </motion.div>
     </aside>
   );
