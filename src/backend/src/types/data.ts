@@ -190,6 +190,7 @@ export interface CreativeFormatSpecs {
   description_max?: number;
   image_dimensions?: string;
   cta_max?: number;
+  interaction?: string;
 }
 
 export interface CreativeFormat {
