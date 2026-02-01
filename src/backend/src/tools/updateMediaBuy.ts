@@ -375,6 +375,69 @@ function calculateEstimatedImpact(
 }
 
 /**
+ * Normalize update operation field names to handle common aliases
+ * Claude and other callers may use different field names
+ */
+function normalizeUpdates(updates: Record<string, unknown>): MediaBuyUpdates {
+  const normalized: MediaBuyUpdates = {};
+
+  // Handle remove_geo with aliases: geo, country, countries
+  if (updates.remove_geo) {
+    const op = updates.remove_geo as Record<string, unknown>;
+    normalized.remove_geo = {
+      countries: (op.countries || op.geo || op.country || []) as string[],
+    };
+    // Handle single string value
+    if (typeof normalized.remove_geo.countries === 'string') {
+      normalized.remove_geo.countries = [normalized.remove_geo.countries];
+    }
+  }
+
+  // Handle add_geo with aliases: geo, country, countries
+  if (updates.add_geo) {
+    const op = updates.add_geo as Record<string, unknown>;
+    normalized.add_geo = {
+      countries: (op.countries || op.geo || op.country || []) as string[],
+    };
+    // Handle single string value
+    if (typeof normalized.add_geo.countries === 'string') {
+      normalized.add_geo.countries = [normalized.add_geo.countries];
+    }
+  }
+
+  // Handle adjust_bid with aliases: adjustment_percent, percent, change_percent
+  if (updates.adjust_bid) {
+    const op = updates.adjust_bid as Record<string, unknown>;
+    normalized.adjust_bid = {
+      device: (op.device || 'all') as string,
+      change_percent: (op.change_percent ?? op.adjustment_percent ?? op.percent ?? 0) as number,
+    };
+  }
+
+  // Handle set_daily_cap with aliases: cap, amount, daily_cap, budget
+  if (updates.set_daily_cap) {
+    const op = updates.set_daily_cap as Record<string, unknown>;
+    normalized.set_daily_cap = {
+      amount: (op.amount ?? op.cap ?? op.daily_cap ?? op.budget ?? 0) as number,
+    };
+  }
+
+  // Handle shift_budget with standard fields
+  if (updates.shift_budget) {
+    const op = updates.shift_budget as Record<string, unknown>;
+    normalized.shift_budget = {
+      from_audience: op.from_audience as string | undefined,
+      to_audience: op.to_audience as string | undefined,
+      from_device: op.from_device as string | undefined,
+      to_device: op.to_device as string | undefined,
+      percent: (op.percent ?? op.percentage ?? 0) as number,
+    };
+  }
+
+  return normalized;
+}
+
+/**
  * update_media_buy tool implementation
  *
  * Updates an existing media buy with various optimization operations.
@@ -400,6 +463,9 @@ export function updateMediaBuy(input: UpdateMediaBuyInput): UpdateMediaBuyResult
     };
   }
 
+  // Normalize field names to handle common aliases from Claude/API callers
+  const normalizedUpdates = normalizeUpdates(input.updates as Record<string, unknown>);
+
   // Get the media buy
   const mediaBuy = getMediaBuyById(input.media_buy_id);
   if (!mediaBuy) {
@@ -423,35 +489,35 @@ export function updateMediaBuy(input: UpdateMediaBuyInput): UpdateMediaBuyResult
   const metrics = metricsResult;
   const changesApplied: ChangeApplied[] = [];
 
-  // Apply each update operation
-  if (input.updates.remove_geo) {
-    const change = applyRemoveGeo(mediaBuy, metrics, input.updates.remove_geo);
+  // Apply each update operation using normalized updates
+  if (normalizedUpdates.remove_geo) {
+    const change = applyRemoveGeo(mediaBuy, metrics, normalizedUpdates.remove_geo);
     if (change) {
       changesApplied.push(change);
     }
   }
 
-  if (input.updates.add_geo) {
-    const change = applyAddGeo(mediaBuy, input.updates.add_geo);
+  if (normalizedUpdates.add_geo) {
+    const change = applyAddGeo(mediaBuy, normalizedUpdates.add_geo);
     if (change) {
       changesApplied.push(change);
     }
   }
 
-  if (input.updates.adjust_bid) {
-    const change = applyAdjustBid(metrics, input.updates.adjust_bid);
+  if (normalizedUpdates.adjust_bid) {
+    const change = applyAdjustBid(metrics, normalizedUpdates.adjust_bid);
     if (change) {
       changesApplied.push(change);
     }
   }
 
-  if (input.updates.set_daily_cap) {
-    const change = applySetDailyCap(metrics, input.updates.set_daily_cap);
+  if (normalizedUpdates.set_daily_cap) {
+    const change = applySetDailyCap(metrics, normalizedUpdates.set_daily_cap);
     changesApplied.push(change);
   }
 
-  if (input.updates.shift_budget) {
-    const change = applyShiftBudget(mediaBuy, metrics, input.updates.shift_budget);
+  if (normalizedUpdates.shift_budget) {
+    const change = applyShiftBudget(mediaBuy, metrics, normalizedUpdates.shift_budget);
     changesApplied.push(change);
   }
 
