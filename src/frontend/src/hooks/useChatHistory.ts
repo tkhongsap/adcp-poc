@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Message } from "@/types/chat";
 import { API_BASE_URL } from "@/lib/apiBaseUrl";
 
