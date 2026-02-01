@@ -9,42 +9,42 @@
     --content-max-width: 768px;
   }
 
-  /* Light theme (default) */
+  /* Light theme (default) - Manus-inspired minimal design */
   :root {
-    --background: #F5F4EF;
-    --foreground: #1A1915;
+    --background: #FFFFFF;
+    --foreground: #0A0A0A;
     --card: #FFFFFF;
-    --card-foreground: #1A1915;
-    --primary: #DA7756;
+    --card-foreground: #0A0A0A;
+    --primary: #1A1A1A;
     --primary-foreground: #FFFFFF;
-    --secondary: #F5F4EF;
-    --secondary-foreground: #1A1915;
-    --muted: #E8E7E2;
-    --muted-foreground: #5D5D5A;
-    --accent: #DA7756;
+    --secondary: #F5F5F5;
+    --secondary-foreground: #0A0A0A;
+    --muted: #F5F5F5;
+    --muted-foreground: #737373;
+    --accent: #1A1A1A;
     --accent-foreground: #FFFFFF;
-    --border: #E5E4DF;
-    --input: #E5E4DF;
-    --ring: #DA7756;
+    --border: #E5E5E5;
+    --input: #E5E5E5;
+    --ring: #1A1A1A;
   }
 
-  /* Dark theme */
+  /* Dark theme - Manus-inspired minimal design */
   .dark {
-    --background: #1A1915;
-    --foreground: #F5F4EF;
-    --card: #262522;
-    --card-foreground: #F5F4EF;
-    --primary: #DA7756;
-    --primary-foreground: #FFFFFF;
-    --secondary: #262522;
-    --secondary-foreground: #F5F4EF;
-    --muted: #3D3A36;
-    --muted-foreground: #A8A8A5;
-    --accent: #DA7756;
-    --accent-foreground: #FFFFFF;
-    --border: #3D3A36;
-    --input: #3D3A36;
-    --ring: #DA7756;
+    --background: #0A0A0A;
+    --foreground: #FAFAFA;
+    --card: #171717;
+    --card-foreground: #FAFAFA;
+    --primary: #FAFAFA;
+    --primary-foreground: #0A0A0A;
+    --secondary: #171717;
+    --secondary-foreground: #FAFAFA;
+    --muted: #262626;
+    --muted-foreground: #A3A3A3;
+    --accent: #FAFAFA;
+    --accent-foreground: #0A0A0A;
+    --border: #262626;
+    --input: #262626;
+    --ring: #FAFAFA;
   }
 
   * {

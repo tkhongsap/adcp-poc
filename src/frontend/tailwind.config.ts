@@ -26,15 +26,15 @@ const config: Config = {
         border: "var(--border)",
         input: "var(--input)",
         ring: "var(--ring)",
-        // Claude.ai-inspired color palette (static references)
-        claude: {
-          cream: "#F5F4EF",
-          orange: "#DA7756",
+        // Minimal design palette (Manus-inspired)
+        minimal: {
+          white: "#FFFFFF",
+          black: "#1A1A1A",
           "text-primary": "var(--foreground)",
           "text-secondary": "var(--muted-foreground)",
           border: "var(--border)",
           "border-light": "var(--border)",
-          sidebar: "#1A1915",
+          sidebar: "#0A0A0A",
           "user-bubble": "var(--muted)",
         },
       },
