@@ -12,6 +12,7 @@ import ArtifactPanel from "./ArtifactPanel";
 import ThemeToggle from "../ui/ThemeToggle";
 import { detectArtifact, ToolCallData } from "@/utils/artifactDetection";
 import { API_BASE_URL } from "@/lib/apiBaseUrl";
+import { useChatHistory, generateConversationId } from "@/hooks/useChatHistory";
 
 function OpenDashboardButton() {
   const handleOpenDashboard = () => {
@@ -52,6 +53,18 @@ export default function MainContainer() {
   const [selectedModel, setSelectedModel] = useState<ClaudeModelId>(DEFAULT_MODEL);
   const conversationIdRef = useRef<string | null>(null);
 
+  // Chat history hook
+  const {
+    conversations,
+    activeConversationId,
+    isLoaded: historyLoaded,
+    saveConversation,
+    getConversation,
+    deleteConversation,
+    setActiveConversation,
+    fetchConversationFromBackend,
+  } = useChatHistory();
+
   // Auto-open artifact panel when artifact is detected
   useEffect(() => {
     if (artifact) {
@@ -59,7 +72,92 @@ export default function MainContainer() {
     }
   }, [artifact]);
 
+  // Load active conversation on mount or when it changes
+  useEffect(() => {
+    if (historyLoaded && activeConversationId) {
+      const conv = getConversation(activeConversationId);
+      if (conv) {
+        setMessages(conv.messages);
+        conversationIdRef.current = activeConversationId;
+      }
+    }
+  }, [historyLoaded, activeConversationId, getConversation]);
+
+  // Save messages whenever they change (after initial load)
+  useEffect(() => {
+    if (historyLoaded && conversationIdRef.current && messages.length > 0) {
+      saveConversation(conversationIdRef.current, messages);
+    }
+  }, [messages, historyLoaded, saveConversation]);
+
+  // Handler for creating new chat
+  const handleNewChat = useCallback(() => {
+    // Save current conversation if it has messages
+    if (conversationIdRef.current && messages.length > 0) {
+      saveConversation(conversationIdRef.current, messages);
+    }
+    
+    // Reset state for new chat
+    const newId = generateConversationId();
+    conversationIdRef.current = newId;
+    setMessages([]);
+    setArtifact(null);
+    setArtifactPanelOpen(false);
+    setActiveConversation(newId);
+  }, [messages, saveConversation, setActiveConversation]);
+
+  // Handler for selecting a conversation
+  const handleSelectConversation = useCallback(async (id: string) => {
+    // Save current conversation if it has messages
+    if (conversationIdRef.current && messages.length > 0) {
+      saveConversation(conversationIdRef.current, messages);
+    }
+    
+    // Load selected conversation
+    let conv = getConversation(id);
+    
+    // If conversation has no messages (metadata-only from list), fetch from backend
+    if (!conv || conv.messages.length === 0) {
+      const fullConv = await fetchConversationFromBackend(id);
+      if (fullConv) {
+        conv = fullConv;
+        // Save to local state so it's available next time
+        saveConversation(id, fullConv.messages, false); // Don't sync back to backend
+      }
+    }
+    
+    if (conv && conv.messages.length > 0) {
+      conversationIdRef.current = id;
+      setMessages(conv.messages);
+      setActiveConversation(id);
+      // Clear artifact when switching conversations
+      setArtifact(null);
+      setArtifactPanelOpen(false);
+    }
+  }, [messages, saveConversation, getConversation, setActiveConversation, fetchConversationFromBackend]);
+
+  // Handler for deleting a conversation
+  const handleDeleteConversation = useCallback((id: string) => {
+    deleteConversation(id);
+    
+    // If deleting active conversation, reset to new chat
+    if (conversationIdRef.current === id) {
+      const newId = generateConversationId();
+      conversationIdRef.current = newId;
+      setMessages([]);
+      setArtifact(null);
+      setArtifactPanelOpen(false);
+      setActiveConversation(newId);
+    }
+  }, [deleteConversation, setActiveConversation]);
+
   const handleSendMessage = useCallback(async (content: string) => {
+    // Ensure we have a conversation ID
+    if (!conversationIdRef.current) {
+      conversationIdRef.current = generateConversationId();
+      setActiveConversation(conversationIdRef.current);
+    }
+
     // Add user message immediately
     const userMessage: Message = {
       id: `user_${Date.now()}`,
@@ -259,7 +357,7 @@ export default function MainContainer() {
     } finally {
       setIsLoading(false);
     }
-  }, [selectedModel]);
+  }, [selectedModel, setActiveConversation]);
 
   const hasMessages = messages.length > 0;
 
@@ -269,6 +367,11 @@ export default function MainContainer() {
       <ChatSidebar
         isCollapsed={sidebarCollapsed}
         onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+        conversations={conversations}
+        activeConversationId={activeConversationId}
+        onNewChat={handleNewChat}
+        onSelectConversation={handleSelectConversation}
+        onDeleteConversation={handleDeleteConversation}
       />
 
       {/* Main content area - flexes to share space with artifact panel */}

@@ -2,10 +2,16 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Conversation } from "@/hooks/useChatHistory";
 
 interface ChatSidebarProps {
   isCollapsed: boolean;
   onToggle: () => void;
+  conversations: Conversation[];
+  activeConversationId: string | null;
+  onNewChat: () => void;
+  onSelectConversation: (id: string) => void;
+  onDeleteConversation: (id: string) => void;
 }
 
 // Navigation item component
@@ -34,32 +40,111 @@ function NavItem({
   );
 }
 
-// Recent chat item component
-function RecentChatItem({ title }: { title: string }) {
+// Recent chat item component with delete
+function RecentChatItem({
+  title,
+  isActive,
+  onClick,
+  onDelete,
+}: {
+  title: string;
+  isActive: boolean;
+  onClick: () => void;
+  onDelete: () => void;
+}) {
   return (
-    <button
-      className={cn(
-        "w-full text-left px-3 py-2 text-sm rounded-lg",
-        "text-muted-foreground hover:bg-muted/50 hover:text-foreground",
-        "transition-colors duration-150 truncate"
-      )}
-    >
-      {title}
-    </button>
+    <div className="group relative">
+      <button
+        onClick={onClick}
+        className={cn(
+          "w-full text-left px-3 py-2 text-sm rounded-lg pr-8",
+          "transition-colors duration-150 truncate",
+          isActive
+            ? "bg-muted text-foreground"
+            : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+        )}
+        title={title}
+      >
+        {title}
+      </button>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onDelete();
+        }}
+        className={cn(
+          "absolute right-2 top-1/2 -translate-y-1/2",
+          "p-1 rounded opacity-0 group-hover:opacity-100",
+          "text-muted-foreground hover:text-destructive hover:bg-muted",
+          "transition-all duration-150"
+        )}
+        title="Delete conversation"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          className="w-3.5 h-3.5"
+        >
+          <path
+            fillRule="evenodd"
+            d="M8.75 1A2.75 2.75 0 006 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 10.23 1.482l.149-.022.841 10.518A2.75 2.75 0 007.596 19h4.807a2.75 2.75 0 002.742-2.53l.841-10.519.149.023a.75.75 0 00.23-1.482A41.03 41.03 0 0014 4.193V3.75A2.75 2.75 0 0011.25 1h-2.5zM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4zM8.58 7.72a.75.75 0 00-1.5.06l.3 7.5a.75.75 0 101.5-.06l-.3-7.5zm4.34.06a.75.75 0 10-1.5-.06l-.3 7.5a.75.75 0 101.5.06l.3-7.5z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </button>
+    </div>
   );
 }
 
-// Mock recent chats
-const recentChats = [
-  "Campaign performance review",
-  "Budget optimization Q1",
-  "Audience targeting analysis",
-  "Creative A/B test results",
-  "Monthly report setup",
-  "Conversion tracking help",
-];
+// Group conversations by date
+function groupConversationsByDate(conversations: Conversation[]) {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+  const lastWeek = new Date(today);
+  lastWeek.setDate(lastWeek.getDate() - 7);
 
-export default function ChatSidebar({ isCollapsed, onToggle }: ChatSidebarProps) {
+  const groups: {
+    label: string;
+    conversations: Conversation[];
+  }[] = [
+    { label: "Today", conversations: [] },
+    { label: "Yesterday", conversations: [] },
+    { label: "Last 7 days", conversations: [] },
+    { label: "Older", conversations: [] },
+  ];
+
+  for (const conv of conversations) {
+    const convDate = new Date(conv.updatedAt);
+    
+    if (convDate >= today) {
+      groups[0].conversations.push(conv);
+    } else if (convDate >= yesterday) {
+      groups[1].conversations.push(conv);
+    } else if (convDate >= lastWeek) {
+      groups[2].conversations.push(conv);
+    } else {
+      groups[3].conversations.push(conv);
+    }
+  }
+
+  // Filter out empty groups
+  return groups.filter((g) => g.conversations.length > 0);
+}
+
+export default function ChatSidebar({
+  isCollapsed,
+  onToggle,
+  conversations,
+  activeConversationId,
+  onNewChat,
+  onSelectConversation,
+  onDeleteConversation,
+}: ChatSidebarProps) {
+  const groupedConversations = groupConversationsByDate(conversations);
+
   return (
     <AnimatePresence initial={false}>
       {!isCollapsed && (
@@ -111,6 +196,7 @@ export default function ChatSidebar({ isCollapsed, onToggle }: ChatSidebarProps)
           {/* New Chat button */}
           <div className="px-3 mb-4">
             <button
+              onClick={onNewChat}
               className={cn(
                 "w-full flex items-center gap-2 px-3 py-2.5 text-sm font-medium rounded-lg",
                 "bg-muted hover:bg-muted/80",
@@ -179,11 +265,33 @@ export default function ChatSidebar({ isCollapsed, onToggle }: ChatSidebarProps)
             <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-3 mb-2">
               Recents
             </div>
-            <div className="space-y-0.5">
-              {recentChats.map((chat, index) => (
-                <RecentChatItem key={index} title={chat} />
-              ))}
-            </div>
+            
+            {groupedConversations.length === 0 ? (
+              <div className="text-sm text-muted-foreground px-3 py-2">
+                No conversations yet
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {groupedConversations.map((group) => (
+                  <div key={group.label}>
+                    <div className="text-xs text-muted-foreground px-3 mb-1">
+                      {group.label}
+                    </div>
+                    <div className="space-y-0.5">
+                      {group.conversations.map((conv) => (
+                        <RecentChatItem
+                          key={conv.id}
+                          title={conv.title}
+                          isActive={conv.id === activeConversationId}
+                          onClick={() => onSelectConversation(conv.id)}
+                          onDelete={() => onDeleteConversation(conv.id)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* User profile section */}

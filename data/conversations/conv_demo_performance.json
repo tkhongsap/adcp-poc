@@ -1,0 +1,16 @@
+{
+  "id": "conv_demo_performance",
+  "title": "What's the current performance of our...",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What's the current performance of our campaigns?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'll analyze your current campaign performance. Let me pull the data for you.\n\nBased on the current data, here's a summary of your active campaigns:\n\n**Apex Motors Campaign**\n- Status: Active\n- Spend: $32,450 / $50,000 budget (64.9%)\n- Health: Poor - needs attention\n- Geos: US, UK, DE\n\n**TechFlow SaaS Campaign**\n- Status: Active  \n- Spend: $18,200 / $25,000 budget (72.8%)\n- Health: Good\n- Geos: US, CA\n\n**SportMax Athletics**\n- Status: Active\n- Spend: $45,000 / $75,000 budget (60%)\n- Health: Excellent\n- Geos: US, UK, AU\n\n**HomeStyle Furniture**\n- Status: Active\n- Spend: $12,800 / $20,000 budget (64%)\n- Health: Fair\n- Geos: US\n\n**FreshBite Foods**\n- Status: Paused\n- Spend: $8,500 / $15,000 budget (56.7%)\n- Health: Poor\n- Geos: US, CA, MX\n\nThe Apex Motors campaign needs immediate attention due to poor health metrics. Would you like me to provide specific recommendations for optimization?"
+    }
+  ],
+  "createdAt": "2026-01-31T14:30:00.000Z",
+  "updatedAt": "2026-02-01T06:04:33.240Z"
+}

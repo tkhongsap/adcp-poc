@@ -1,0 +1,16 @@
+{
+  "id": "conv_demo_targeting",
+  "title": "Show me our audience targeting options",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Show me our audience targeting options"
+    },
+    {
+      "role": "assistant",
+      "content": "Here's an overview of your available audience targeting options across our product inventory:\n\n## Geographic Targeting\n\nCurrently active regions:\n- **United States (US)** - Primary market, available on all products\n- **United Kingdom (UK)** - Secondary market, premium sports & news\n- **Canada (CA)** - Available on sports and tech products\n- **Germany (DE)** - Limited to Apex Motors campaign\n- **Australia (AU)** - Sports inventory only\n- **Mexico (MX)** - FreshBite Foods only\n\n## Product Categories\n\n### Sports & Entertainment\n- ESPN Premium Sports\n- Bleacher Report\n- Weather.com\n\n### News & Business\n- CNN News\n- Forbes Business\n- New York Times Premium\n\n### Technology\n- TechCrunch\n\n## Available Ad Formats\n\n- **Display**: 300x250, 728x90, 160x600\n- **Video**: Pre-roll, Mid-roll (15s, 30s)\n- **Native**: In-feed, Content recommendation\n- **Audio**: Podcast ads (15s, 30s, 60s)\n\nWould you like me to help you set up targeting for a specific campaign?"
+    }
+  ],
+  "createdAt": "2026-01-29T09:00:00.000Z",
+  "updatedAt": "2026-01-29T09:05:00.000Z"
+}
