@@ -49,6 +49,13 @@ export interface ShiftBudgetOperation {
 }
 
 /**
+ * Update operations for set_status (pause/resume campaign)
+ */
+export interface SetStatusOperation {
+  status: 'active' | 'paused';
+}
+
+/**
  * All possible update operations
  */
 export interface MediaBuyUpdates {
@@ -57,6 +64,7 @@ export interface MediaBuyUpdates {
   adjust_bid?: AdjustBidOperation;
   set_daily_cap?: SetDailyCapOperation;
   shift_budget?: ShiftBudgetOperation;
+  set_status?: SetStatusOperation;
 }
 
 /**
@@ -313,6 +321,24 @@ function applyShiftBudget(
 }
 
 /**
+ * Apply set_status operation to pause/resume campaign
+ */
+function applySetStatus(
+  mediaBuy: MediaBuy,
+  operation: SetStatusOperation
+): ChangeApplied {
+  const previousStatus = mediaBuy.status;
+  mediaBuy.status = operation.status;
+
+  return {
+    operation: 'set_status',
+    details: `Changed campaign status from ${previousStatus} to ${operation.status}`,
+    previous_value: previousStatus,
+    new_value: operation.status,
+  };
+}
+
+/**
  * Calculate estimated impact of changes
  */
 function calculateEstimatedImpact(
@@ -364,6 +390,16 @@ function calculateEstimatedImpact(
         descriptions.push(`Budget allocation optimized`);
         efficiencyImprovement = efficiencyImprovement || 'Improved targeting efficiency expected';
         break;
+      case 'set_status': {
+        const newStatus = change.new_value as string;
+        if (newStatus === 'paused') {
+          descriptions.push(`Campaign paused - delivery stopped`);
+          reachChangePercent = -100; // No delivery when paused
+        } else {
+          descriptions.push(`Campaign resumed - delivery active`);
+        }
+        break;
+      }
     }
   }
 
@@ -433,6 +469,23 @@ function normalizeUpdates(updates: Record<string, unknown>): MediaBuyUpdates {
       to_device: op.to_device as string | undefined,
       percent: (op.percent ?? op.percentage ?? 0) as number,
     };
+  }
+
+  // Handle set_status with aliases: status, pause, resume, state
+  if (updates.set_status) {
+    const op = updates.set_status as Record<string, unknown>;
+    const status = (op.status ?? op.state) as string;
+    if (status === 'active' || status === 'paused') {
+      normalized.set_status = { status };
+    }
+  }
+  
+  // Handle direct pause/resume commands as set_status
+  if (updates.pause === true || (updates as Record<string, unknown>).paused === true) {
+    normalized.set_status = { status: 'paused' };
+  }
+  if (updates.resume === true || updates.activate === true) {
+    normalized.set_status = { status: 'active' };
   }
 
   return normalized;
@@ -529,6 +582,11 @@ export function updateMediaBuy(input: UpdateMediaBuyInput): UpdateMediaBuyResult
 
   if (normalizedUpdates.shift_budget) {
     const change = applyShiftBudget(mediaBuy, metrics, normalizedUpdates.shift_budget);
+    changesApplied.push(change);
+  }
+
+  if (normalizedUpdates.set_status) {
+    const change = applySetStatus(mediaBuy, normalizedUpdates.set_status);
     changesApplied.push(change);
   }
 

@@ -56,7 +56,9 @@ You have access to the following tools to help users:
 - list_authorized_properties: Get accessible publisher properties with authorization details
 - create_media_buy: Launch new advertising campaigns
 - get_media_buy_delivery: Get performance metrics for campaigns
-- update_media_buy: Modify existing campaigns (change targeting, adjust bids, etc.)
+- update_media_buy: Modify existing campaigns (change targeting, adjust bids, pause/resume, etc.)
+  - Pause/resume campaigns: "Pause Apex campaign" → update_media_buy with set_status: { status: "paused" }
+  - Resume campaigns: "Resume Apex" → update_media_buy with set_status: { status: "active" }
 - provide_performance_feedback: Submit conversion data, lead quality, or brand lift feedback
 
 Guidelines:
@@ -190,7 +192,7 @@ export const TOOL_DEFINITIONS: Tool[] = [
   },
   {
     name: 'update_media_buy',
-    description: 'Update an existing campaign with various operations: remove/add geo targeting, adjust bids, set daily caps, or shift budget allocation.',
+    description: 'Update an existing campaign with various operations: pause/resume campaign, remove/add geo targeting, adjust bids, set daily caps, or shift budget allocation.',
     input_schema: {
       type: 'object' as const,
       properties: {
@@ -273,6 +275,17 @@ export const TOOL_DEFINITIONS: Tool[] = [
                 },
               },
               required: ['percent'],
+            },
+            set_status: {
+              type: 'object',
+              properties: {
+                status: {
+                  type: 'string',
+                  enum: ['active', 'paused'],
+                  description: 'New status for the campaign. Use "paused" to stop/pause a campaign, "active" to resume/start it.',
+                },
+              },
+              required: ['status'],
             },
           },
         },
