@@ -1,0 +1,12 @@
+{
+  "id": "conv_1769928149700_f81by2k",
+  "title": "Show me an overview of all active cam...",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Show me an overview of all active campaigns"
+    }
+  ],
+  "createdAt": "2026-02-01T06:42:29.758Z",
+  "updatedAt": "2026-02-01T06:45:28.930Z"
+}

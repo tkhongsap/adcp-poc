@@ -1,0 +1,12 @@
+{
+  "id": "conv_1769928013310_6zlumw6",
+  "title": "What should I focus on today?",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What should I focus on today?"
+    }
+  ],
+  "createdAt": "2026-02-01T06:40:17.042Z",
+  "updatedAt": "2026-02-01T06:41:39.563Z"
+}
