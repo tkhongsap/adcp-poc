@@ -35,8 +35,20 @@ function getValidModel(model?: string): ValidModel {
   return DEFAULT_MODEL;
 }
 
-// System prompt for the AdCP Sales Agent
-const SYSTEM_PROMPT = `You are the AdCP Sales Agent, an AI assistant for the Adform Campaign Platform. You help advertisers and agencies manage their digital advertising campaigns.
+// Model display names for system prompt
+const MODEL_DISPLAY_NAMES: Record<string, string> = {
+  'claude-sonnet-4-5-20250929': 'Claude Sonnet 4.5',
+  'claude-opus-4-5-20251101': 'Claude Opus 4.5',
+  'claude-haiku-4-5-20251001': 'Claude Haiku 4.5',
+};
+
+// System prompt for the Signal42.ai Agent
+function getSystemPrompt(model: string): string {
+  const modelName = MODEL_DISPLAY_NAMES[model] || 'Claude';
+
+  return `You are the Signal42.ai Campaign Agent, powered by ${modelName}. You are an AI assistant built by Signal42.ai to help advertisers and agencies manage their digital advertising campaigns.
+
+When asked about who you are or what model you're using, mention that you are powered by ${modelName} (by Anthropic) and built by Signal42.ai.
 
 You have access to the following tools to help users:
 - get_products: Discover available advertising inventory (display, video, native, audio products)
@@ -54,6 +66,7 @@ Guidelines:
 - For simple confirmations or single values, respond inline
 - For complex data (tables, reports), structure your response clearly
 - Always explain what actions you're taking and their results`;
+}
 
 // Tool definitions for Claude API
 export const TOOL_DEFINITIONS: Tool[] = [
@@ -359,7 +372,7 @@ export async function processChat(
   let response = await anthropic.messages.create({
     model: validModel,
     max_tokens: 4096,
-    system: SYSTEM_PROMPT,
+    system: getSystemPrompt(validModel),
     tools: TOOL_DEFINITIONS,
     messages,
   });
@@ -406,7 +419,7 @@ export async function processChat(
     response = await anthropic.messages.create({
       model: validModel,
       max_tokens: 4096,
-      system: SYSTEM_PROMPT,
+      system: getSystemPrompt(validModel),
       tools: TOOL_DEFINITIONS,
       messages,
     });
@@ -457,7 +470,7 @@ export async function processChatStream(
     const stream = anthropic.messages.stream({
       model: validModel,
       max_tokens: 4096,
-      system: SYSTEM_PROMPT,
+      system: getSystemPrompt(validModel),
       tools: TOOL_DEFINITIONS,
       messages,
     });
