@@ -69,6 +69,6 @@ externalPort = 3000
 exposeLocalhost = true
 
 [deployment]
-deploymentTarget = "vm"
+deploymentTarget = "cloudrun"
 run = ["npm", "run", "start"]
 build = ["npm", "run", "build"]
