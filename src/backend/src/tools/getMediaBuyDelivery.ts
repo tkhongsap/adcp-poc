@@ -1,4 +1,4 @@
-import { getDeliveryMetrics } from '../data/loader.js';
+import { getDeliveryMetrics, resolveMediaBuyId } from '../data/loader.js';
 import type { DeliveryMetrics, MetricsSummary, DeviceMetrics, GeoMetrics } from '../types/data.js';
 
 /**
@@ -77,7 +77,18 @@ function toDeliveryMetricsOutput(metrics: DeliveryMetrics): DeliveryMetricsOutpu
 export function getMediaBuyDelivery(input: GetMediaBuyDeliveryInput): GetMediaBuyDeliveryResult {
   // If media_buy_id is provided, return single metrics
   if (input.media_buy_id) {
-    const metrics = getDeliveryMetrics(input.media_buy_id);
+    // Resolve brand name or ID to actual media_buy_id
+    const resolvedId = resolveMediaBuyId(input.media_buy_id);
+    
+    if (!resolvedId) {
+      return {
+        success: false,
+        metrics: null,
+        error: `Media buy not found: ${input.media_buy_id}`,
+      };
+    }
+    
+    const metrics = getDeliveryMetrics(resolvedId);
 
     if (!metrics || Array.isArray(metrics)) {
       return {

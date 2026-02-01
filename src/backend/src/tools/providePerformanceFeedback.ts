@@ -2,6 +2,7 @@ import {
   getMediaBuyById,
   addPerformanceFeedback,
   getDeliveryMetrics,
+  resolveMediaBuyId,
 } from '../data/loader.js';
 import { broadcastFeedbackSubmitted } from '../websocket/socket.js';
 import type { PerformanceFeedback, FeedbackData } from '../types/data.js';
@@ -159,8 +160,18 @@ export function providePerformanceFeedback(
     };
   }
 
-  // Verify media buy exists
-  const mediaBuy = getMediaBuyById(input.media_buy_id);
+  // Resolve brand name or ID to actual media_buy_id
+  const resolvedId = resolveMediaBuyId(input.media_buy_id);
+  if (!resolvedId) {
+    return {
+      success: false,
+      result: null,
+      error: `Media buy not found: ${input.media_buy_id}`,
+    };
+  }
+
+  // Verify media buy exists using resolved ID
+  const mediaBuy = getMediaBuyById(resolvedId);
   if (!mediaBuy) {
     return {
       success: false,
@@ -169,16 +180,16 @@ export function providePerformanceFeedback(
     };
   }
 
-  // Generate feedback ID
-  const feedbackId = generateFeedbackId(input.media_buy_id, input.feedback_type);
+  // Generate feedback ID using resolved ID
+  const feedbackId = generateFeedbackId(resolvedId, input.feedback_type);
 
-  // Calculate impact
-  const impact = calculateImpact(input.feedback_type, input.data, input.media_buy_id);
+  // Calculate impact using resolved ID
+  const impact = calculateImpact(input.feedback_type, input.data, resolvedId);
 
-  // Create the feedback entry
+  // Create the feedback entry using resolved ID
   const feedback: PerformanceFeedback = {
     feedback_id: feedbackId,
-    media_buy_id: input.media_buy_id,
+    media_buy_id: resolvedId,
     submitted_at: new Date().toISOString(),
     feedback_type: input.feedback_type,
     data: input.data,
@@ -189,10 +200,10 @@ export function providePerformanceFeedback(
   // Add to performance_feedback_log
   addPerformanceFeedback(feedback);
 
-  // Broadcast feedback to all connected clients
+  // Broadcast feedback to all connected clients using resolved ID
   broadcastFeedbackSubmitted({
     feedback_id: feedbackId,
-    media_buy_id: input.media_buy_id,
+    media_buy_id: resolvedId,
     feedback_type: input.feedback_type,
     impact: impact,
     timestamp: new Date().toISOString(),
@@ -202,7 +213,7 @@ export function providePerformanceFeedback(
     success: true,
     result: {
       feedback_id: feedbackId,
-      media_buy_id: input.media_buy_id,
+      media_buy_id: resolvedId,
       status: 'processed',
       impact: impact,
     },

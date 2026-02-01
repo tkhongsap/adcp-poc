@@ -314,6 +314,87 @@
       ],
       "minimum_budget": 5000,
       "available_inventory": 7000000
+    },
+    {
+      "product_id": "prod_nyt_premium",
+      "name": "New York Times Premium",
+      "description": "Premium news audience on New York Times digital properties with high-income, educated readers",
+      "category": "News",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_nyt_standard",
+          "currency": "USD",
+          "cpm": 32.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_nyt_sponsorship",
+          "currency": "USD",
+          "cpm": 42.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "display_300x250_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "display_970x250_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "native_article_card"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "device_type",
+        "news_interest",
+        "income_level"
+      ],
+      "minimum_budget": 15000,
+      "available_inventory": 12000000
+    },
+    {
+      "product_id": "prod_spotify_audio",
+      "name": "Spotify Audio Ads",
+      "description": "Audio advertising on Spotify's streaming platform reaching music and podcast listeners",
+      "category": "Audio/Music",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_spotify_standard",
+          "currency": "USD",
+          "cpm": 15.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_spotify_podcast",
+          "currency": "USD",
+          "cpm": 25.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "audio_30s"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "video_preroll_15s"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "device_type",
+        "music_genre",
+        "podcast_category",
+        "demographics"
+      ],
+      "minimum_budget": 10000,
+      "available_inventory": 50000000
     }
   ],
   "media_buys": [

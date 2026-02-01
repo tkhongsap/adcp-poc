@@ -65,7 +65,18 @@ Guidelines:
 - When showing tabular data, format it clearly
 - For simple confirmations or single values, respond inline
 - For complex data (tables, reports), structure your response clearly
-- Always explain what actions you're taking and their results`;
+- Always explain what actions you're taking and their results
+
+Context Awareness:
+- When a user refers to a campaign by brand name (e.g., "Apex", "TechFlow"), use get_media_buy_delivery to find the matching campaign ID
+- If a campaign was recently discussed in the conversation, apply commands to that campaign without asking for clarification
+- For ambiguous commands like "pause Germany targeting", first check if there's a recently discussed campaign, otherwise list campaigns and ask which one
+- Brand name mappings: "Apex" = mb_apex_motors_q1, "TechFlow" = mb_techflow_saas, "SportMax" = mb_sportmax_apparel, "FinanceFirst" = mb_financefirst_bank, "GreenEnergy" = mb_greenenergy
+
+Smart Defaults:
+- When creating campaigns without all details, suggest reasonable defaults based on the product and budget
+- For bid adjustments, always confirm the change before and after values
+- For geo changes, confirm which countries are being added/removed`;
 }
 
 // Tool definitions for Claude API

@@ -77,6 +77,17 @@ const creativeFormats: CreativeFormat[] = [
       file_types: ['jpg', 'png', 'gif'],
     },
   },
+  {
+    format_id: 'rich_media_expandable',
+    name: 'Expandable Rich Media',
+    type: 'display',
+    dimensions: '300x250 -> 600x400',
+    specs: {
+      max_file_size: '500KB',
+      file_types: ['html5', 'js'],
+      interaction: 'click_to_expand',
+    },
+  },
   // Video formats
   {
     format_id: 'video_preroll_15s',
@@ -395,6 +406,39 @@ export function getMediaBuys(): MediaBuy[] {
 export function getMediaBuyById(mediaBuyId: string): MediaBuy | undefined {
   const { media_buys } = ensureDataLoaded();
   return media_buys.find(mb => mb.media_buy_id === mediaBuyId);
+}
+
+/**
+ * Find a media buy by brand name (partial match)
+ * This allows users to say "Apex" instead of "mb_apex_motors_q1"
+ */
+export function findMediaBuyByBrandName(brandName: string): MediaBuy | undefined {
+  const { media_buys } = ensureDataLoaded();
+  const normalizedName = brandName.toLowerCase();
+  return media_buys.find(mb =>
+    mb.brand_manifest.name.toLowerCase().includes(normalizedName) ||
+    mb.media_buy_id.toLowerCase().includes(normalizedName)
+  );
+}
+
+/**
+ * Resolve a media buy ID or brand name to a media buy ID
+ * Tries exact match first, then brand name match
+ */
+export function resolveMediaBuyId(idOrBrandName: string): string | undefined {
+  // First try exact match
+  const exactMatch = getMediaBuyById(idOrBrandName);
+  if (exactMatch) {
+    return exactMatch.media_buy_id;
+  }
+  
+  // Then try brand name match
+  const brandMatch = findMediaBuyByBrandName(idOrBrandName);
+  if (brandMatch) {
+    return brandMatch.media_buy_id;
+  }
+  
+  return undefined;
 }
 
 /**

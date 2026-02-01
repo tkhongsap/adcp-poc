@@ -3,6 +3,7 @@ import {
   updateMediaBuy as updateMediaBuyData,
   getDeliveryMetrics,
   updateDeliveryMetrics,
+  resolveMediaBuyId,
 } from '../data/loader.js';
 import { broadcastMediaBuyUpdated } from '../websocket/socket.js';
 import type { MediaBuy, DeliveryMetrics, TargetingOverlay } from '../types/data.js';
@@ -466,8 +467,18 @@ export function updateMediaBuy(input: UpdateMediaBuyInput): UpdateMediaBuyResult
   // Normalize field names to handle common aliases from Claude/API callers
   const normalizedUpdates = normalizeUpdates(input.updates as Record<string, unknown>);
 
-  // Get the media buy
-  const mediaBuy = getMediaBuyById(input.media_buy_id);
+  // Resolve brand name or ID to actual media_buy_id
+  const resolvedId = resolveMediaBuyId(input.media_buy_id);
+  if (!resolvedId) {
+    return {
+      success: false,
+      result: null,
+      error: `Media buy not found: ${input.media_buy_id}`,
+    };
+  }
+
+  // Get the media buy using resolved ID
+  const mediaBuy = getMediaBuyById(resolvedId);
   if (!mediaBuy) {
     return {
       success: false,
@@ -476,8 +487,8 @@ export function updateMediaBuy(input: UpdateMediaBuyInput): UpdateMediaBuyResult
     };
   }
 
-  // Get delivery metrics
-  const metricsResult = getDeliveryMetrics(input.media_buy_id);
+  // Get delivery metrics using resolved ID
+  const metricsResult = getDeliveryMetrics(resolvedId);
   if (!metricsResult || Array.isArray(metricsResult)) {
     return {
       success: false,
@@ -521,9 +532,9 @@ export function updateMediaBuy(input: UpdateMediaBuyInput): UpdateMediaBuyResult
     changesApplied.push(change);
   }
 
-  // Persist changes to in-memory state
-  updateMediaBuyData(input.media_buy_id, mediaBuy);
-  updateDeliveryMetrics(input.media_buy_id, metrics);
+  // Persist changes to in-memory state using resolved ID
+  updateMediaBuyData(resolvedId, mediaBuy);
+  updateDeliveryMetrics(resolvedId, metrics);
 
   // Calculate estimated impact
   const estimatedImpact = calculateEstimatedImpact(mediaBuy, metrics, changesApplied);
@@ -531,7 +542,7 @@ export function updateMediaBuy(input: UpdateMediaBuyInput): UpdateMediaBuyResult
   // Broadcast update to all connected clients
   if (changesApplied.length > 0) {
     broadcastMediaBuyUpdated({
-      media_buy_id: input.media_buy_id,
+      media_buy_id: resolvedId,
       media_buy: mediaBuy,
       delivery_metrics: metrics,
       changes_applied: changesApplied,
@@ -542,7 +553,7 @@ export function updateMediaBuy(input: UpdateMediaBuyInput): UpdateMediaBuyResult
   return {
     success: true,
     result: {
-      media_buy_id: input.media_buy_id,
+      media_buy_id: resolvedId,
       success: changesApplied.length > 0,
       changes_applied: changesApplied,
       estimated_impact: estimatedImpact,
