@@ -72,69 +72,96 @@ export default function MainContainer() {
     }
   }, [artifact]);
 
-  // Load active conversation on mount or when it changes
+  // Refs to hold stable function references
+  const getConversationRef = useRef(getConversation);
+  const saveConversationRef = useRef(saveConversation);
+  getConversationRef.current = getConversation;
+  saveConversationRef.current = saveConversation;
+
+  // Load active conversation on mount or when activeConversationId changes
   useEffect(() => {
     if (historyLoaded && activeConversationId) {
-      const conv = getConversation(activeConversationId);
-      if (conv) {
+      const conv = getConversationRef.current(activeConversationId);
+      if (conv && conv.messages.length > 0) {
         setMessages(conv.messages);
         conversationIdRef.current = activeConversationId;
       }
     }
-  }, [historyLoaded, activeConversationId, getConversation]);
+  }, [historyLoaded, activeConversationId]);
 
-  // Save messages whenever they change (after initial load)
+  // Track if we're in the middle of loading a conversation to avoid save loops
+  const isLoadingConversation = useRef(false);
+  
+  // Save messages only when user sends a new message (not on load)
+  const prevMessagesLength = useRef(0);
   useEffect(() => {
-    if (historyLoaded && conversationIdRef.current && messages.length > 0) {
-      saveConversation(conversationIdRef.current, messages);
+    // Skip if still loading, not loaded yet, or no conversation
+    if (isLoadingConversation.current || !historyLoaded || !conversationIdRef.current) {
+      prevMessagesLength.current = messages.length;
+      return;
     }
-  }, [messages, historyLoaded, saveConversation]);
+    
+    // Only save if messages increased (new message added, not loaded)
+    if (messages.length > 0 && messages.length > prevMessagesLength.current) {
+      saveConversationRef.current(conversationIdRef.current, messages);
+    }
+    prevMessagesLength.current = messages.length;
+  }, [messages, historyLoaded]);
 
   // Handler for creating new chat
   const handleNewChat = useCallback(() => {
     // Save current conversation if it has messages
     if (conversationIdRef.current && messages.length > 0) {
-      saveConversation(conversationIdRef.current, messages);
+      saveConversationRef.current(conversationIdRef.current, messages);
     }
     
     // Reset state for new chat
     const newId = generateConversationId();
     conversationIdRef.current = newId;
+    prevMessagesLength.current = 0;
     setMessages([]);
     setArtifact(null);
     setArtifactPanelOpen(false);
     setActiveConversation(newId);
-  }, [messages, saveConversation, setActiveConversation]);
+  }, [messages, setActiveConversation]);
 
   // Handler for selecting a conversation
   const handleSelectConversation = useCallback(async (id: string) => {
-    // Save current conversation if it has messages
-    if (conversationIdRef.current && messages.length > 0) {
-      saveConversation(conversationIdRef.current, messages);
-    }
+    isLoadingConversation.current = true;
     
-    // Load selected conversation
-    let conv = getConversation(id);
-    
-    // If conversation has no messages (metadata-only from list), fetch from backend
-    if (!conv || conv.messages.length === 0) {
-      const fullConv = await fetchConversationFromBackend(id);
-      if (fullConv) {
-        conv = fullConv;
-        // Save to local state so it's available next time
-        saveConversation(id, fullConv.messages, false); // Don't sync back to backend
+    try {
+      // Save current conversation if it has messages
+      if (conversationIdRef.current && messages.length > 0) {
+        saveConversationRef.current(conversationIdRef.current, messages);
       }
+      
+      // Load selected conversation
+      let conv = getConversationRef.current(id);
+      
+      // If conversation has no messages (metadata-only from list), fetch from backend
+      if (!conv || conv.messages.length === 0) {
+        const fullConv = await fetchConversationFromBackend(id);
+        if (fullConv) {
+          conv = fullConv;
+          // Save to local state so it's available next time
+          saveConversationRef.current(id, fullConv.messages, false); // Don't sync back to backend
+        }
+      }
+      
+      if (conv && conv.messages.length > 0) {
+        conversationIdRef.current = id;
+        prevMessagesLength.current = conv.messages.length;
+        setMessages(conv.messages);
+        setActiveConversation(id);
+        // Clear artifact when switching conversations
+        setArtifact(null);
+        setArtifactPanelOpen(false);
+      }
+    } finally {
+      // Always reset the loading flag
+      isLoadingConversation.current = false;
     }
-    
-    if (conv && conv.messages.length > 0) {
-      conversationIdRef.current = id;
-      setMessages(conv.messages);
-      setActiveConversation(id);
-      // Clear artifact when switching conversations
-      setArtifact(null);
-      setArtifactPanelOpen(false);
-    }
-  }, [messages, saveConversation, getConversation, setActiveConversation, fetchConversationFromBackend]);
+  }, [messages, setActiveConversation, fetchConversationFromBackend]);
 
   // Handler for deleting a conversation
   const handleDeleteConversation = useCallback((id: string) => {
@@ -144,6 +171,7 @@ export default function MainContainer() {
     if (conversationIdRef.current === id) {
       const newId = generateConversationId();
       conversationIdRef.current = newId;
+      prevMessagesLength.current = 0;
       setMessages([]);
       setArtifact(null);
       setArtifactPanelOpen(false);

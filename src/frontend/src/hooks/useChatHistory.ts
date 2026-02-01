@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { Message } from "@/types/chat";
 import { API_BASE_URL } from "@/lib/apiBaseUrl";
 
@@ -20,6 +20,7 @@ interface ChatHistoryState {
 const STORAGE_KEY = "adcp_chat_history";
 const MAX_CONVERSATIONS = 50;
 const MAX_MESSAGES_PER_CONVERSATION = 100;
+const SAVE_DEBOUNCE_MS = 1000;
 
 // Helper to serialize dates for localStorage
 function serializeConversation(conv: Conversation): Record<string, unknown> {
@@ -71,6 +72,22 @@ export function useChatHistory() {
     activeConversationId: null,
   });
   const [isLoaded, setIsLoaded] = useState(false);
+  
+  // Use ref to access current state in callbacks without causing re-renders
+  const stateRef = useRef(state);
+  stateRef.current = state;
+  
+  // Debounce timer ref for saves
+  const saveTimerRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (saveTimerRef.current) {
+        clearTimeout(saveTimerRef.current);
+      }
+    };
+  }, []);
 
   // Load conversations from localStorage on mount
   useEffect(() => {
@@ -215,7 +232,7 @@ export function useChatHistory() {
     }
   }, [isLoaded, loadFromBackend]);
 
-  // Save or update a conversation
+  // Save or update a conversation with debouncing
   const saveConversation = useCallback((
     conversationId: string,
     messages: Message[],
@@ -223,57 +240,74 @@ export function useChatHistory() {
   ) => {
     if (messages.length === 0) return;
 
-    setState((prev) => {
-      const existingIndex = prev.conversations.findIndex((c) => c.id === conversationId);
-      const now = new Date();
-      
-      let conversation: Conversation;
-      
-      if (existingIndex >= 0) {
-        // Update existing conversation
-        conversation = {
-          ...prev.conversations[existingIndex],
-          messages: messages.slice(-MAX_MESSAGES_PER_CONVERSATION),
-          title: generateTitle(messages),
-          updatedAt: now,
-        };
-      } else {
-        // Create new conversation
-        conversation = {
-          id: conversationId,
-          title: generateTitle(messages),
-          messages: messages.slice(-MAX_MESSAGES_PER_CONVERSATION),
-          createdAt: now,
-          updatedAt: now,
-        };
+    // Clear any pending save
+    if (saveTimerRef.current) {
+      clearTimeout(saveTimerRef.current);
+    }
+
+    // Capture the conversation ID at call time
+    const targetConversationId = conversationId;
+    const messagesToSave = [...messages]; // Copy to avoid stale closure
+
+    // Debounce the save operation
+    saveTimerRef.current = setTimeout(() => {
+      // Verify the active conversation hasn't changed
+      if (stateRef.current.activeConversationId !== targetConversationId) {
+        return; // Skip stale save
       }
+      
+      setState((prev) => {
+        const existingIndex = prev.conversations.findIndex((c) => c.id === targetConversationId);
+        const now = new Date();
+        
+        let conversation: Conversation;
+        
+        if (existingIndex >= 0) {
+          // Update existing conversation
+          conversation = {
+            ...prev.conversations[existingIndex],
+            messages: messagesToSave.slice(-MAX_MESSAGES_PER_CONVERSATION),
+            title: generateTitle(messagesToSave),
+            updatedAt: now,
+          };
+        } else {
+          // Create new conversation
+          conversation = {
+            id: targetConversationId,
+            title: generateTitle(messagesToSave),
+            messages: messagesToSave.slice(-MAX_MESSAGES_PER_CONVERSATION),
+            createdAt: now,
+            updatedAt: now,
+          };
+        }
 
-      // Sync to backend asynchronously
-      if (syncBackend) {
-        syncToBackend(conversation);
-      }
+        // Sync to backend asynchronously
+        if (syncBackend) {
+          syncToBackend(conversation);
+        }
 
-      // Update conversations list
-      const updatedConversations = existingIndex >= 0
-        ? prev.conversations.map((c, i) => i === existingIndex ? conversation : c)
-        : [conversation, ...prev.conversations];
+        // Update conversations list
+        const updatedConversations = existingIndex >= 0
+          ? prev.conversations.map((c, i) => i === existingIndex ? conversation : c)
+          : [conversation, ...prev.conversations];
 
-      // Sort by updated date and limit total
-      const sorted = updatedConversations
-        .sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())
-        .slice(0, MAX_CONVERSATIONS);
+        // Sort by updated date and limit total
+        const sorted = updatedConversations
+          .sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())
+          .slice(0, MAX_CONVERSATIONS);
 
-      return {
-        conversations: sorted,
-        activeConversationId: conversationId,
-      };
-    });
+        return {
+          conversations: sorted,
+          activeConversationId: targetConversationId,
+        };
+      });
+    }, SAVE_DEBOUNCE_MS);
   }, [syncToBackend]);
 
-  // Get a specific conversation
+  // Get a specific conversation - uses ref to avoid dependency on state
   const getConversation = useCallback((id: string): Conversation | undefined => {
-    return state.conversations.find((c) => c.id === id);
-  }, [state.conversations]);
+    return stateRef.current.conversations.find((c) => c.id === id);
+  }, []);
 
   // Delete a conversation
   const deleteConversation = useCallback(async (id: string) => {
@@ -313,11 +347,12 @@ export function useChatHistory() {
     return id;
   }, []);
 
-  // Get active conversation
+  // Get active conversation - uses ref to avoid dependency on state
   const getActiveConversation = useCallback((): Conversation | undefined => {
-    if (!state.activeConversationId) return undefined;
-    return state.conversations.find((c) => c.id === state.activeConversationId);
-  }, [state.conversations, state.activeConversationId]);
+    const { activeConversationId, conversations } = stateRef.current;
+    if (!activeConversationId) return undefined;
+    return conversations.find((c) => c.id === activeConversationId);
+  }, []);
 
   return {
     conversations: state.conversations,
