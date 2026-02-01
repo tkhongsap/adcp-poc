@@ -8,9 +8,9 @@
 
 ## Executive Summary
 
-The AdCP Sales Agent Demo is **substantially complete** and ready for executive demonstration. All 7 AdCP tools are implemented and functional. The demo successfully demonstrates the **DISCOVER → MONITOR → OPTIMISE** lifecycle through natural language chat.
+The AdCP Sales Agent Demo is **substantially complete** and demonstrates the full **DISCOVER → MONITOR → OPTIMISE** lifecycle through natural language chat. All 7 AdCP tools are implemented. The demo is suitable for executive presentation with awareness of documented issues.
 
-### Overall Status: **PASS** (with minor issues noted)
+### Overall Status: **PASS WITH RESERVATIONS**
 
 ---
 
@@ -19,11 +19,11 @@ The AdCP Sales Agent Demo is **substantially complete** and ready for executive 
 | # | Criteria | Status | Notes |
 |---|----------|--------|-------|
 | 1 | Frontend loads and chat interface works | **PASS** | Chat interface loads correctly, accepts input, displays responses |
-| 2 | All 7 tools return valid responses | **PASS** | All tools implemented and callable via API |
+| 2 | All 7 tools return valid responses | **PARTIAL** | 6/7 tools fully working; update_media_buy has field parsing issues |
 | 3 | DISCOVER phase works (inventory queries) | **PASS** | Products, formats, properties all queryable |
 | 4 | MONITOR phase works (performance queries) | **PASS** | Campaign metrics, breakdowns by device/geo all working |
-| 5 | OPTIMISE phase works (updates persist) | **PARTIAL** | Tools work but some field parsing issues |
-| 6 | Response times under 3 seconds | **PASS** | API responses are fast; Claude responses ~2-5 seconds |
+| 5 | OPTIMISE phase works (updates persist) | **PARTIAL** | Tool calls succeed but persistence not fully verified; parsing issues |
+| 6 | Response times under 3 seconds | **PARTIAL** | API responses <1s; Claude chat responses ~2-5s (exceeds 3s threshold) |
 | 7 | Professional appearance | **PASS** | Modern, polished Claude-style interface |
 
 ---
@@ -36,24 +36,26 @@ The AdCP Sales Agent Demo is **substantially complete** and ready for executive 
 - **Status:** PASS
 - **Test:** `POST /api/tools/get_products {}`
 - **Result:** Returns 8 products including ESPN, CNN, Weather.com, TechCrunch, Sports Illustrated, Bleacher Report, Forbes, Auto News
+- **PRD Note:** PRD lists 10 products; Spotify and NYT missing from products (available as properties)
 - **Pricing:** Correct CPM ranges ($8-$45)
 
 #### 2. list_creative_formats
 - **Status:** PASS
 - **Test:** `POST /api/tools/list_creative_formats {}`
 - **Result:** Returns 13 formats across display (6), video (4), native (2), audio (1)
-- **Specs:** Include dimensions, file sizes, durations
+- **PRD Note:** PRD lists 14 formats; Rich Media format missing
 
 #### 3. list_authorized_properties
 - **Status:** PASS
 - **Test:** `POST /api/tools/list_authorized_properties {}`
-- **Result:** Returns 10 properties with monthly uniques, authorization levels, discounts, audience profiles
+- **Result:** Returns 10 properties including Spotify, NYT with monthly uniques, authorization levels, discounts
+- **Note:** Properties include Spotify/NYT but these are not available as purchasable products
 
 #### 4. create_media_buy
 - **Status:** PASS
 - **Test:** `POST /api/tools/create_media_buy {"brand_name": "Test Campaign", "product_id": "prod_espn_premium", "budget": 5000, "start_time": "2026-02-01", "end_time": "2026-02-28", "targeting": {}}`
 - **Result:** Successfully creates media buy with ID `mb_test_campaign_1`
-- **Features:** Generates estimated impressions, validates minimum budget
+- **Features:** Generates estimated impressions, validates minimum budget, broadcasts via WebSocket
 
 ### MONITOR Phase Tools
 
@@ -73,9 +75,10 @@ The AdCP Sales Agent Demo is **substantially complete** and ready for executive 
 #### 6. update_media_buy
 - **Status:** PARTIAL PASS
 - **Test:** `POST /api/tools/update_media_buy {"media_buy_id": "mb_apex_motors_q1", "updates": {"adjust_bid": {"device": "mobile", "adjustment_percent": -20}}}`
-- **Result:** Tool executes but shows `undefined` for some percentage values
-- **Issue:** Field parsing issue - `adjustment_percent` vs expected field name
-- **Impact:** Minor - tool still broadcasts updates; fix recommended
+- **Result:** Tool executes but shows `undefined` for percentage values
+- **Issue:** Field parsing - looking for different field names than provided
+- **Persistence:** WebSocket broadcasts update but actual value persistence unverified
+- **Recommendation:** **FIX BEFORE DEMO** - Review updateMediaBuy.ts field parsing
 
 #### 7. provide_performance_feedback
 - **Status:** PASS
@@ -106,7 +109,7 @@ The AdCP Sales Agent Demo is **substantially complete** and ready for executive 
 
 | Query | Response | Status |
 |-------|----------|--------|
-| "Reduce Apex mobile bid by 20%" | Calls update_media_buy tool | PASS |
+| "Reduce Apex mobile bid by 20%" | Calls update_media_buy tool | PARTIAL (parsing issues) |
 | "Submit our conversion data for Apex" | Calls provide_performance_feedback | PASS |
 
 ---
@@ -134,83 +137,105 @@ The AdCP Sales Agent Demo is **substantially complete** and ready for executive 
 
 ## Mock Data Verification
 
-| Data Type | Expected | Actual | Status |
-|-----------|----------|--------|--------|
-| Products | 10 | 8 | PARTIAL (missing Spotify, NYT in products) |
-| Media Buys | 5 | 5 | PASS |
-| Creative Formats | 14 | 13 | PARTIAL (missing 1 format) |
-| Properties | 10 | 10 | PASS |
-| Delivery Metrics | 5 | 5 | PASS |
+| Data Type | PRD Expected | Actual | Status | Notes |
+|-----------|--------------|--------|--------|-------|
+| Products | 10 | 8 | **PARTIAL** | Missing Spotify, NYT as products (exist as properties only) |
+| Media Buys | 5 | 5 | **PASS** | All campaigns present with correct data |
+| Creative Formats | 14 | 13 | **PARTIAL** | Missing Rich Media format |
+| Properties | 10 | 10 | **PASS** | All 10 properties including Spotify, NYT |
+| Delivery Metrics | 5 | 5 | **PASS** | Full breakdowns available |
+
+---
+
+## Response Time Analysis
+
+| Operation | Time | PRD Requirement | Status |
+|-----------|------|-----------------|--------|
+| API tool calls | <1 second | Under 3 seconds | **PASS** |
+| Claude chat responses | 2-5 seconds | Under 3 seconds | **PARTIAL** |
+| Dashboard load | ~2 seconds | Under 3 seconds | **PASS** |
+
+**Note:** Claude API response times depend on model load and query complexity. Simple queries are faster; complex analysis may exceed 3 seconds.
 
 ---
 
 ## Issues Found
 
-### Minor Issues (Demo-Ready)
+### Must Fix Before Demo
 
 1. **update_media_buy field parsing:** Shows `undefined` for adjustment percentages
-   - Root cause: Field name mismatch in update handling
-   - Impact: Low - tool still executes
-   - Recommendation: Fix before production demo
+   - Root cause: Field name mismatch (e.g., `adjustment_percent` vs actual expected field)
+   - Impact: OPTIMISE phase not fully demonstrable
+   - Recommendation: Review and fix src/backend/src/tools/updateMediaBuy.ts
 
-2. **Console warnings:** Framer Motion "transparent" animation warnings
-   - Impact: Visual only, no functional impact
-   - Recommendation: Nice to fix but not blocking
+### Should Fix (If Time Permits)
 
-3. **WebSocket warnings in dev:** Cross-origin blocked messages
-   - Impact: Dev only, not visible to end users
-   - Recommendation: Configure allowedDevOrigins
+1. **Missing Products:** Spotify and NYT exist as properties but not as purchasable products
+   - Impact: Minor - demo can focus on available products
+   
+2. **Missing Rich Media format:** PRD lists 14 formats, only 13 available
+   - Impact: Minor - not likely to come up in demo
 
-### Missing From PRD (Nice to Have)
+### Low Priority
 
-1. **Spotify product:** Listed in PRD but not in products endpoint
-2. **NYT product:** Listed in PRD but not in products endpoint
-3. **Rich Media format:** PRD mentions 14 formats, API returns 13
+1. **Console warnings:** Framer Motion "transparent" animation warnings
+   - Impact: Visual only, not visible to demo audience
+
+2. **WebSocket dev warnings:** Cross-origin blocked messages
+   - Impact: Dev only
 
 ---
 
 ## PRD Compliance Summary
 
-| Requirement | Status |
-|-------------|--------|
-| Frontend Dashboard with AI Chat | **COMPLETE** |
-| MCP Backend with 7 AdCP Tools | **COMPLETE** |
-| Claude API Integration | **COMPLETE** |
-| Tool Calling from Natural Language | **COMPLETE** |
-| DISCOVER Phase Demo | **COMPLETE** |
-| MONITOR Phase Demo | **COMPLETE** |
-| OPTIMISE Phase Demo | **COMPLETE** |
-| Mock Data (Products, Buys, Formats) | **COMPLETE** |
-| Professional Appearance | **COMPLETE** |
-| WebSocket Real-time Updates | **COMPLETE** |
+| Requirement | Status | Notes |
+|-------------|--------|-------|
+| Frontend Dashboard with AI Chat | **COMPLETE** | Professional Claude-style interface |
+| MCP Backend with 7 AdCP Tools | **PARTIAL** | 6/7 fully working; update_media_buy needs fix |
+| Claude API Integration | **COMPLETE** | Tool calling working correctly |
+| Tool Calling from Natural Language | **COMPLETE** | All tools callable via chat |
+| DISCOVER Phase Demo | **COMPLETE** | Products, formats, properties queryable |
+| MONITOR Phase Demo | **COMPLETE** | Campaign metrics and breakdowns working |
+| OPTIMISE Phase Demo | **PARTIAL** | Tool calls work but values show undefined |
+| Mock Data (Products, Buys, Formats) | **PARTIAL** | 8/10 products, 13/14 formats |
+| Professional Appearance | **COMPLETE** | Modern, polished design |
+| WebSocket Real-time Updates | **COMPLETE** | Dashboard updates in real-time |
+| Response Times <3s | **PARTIAL** | API fast; Claude responses can exceed 3s |
 
 ---
 
 ## Recommendations Before Demo
 
 ### High Priority (Must Fix)
-- None - demo is functional
+1. **Fix update_media_buy field parsing** - Review updateMediaBuy.ts to correct field name expectations
 
 ### Medium Priority (Should Fix)
-1. Review update_media_buy field parsing to fix `undefined` values
-2. Add missing products (Spotify, NYT) to match PRD exactly
+1. Add missing products (Spotify, NYT) to products data if time permits
+2. Add Rich Media format to formats data
 
-### Low Priority (Nice to Have)
-1. Fix Framer Motion animation warnings
-2. Configure Next.js allowedDevOrigins
+### Demo Workarounds
+- For OPTIMISE phase: Focus on provide_performance_feedback which works correctly
+- For response times: Use simpler queries that respond faster
+- For missing products: Demo available products (ESPN, Forbes, TechCrunch work well)
 
 ---
 
 ## Conclusion
 
-The AdCP Sales Agent Demo is **ready for executive demonstration**. The core demo flow (DISCOVER → MONITOR → OPTIMISE) works end-to-end through natural language chat. All 7 AdCP tools are implemented and functional. The UI is polished and professional.
+The AdCP Sales Agent Demo demonstrates the core value proposition effectively. The **DISCOVER** and **MONITOR** phases work flawlessly. The **OPTIMISE** phase works through provide_performance_feedback, but update_media_buy requires a fix for field parsing.
+
+### Demo Readiness: **READY** (with awareness of limitations)
 
 **Recommended Demo Script:**
-1. Open chat, ask "What sports inventory do you have?" (DISCOVER)
-2. Ask "Show me all active campaigns" (MONITOR)
-3. Ask "How is Apex Motors performing?" (MONITOR - detailed)
-4. Ask "What optimisations would you recommend?" (OPTIMISE - recommendations)
-5. Show dashboard to display real-time campaign data
+1. Open chat, ask "What sports inventory do you have?" (DISCOVER) - **Works perfectly**
+2. Ask "Show me all active campaigns" (MONITOR) - **Works perfectly**
+3. Ask "How is Apex Motors performing?" (MONITOR - detailed) - **Works perfectly**
+4. Ask "What optimisations would you recommend?" (OPTIMISE - AI recommendations) - **Works perfectly**
+5. Ask "Submit conversion data for Apex: 25 conversions worth $125,000" (OPTIMISE) - **Works perfectly**
+6. Show dashboard to display real-time campaign data - **Works perfectly**
+
+**Avoid during demo:**
+- Specific bid adjustment commands until field parsing is fixed
 
 ---
 
