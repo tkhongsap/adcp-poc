@@ -15,6 +15,26 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
+// Default model to use
+const DEFAULT_MODEL = 'claude-sonnet-4-5-20250929';
+
+// Valid Claude 4.5 model IDs
+const VALID_MODELS = [
+  'claude-sonnet-4-5-20250929',
+  'claude-opus-4-5-20251101',
+  'claude-haiku-4-5-20251001',
+] as const;
+
+type ValidModel = typeof VALID_MODELS[number];
+
+// Validate and return the model ID
+function getValidModel(model?: string): ValidModel {
+  if (model && VALID_MODELS.includes(model as ValidModel)) {
+    return model as ValidModel;
+  }
+  return DEFAULT_MODEL;
+}
+
 // System prompt for the AdCP Sales Agent
 const SYSTEM_PROMPT = `You are the AdCP Sales Agent, an AI assistant for the Adform Campaign Platform. You help advertisers and agencies manage their digital advertising campaigns.
 
@@ -316,8 +336,11 @@ export interface ChatResponse {
  */
 export async function processChat(
   userMessage: string,
-  conversationHistory: ChatMessage[] = []
+  conversationHistory: ChatMessage[] = [],
+  model?: string
 ): Promise<ChatResponse> {
+  const validModel = getValidModel(model);
+
   // Convert our chat history to Claude's format
   const messages: MessageParam[] = conversationHistory.map((msg) => ({
     role: msg.role,
@@ -334,7 +357,7 @@ export async function processChat(
 
   // Initial API call
   let response = await anthropic.messages.create({
-    model: 'claude-opus-4-5-20251101',
+    model: validModel,
     max_tokens: 4096,
     system: SYSTEM_PROMPT,
     tools: TOOL_DEFINITIONS,
@@ -381,7 +404,7 @@ export async function processChat(
 
     // Continue the conversation with tool results
     response = await anthropic.messages.create({
-      model: 'claude-opus-4-5-20251101',
+      model: validModel,
       max_tokens: 4096,
       system: SYSTEM_PROMPT,
       tools: TOOL_DEFINITIONS,
@@ -409,8 +432,11 @@ export async function processChatStream(
   conversationHistory: ChatMessage[] = [],
   onText: (text: string) => void,
   onToolCall?: (name: string, input: Record<string, unknown>) => void,
-  onToolResult?: (name: string, result: unknown) => void
+  onToolResult?: (name: string, result: unknown) => void,
+  model?: string
 ): Promise<ChatResponse> {
+  const validModel = getValidModel(model);
+
   // Convert our chat history to Claude's format
   const messages: MessageParam[] = conversationHistory.map((msg) => ({
     role: msg.role,
@@ -429,7 +455,7 @@ export async function processChatStream(
   // Helper function to process streaming responses
   async function streamResponse(): Promise<Anthropic.Message> {
     const stream = anthropic.messages.stream({
-      model: 'claude-opus-4-5-20251101',
+      model: validModel,
       max_tokens: 4096,
       system: SYSTEM_PROMPT,
       tools: TOOL_DEFINITIONS,

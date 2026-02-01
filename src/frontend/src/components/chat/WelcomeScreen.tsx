@@ -1,12 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import MessageInput from "./MessageInput";
+import MessageInput, { ClaudeModelId } from "./MessageInput";
 import QuickActionPills from "./QuickActionPills";
 
 interface WelcomeScreenProps {
   onSendMessage: (content: string) => void;
   disabled?: boolean;
+  selectedModel?: ClaudeModelId;
+  onModelChange?: (model: ClaudeModelId) => void;
 }
 
 // Animated starburst icon matching Claude.ai style
@@ -49,7 +51,12 @@ function AnimatedStarburst() {
   );
 }
 
-export default function WelcomeScreen({ onSendMessage, disabled = false }: WelcomeScreenProps) {
+export default function WelcomeScreen({
+  onSendMessage,
+  disabled = false,
+  selectedModel,
+  onModelChange,
+}: WelcomeScreenProps) {
   return (
     <div className="flex flex-col items-center justify-center h-full px-6">
       <motion.div
@@ -80,7 +87,12 @@ export default function WelcomeScreen({ onSendMessage, disabled = false }: Welco
           transition={{ delay: 0.15, duration: 0.4 }}
           className="mb-4"
         >
-          <MessageInput onSendMessage={onSendMessage} disabled={disabled} />
+          <MessageInput
+            onSendMessage={onSendMessage}
+            disabled={disabled}
+            selectedModel={selectedModel}
+            onModelChange={onModelChange}
+          />
         </motion.div>
 
         {/* Quick action pills */}
