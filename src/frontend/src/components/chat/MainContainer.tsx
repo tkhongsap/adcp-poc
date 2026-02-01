@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import ChatSidebar from "./ChatSidebar";
 import WelcomeScreen from "./WelcomeScreen";
 import ConversationView from "./ConversationView";
-import MessageInput from "./MessageInput";
+import MessageInput, { ClaudeModelId, DEFAULT_MODEL } from "./MessageInput";
 import ArtifactPanel from "./ArtifactPanel";
 import ThemeToggle from "../ui/ThemeToggle";
 import { detectArtifact, ToolCallData } from "@/utils/artifactDetection";
@@ -49,6 +49,7 @@ export default function MainContainer() {
   const [artifact, setArtifact] = useState<Artifact | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [artifactPanelOpen, setArtifactPanelOpen] = useState(false);
+  const [selectedModel, setSelectedModel] = useState<ClaudeModelId>(DEFAULT_MODEL);
   const conversationIdRef = useRef<string | null>(null);
 
   // Auto-open artifact panel when artifact is detected
@@ -88,6 +89,7 @@ export default function MainContainer() {
         body: JSON.stringify({
           message: content,
           conversationId: conversationIdRef.current,
+          model: selectedModel,
         }),
       });
 
@@ -257,7 +259,7 @@ export default function MainContainer() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [selectedModel]);
 
   const hasMessages = messages.length > 0;
 
@@ -288,7 +290,12 @@ export default function MainContainer() {
         <div className="flex-1 flex flex-col overflow-hidden">
           {!hasMessages ? (
             /* Empty state: Welcome screen with centered input */
-            <WelcomeScreen onSendMessage={handleSendMessage} disabled={isLoading} />
+            <WelcomeScreen
+              onSendMessage={handleSendMessage}
+              disabled={isLoading}
+              selectedModel={selectedModel}
+              onModelChange={setSelectedModel}
+            />
           ) : (
             /* Conversation state: Messages + sticky bottom input */
             <>
@@ -301,6 +308,8 @@ export default function MainContainer() {
                     onSendMessage={handleSendMessage}
                     disabled={isLoading}
                     placeholder="Reply to AdCP Agent..."
+                    selectedModel={selectedModel}
+                    onModelChange={setSelectedModel}
                   />
                 </div>
               </div>

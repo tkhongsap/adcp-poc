@@ -15,8 +15,40 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-// System prompt for the AdCP Sales Agent
-const SYSTEM_PROMPT = `You are the AdCP Sales Agent, an AI assistant for the Adform Campaign Platform. You help advertisers and agencies manage their digital advertising campaigns.
+// Default model to use
+const DEFAULT_MODEL = 'claude-sonnet-4-5-20250929';
+
+// Valid Claude 4.5 model IDs
+const VALID_MODELS = [
+  'claude-sonnet-4-5-20250929',
+  'claude-opus-4-5-20251101',
+  'claude-haiku-4-5-20251001',
+] as const;
+
+type ValidModel = typeof VALID_MODELS[number];
+
+// Validate and return the model ID
+function getValidModel(model?: string): ValidModel {
+  if (model && VALID_MODELS.includes(model as ValidModel)) {
+    return model as ValidModel;
+  }
+  return DEFAULT_MODEL;
+}
+
+// Model display names for system prompt
+const MODEL_DISPLAY_NAMES: Record<string, string> = {
+  'claude-sonnet-4-5-20250929': 'Claude Sonnet 4.5',
+  'claude-opus-4-5-20251101': 'Claude Opus 4.5',
+  'claude-haiku-4-5-20251001': 'Claude Haiku 4.5',
+};
+
+// System prompt for the Signal42.ai Agent
+function getSystemPrompt(model: string): string {
+  const modelName = MODEL_DISPLAY_NAMES[model] || 'Claude';
+
+  return `You are the Signal42.ai Campaign Agent, powered by ${modelName}. You are an AI assistant built by Signal42.ai to help advertisers and agencies manage their digital advertising campaigns.
+
+When asked about who you are or what model you're using, mention that you are powered by ${modelName} (by Anthropic) and built by Signal42.ai.
 
 You have access to the following tools to help users:
 - get_products: Discover available advertising inventory (display, video, native, audio products)
@@ -34,6 +66,7 @@ Guidelines:
 - For simple confirmations or single values, respond inline
 - For complex data (tables, reports), structure your response clearly
 - Always explain what actions you're taking and their results`;
+}
 
 // Tool definitions for Claude API
 export const TOOL_DEFINITIONS: Tool[] = [
@@ -316,8 +349,11 @@ export interface ChatResponse {
  */
 export async function processChat(
   userMessage: string,
-  conversationHistory: ChatMessage[] = []
+  conversationHistory: ChatMessage[] = [],
+  model?: string
 ): Promise<ChatResponse> {
+  const validModel = getValidModel(model);
+
   // Convert our chat history to Claude's format
   const messages: MessageParam[] = conversationHistory.map((msg) => ({
     role: msg.role,
@@ -334,9 +370,9 @@ export async function processChat(
 
   // Initial API call
   let response = await anthropic.messages.create({
-    model: 'claude-opus-4-5-20251101',
+    model: validModel,
     max_tokens: 4096,
-    system: SYSTEM_PROMPT,
+    system: getSystemPrompt(validModel),
     tools: TOOL_DEFINITIONS,
     messages,
   });
@@ -381,9 +417,9 @@ export async function processChat(
 
     // Continue the conversation with tool results
     response = await anthropic.messages.create({
-      model: 'claude-opus-4-5-20251101',
+      model: validModel,
       max_tokens: 4096,
-      system: SYSTEM_PROMPT,
+      system: getSystemPrompt(validModel),
       tools: TOOL_DEFINITIONS,
       messages,
     });
@@ -409,8 +445,11 @@ export async function processChatStream(
   conversationHistory: ChatMessage[] = [],
   onText: (text: string) => void,
   onToolCall?: (name: string, input: Record<string, unknown>) => void,
-  onToolResult?: (name: string, result: unknown) => void
+  onToolResult?: (name: string, result: unknown) => void,
+  model?: string
 ): Promise<ChatResponse> {
+  const validModel = getValidModel(model);
+
   // Convert our chat history to Claude's format
   const messages: MessageParam[] = conversationHistory.map((msg) => ({
     role: msg.role,
@@ -429,9 +468,9 @@ export async function processChatStream(
   // Helper function to process streaming responses
   async function streamResponse(): Promise<Anthropic.Message> {
     const stream = anthropic.messages.stream({
-      model: 'claude-opus-4-5-20251101',
+      model: validModel,
       max_tokens: 4096,
-      system: SYSTEM_PROMPT,
+      system: getSystemPrompt(validModel),
       tools: TOOL_DEFINITIONS,
       messages,
     });

@@ -21,7 +21,7 @@ const conversations: Map<string, ChatMessage[]> = new Map();
  */
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { message, conversationId } = req.body;
+    const { message, conversationId, model } = req.body;
 
     if (!message || typeof message !== 'string') {
       res.status(400).json({ error: 'Message is required' });
@@ -32,8 +32,8 @@ router.post('/', async (req: Request, res: Response) => {
     const id = conversationId || `conv_${Date.now()}_${Math.random().toString(36).substring(7)}`;
     const history = conversations.get(id) || [];
 
-    // Process the chat
-    const response = await processChat(message, history);
+    // Process the chat with optional model
+    const response = await processChat(message, history, model);
 
     // Update conversation history
     history.push({ role: 'user', content: message });
@@ -67,7 +67,7 @@ router.post('/', async (req: Request, res: Response) => {
  */
 router.post('/stream', async (req: Request, res: Response) => {
   try {
-    const { message, conversationId } = req.body;
+    const { message, conversationId, model } = req.body;
 
     if (!message || typeof message !== 'string') {
       res.status(400).json({ error: 'Message is required' });
@@ -83,12 +83,12 @@ router.post('/stream', async (req: Request, res: Response) => {
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
 
-    // Send initial event with conversation ID
-    res.write(`event: start\ndata: ${JSON.stringify({ conversationId: id })}\n\n`);
+    // Send initial event with conversation ID and model being used
+    res.write(`event: start\ndata: ${JSON.stringify({ conversationId: id, model: model || 'claude-sonnet-4-5-20250929' })}\n\n`);
 
     let fullMessage = '';
 
-    // Process with streaming
+    // Process with streaming, using the specified model
     const response = await processChatStream(
       message,
       history,
@@ -104,7 +104,9 @@ router.post('/stream', async (req: Request, res: Response) => {
       // On tool result
       (name, result) => {
         res.write(`event: tool_result\ndata: ${JSON.stringify({ name, result })}\n\n`);
-      }
+      },
+      // Model parameter
+      model
     );
 
     // Update conversation history

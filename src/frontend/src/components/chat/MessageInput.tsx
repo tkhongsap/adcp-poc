@@ -4,15 +4,50 @@ import { useState, KeyboardEvent, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
+// Available Claude 4.5 models
+export const CLAUDE_MODELS = {
+  "claude-sonnet-4-5-20250929": {
+    id: "claude-sonnet-4-5-20250929",
+    name: "Sonnet 4.5",
+    description: "Best balance of speed and intelligence",
+  },
+  "claude-opus-4-5-20251101": {
+    id: "claude-opus-4-5-20251101",
+    name: "Opus 4.5",
+    description: "Maximum intelligence",
+  },
+  "claude-haiku-4-5-20251001": {
+    id: "claude-haiku-4-5-20251001",
+    name: "Haiku 4.5",
+    description: "Fastest responses",
+  },
+} as const;
+
+export type ClaudeModelId = keyof typeof CLAUDE_MODELS;
+
+export const DEFAULT_MODEL: ClaudeModelId = "claude-sonnet-4-5-20250929";
+
 interface MessageInputProps {
   onSendMessage: (content: string) => void;
   disabled?: boolean;
   placeholder?: string;
+  selectedModel?: ClaudeModelId;
+  onModelChange?: (model: ClaudeModelId) => void;
 }
 
-// Model selector dropdown (visual only)
-function ModelSelector() {
+// Model selector dropdown
+interface ModelSelectorProps {
+  selectedModel: ClaudeModelId;
+  onModelChange: (model: ClaudeModelId) => void;
+}
+
+function ModelSelector({ selectedModel, onModelChange }: ModelSelectorProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleSelectModel = (modelId: ClaudeModelId) => {
+    onModelChange(modelId);
+    setIsOpen(false);
+  };
 
   return (
     <div className="relative">
@@ -24,7 +59,7 @@ function ModelSelector() {
           "hover:bg-muted/50 transition-colors"
         )}
       >
-        <span className="font-medium">Opus 4.5</span>
+        <span className="font-medium">{CLAUDE_MODELS[selectedModel].name}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
@@ -42,44 +77,32 @@ function ModelSelector() {
         </svg>
       </button>
 
-      {/* Dropdown (visual only) */}
+      {/* Dropdown */}
       {isOpen && (
         <motion.div
           initial={{ opacity: 0, y: -5 }}
           animate={{ opacity: 1, y: 0 }}
           className={cn(
-            "absolute bottom-full right-0 mb-2",
+            "absolute bottom-full right-0 mb-2 z-50",
             "bg-card border border-border rounded-lg shadow-lg",
-            "py-1 min-w-[140px]"
+            "py-1 min-w-[180px]"
           )}
         >
-          <button
-            onClick={() => setIsOpen(false)}
-            className={cn(
-              "w-full px-3 py-2 text-left text-sm",
-              "text-foreground bg-muted/50"
-            )}
-          >
-            Opus 4.5
-          </button>
-          <button
-            onClick={() => setIsOpen(false)}
-            className={cn(
-              "w-full px-3 py-2 text-left text-sm",
-              "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
-            )}
-          >
-            Sonnet 4
-          </button>
-          <button
-            onClick={() => setIsOpen(false)}
-            className={cn(
-              "w-full px-3 py-2 text-left text-sm",
-              "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
-            )}
-          >
-            Haiku 3.5
-          </button>
+          {Object.values(CLAUDE_MODELS).map((model) => (
+            <button
+              key={model.id}
+              onClick={() => handleSelectModel(model.id as ClaudeModelId)}
+              className={cn(
+                "w-full px-3 py-2 text-left text-sm",
+                selectedModel === model.id
+                  ? "text-foreground bg-muted/50"
+                  : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+              )}
+            >
+              <div className="font-medium">{model.name}</div>
+              <div className="text-xs text-muted-foreground">{model.description}</div>
+            </button>
+          ))}
         </motion.div>
       )}
     </div>
@@ -90,10 +113,17 @@ export default function MessageInput({
   onSendMessage,
   disabled = false,
   placeholder = "How can I help you today?",
+  selectedModel = DEFAULT_MODEL,
+  onModelChange,
 }: MessageInputProps) {
   const [inputValue, setInputValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const [localModel, setLocalModel] = useState<ClaudeModelId>(selectedModel);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Use controlled model if onModelChange is provided, otherwise use local state
+  const currentModel = onModelChange ? selectedModel : localModel;
+  const handleModelChange = onModelChange || setLocalModel;
 
   // Auto-resize textarea based on content
   useEffect(() => {
@@ -207,7 +237,7 @@ export default function MessageInput({
 
         {/* Right side: Model selector and send button */}
         <div className="flex items-center gap-2">
-          <ModelSelector />
+          <ModelSelector selectedModel={currentModel} onModelChange={handleModelChange} />
 
           {/* Send button */}
           <motion.button
