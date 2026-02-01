@@ -1,3 +1,6 @@
+import fs from "node:fs";
+import path from "node:path";
+
 const queries = [
   // DISCOVER - Finding the Right Inventory
   "What sports inventory do you have?",
@@ -38,23 +41,42 @@ const queries = [
 
 const results = [];
 
+const CHAT_URL = process.env.CHAT_URL || "http://localhost:3001/api/chat";
+const OUT_PATH =
+  process.env.OUT_PATH ||
+  path.join(process.cwd(), "tests", "results", "e2e_chat_integration_results.json");
+
+function ensureDirForFile(filePath) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+}
+
+let conversationId;
+
 async function testQuery(query, index) {
   const startTime = Date.now();
 
   try {
-    const response = await fetch("http://localhost:3001/api/chat", {
+    const body = { message: query };
+    if (conversationId) body.conversationId = conversationId;
+
+    const response = await fetch(CHAT_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: query })
+      body: JSON.stringify(body)
     });
 
-    const data = await response.json();
+    const rawText = await response.text();
+    const data = rawText ? JSON.parse(rawText) : {};
     const elapsed = Date.now() - startTime;
 
     const toolsCalled = data.toolCalls && data.toolCalls.length > 0;
     const toolNames = toolsCalled
       ? data.toolCalls.map(tc => tc.name).join(", ")
       : "None";
+
+    if (data.conversationId) {
+      conversationId = data.conversationId;
+    }
 
     results.push({
       index: index + 1,
@@ -63,7 +85,10 @@ async function testQuery(query, index) {
       toolNames: toolNames,
       outputPreview: data.message?.substring(0, 200).replace(/\n/g, " ") || "No response",
       fullOutput: data.message || "No response",
-      elapsed: elapsed
+      elapsed: elapsed,
+      httpStatus: response.status,
+      conversationId: data.conversationId || conversationId || null,
+      toolCalls: data.toolCalls || []
     });
 
     console.log("Completed " + (index + 1) + "/" + queries.length + ": " + query.substring(0, 40) + "...");
@@ -76,18 +101,50 @@ async function testQuery(query, index) {
       toolNames: "Error",
       outputPreview: err.message,
       fullOutput: err.message,
-      elapsed: 0
+      elapsed: 0,
+      httpStatus: null,
+      conversationId: conversationId || null,
+      toolCalls: []
     });
     console.log("Error on " + (index + 1) + ": " + err.message);
   }
 }
 
 async function runAll() {
+  const startedAt = new Date().toISOString();
   console.log("Starting tests for " + queries.length + " queries...\n");
 
   for (let i = 0; i < queries.length; i++) {
     await testQuery(queries[i], i);
   }
+
+  // Persist full results for reporting
+  const toolCounts = {};
+  for (const r of results) {
+    for (const tc of r.toolCalls || []) {
+      toolCounts[tc.name] = (toolCounts[tc.name] || 0) + 1;
+    }
+  }
+
+  ensureDirForFile(OUT_PATH);
+  fs.writeFileSync(
+    OUT_PATH,
+    JSON.stringify(
+      {
+        startedAt,
+        finishedAt: new Date().toISOString(),
+        chatUrl: CHAT_URL,
+        conversationId: conversationId || null,
+        totalQueries: queries.length,
+        results,
+        toolUsage: toolCounts,
+      },
+      null,
+      2
+    ),
+    "utf8"
+  );
+  console.log("\nSaved full results to: " + OUT_PATH);
 
   // Print summary table
   console.log("\n\n" + "=".repeat(120));
@@ -136,15 +193,6 @@ async function runAll() {
 
   // Tool usage breakdown
   console.log("\nTOOL USAGE BREAKDOWN:");
-  const toolCounts = {};
-  for (const r of results) {
-    if (r.toolsCalled === "Yes") {
-      const tools = r.toolNames.split(", ");
-      for (const t of tools) {
-        toolCounts[t] = (toolCounts[t] || 0) + 1;
-      }
-    }
-  }
   for (const [tool, count] of Object.entries(toolCounts)) {
     console.log("  - " + tool + ": " + count + " times");
   }
