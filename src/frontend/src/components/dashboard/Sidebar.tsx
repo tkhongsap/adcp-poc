@@ -1,15 +1,15 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 type NavItem = {
   id: string;
   label: string;
   icon: React.ReactNode;
-  href?: string;
+  href: string;
 };
 
 const chatNavItem: NavItem = {
@@ -37,6 +37,7 @@ const tradingNavItems: NavItem[] = [
   {
     id: "media-buys",
     label: "Media Buys",
+    href: "/dashboard/media-buys",
     icon: (
       <svg
         className="w-4 h-4"
@@ -56,6 +57,7 @@ const tradingNavItems: NavItem[] = [
   {
     id: "products",
     label: "Products",
+    href: "/dashboard/products",
     icon: (
       <svg
         className="w-4 h-4"
@@ -75,6 +77,7 @@ const tradingNavItems: NavItem[] = [
   {
     id: "formats",
     label: "Formats",
+    href: "/dashboard/formats",
     icon: (
       <svg
         className="w-4 h-4"
@@ -96,45 +99,41 @@ const tradingNavItems: NavItem[] = [
 interface NavLinkProps {
   item: NavItem;
   isActive: boolean;
-  onClick: () => void;
 }
 
-function NavLink({ item, isActive, onClick }: NavLinkProps) {
-  const content = (
-    <motion.button
-      onClick={onClick}
-      whileHover={{ x: 2 }}
-      whileTap={{ scale: 0.98 }}
-      className={cn(
-        "relative w-full flex items-center gap-3 px-3 py-2 text-sm rounded-lg",
-        "transition-colors duration-150 cursor-pointer text-left",
-        isActive
-          ? "bg-muted text-foreground"
-          : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
-      )}
-    >
-      <span className="transition-colors duration-150">
-        {item.icon}
-      </span>
-      <span>{item.label}</span>
-    </motion.button>
+function NavLink({ item, isActive }: NavLinkProps) {
+  return (
+    <li>
+      <Link href={item.href}>
+        <motion.div
+          whileHover={{ x: 2 }}
+          whileTap={{ scale: 0.98 }}
+          className={cn(
+            "relative w-full flex items-center gap-3 px-3 py-2 text-sm rounded-lg",
+            "transition-colors duration-150 cursor-pointer text-left",
+            isActive
+              ? "bg-muted text-foreground"
+              : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+          )}
+        >
+          <span className="transition-colors duration-150">{item.icon}</span>
+          <span>{item.label}</span>
+        </motion.div>
+      </Link>
+    </li>
   );
-
-  if (item.href) {
-    return (
-      <li>
-        <Link href={item.href}>
-          {content}
-        </Link>
-      </li>
-    );
-  }
-
-  return <li>{content}</li>;
 }
 
 export default function Sidebar() {
-  const [activeItem, setActiveItem] = useState("media-buys");
+  const pathname = usePathname();
+
+  // Determine active item based on current pathname
+  const getIsActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/";
+    }
+    return pathname.startsWith(href);
+  };
 
   return (
     <aside className="w-[260px] flex-shrink-0 bg-background border-r border-border h-full flex flex-col">
@@ -175,11 +174,7 @@ export default function Sidebar() {
           transition={{ delay: 0.1 }}
           className="space-y-1 mb-4"
         >
-          <NavLink
-            item={chatNavItem}
-            isActive={false}
-            onClick={() => {}}
-          />
+          <NavLink item={chatNavItem} isActive={getIsActive(chatNavItem.href)} />
         </motion.ul>
 
         {/* Trading Section */}
@@ -201,8 +196,7 @@ export default function Sidebar() {
             <NavLink
               key={item.id}
               item={item}
-              isActive={activeItem === item.id}
-              onClick={() => setActiveItem(item.id)}
+              isActive={getIsActive(item.href)}
             />
           ))}
         </motion.ul>
