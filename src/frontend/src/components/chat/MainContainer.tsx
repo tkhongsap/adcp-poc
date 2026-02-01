@@ -264,15 +264,20 @@ export default function MainContainer() {
   const hasMessages = messages.length > 0;
 
   return (
-    <div className="h-screen bg-background flex">
+    <div className="h-screen bg-background flex overflow-hidden">
       {/* Sidebar */}
       <ChatSidebar
         isCollapsed={sidebarCollapsed}
         onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
       />
 
-      {/* Main content area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      {/* Main content area - flexes to share space with artifact panel */}
+      <div
+        className={cn(
+          "flex flex-col min-w-0 transition-all duration-300 ease-in-out",
+          artifactPanelOpen && artifact ? "flex-1" : "flex-1"
+        )}
+      >
         {/* Minimal header */}
         <motion.header
           initial={{ opacity: 0, y: -10 }}
@@ -303,7 +308,10 @@ export default function MainContainer() {
 
               {/* Sticky bottom input */}
               <div className="flex-shrink-0 border-t border-border bg-background">
-                <div className="max-w-3xl mx-auto px-4 py-4">
+                <div className={cn(
+                  "mx-auto px-4 py-4 transition-all duration-300",
+                  artifactPanelOpen && artifact ? "max-w-2xl" : "max-w-3xl"
+                )}>
                   <MessageInput
                     onSendMessage={handleSendMessage}
                     disabled={isLoading}
@@ -318,7 +326,7 @@ export default function MainContainer() {
         </div>
       </div>
 
-      {/* Artifact panel (slide-in overlay) */}
+      {/* Artifact panel - side-by-side with chat */}
       <ArtifactPanel
         artifact={artifact}
         isOpen={artifactPanelOpen}
