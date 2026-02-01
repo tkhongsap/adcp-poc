@@ -9,6 +9,7 @@ import GeoChips from "../ui/GeoChips";
 import ThemeToggle from "../ui/ThemeToggle";
 import ConnectionStatus from "../ui/ConnectionStatus";
 import { useWebSocket } from "../../hooks/useWebSocket";
+import { API_BASE_URL } from "../../lib/apiBaseUrl";
 
 type ViewMode = "cards" | "table";
 
@@ -48,6 +49,26 @@ export default function MediaBuysView() {
   const [viewMode, setViewMode] = useState<ViewMode>("table");
 
   const isLoading = mediaBuys.length === 0;
+
+  // Handler to toggle campaign status (pause/resume)
+  const handleStatusToggle = async (mediaBuyId: string, newStatus: "active" | "paused") => {
+    console.log(`[StatusToggle] Toggling ${mediaBuyId} to ${newStatus}`);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/tools/update_media_buy`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          media_buy_id: mediaBuyId,
+          updates: { set_status: { status: newStatus } }
+        }),
+      });
+      const result = await response.json();
+      console.log(`[StatusToggle] API response:`, result);
+      // WebSocket will broadcast the update - no need to manually update state
+    } catch (error) {
+      console.error("[StatusToggle] Failed to update campaign status:", error);
+    }
+  };
 
   return (
     <>
@@ -154,6 +175,7 @@ export default function MediaBuysView() {
               mediaBuys={mediaBuys}
               deliveryMetrics={deliveryMetrics}
               recentlyUpdatedIds={recentlyUpdatedIds}
+              onStatusToggle={handleStatusToggle}
             />
           </motion.div>
         ) : (
