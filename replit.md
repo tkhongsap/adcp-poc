@@ -31,6 +31,13 @@ This is a Claude.ai-style chat interface with artifacts and a live dashboard for
 - Dark/light theme toggle
 
 ## Recent Changes
+- February 1, 2026: Fixed React performance issues
+  - Fixed infinite re-render loop in MainContainer.tsx caused by unstable function references in useEffect dependencies
+  - Added refs for callback functions to prevent dependency array triggers
+  - Added debouncing (1 second) to conversation saves to reduce backend load
+  - Added stale state guards to prevent overwriting conversations during rapid switching
+  - Added proper cleanup for timers on component unmount
+  - Added downlevelIteration to tsconfig.json for TypeScript build compatibility
 - January 31, 2026: Configured for Replit environment
   - Set frontend to run on port 5000 with host 0.0.0.0
   - Enabled CORS for all origins on backend

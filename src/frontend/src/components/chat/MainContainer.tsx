@@ -12,6 +12,7 @@ import ArtifactPanel from "./ArtifactPanel";
 import ThemeToggle from "../ui/ThemeToggle";
 import { detectArtifact, ToolCallData } from "@/utils/artifactDetection";
 import { API_BASE_URL } from "@/lib/apiBaseUrl";
+import { useChatHistory, generateConversationId } from "@/hooks/useChatHistory";
 
 function OpenDashboardButton() {
   const handleOpenDashboard = () => {
@@ -52,6 +53,18 @@ export default function MainContainer() {
   const [selectedModel, setSelectedModel] = useState<ClaudeModelId>(DEFAULT_MODEL);
   const conversationIdRef = useRef<string | null>(null);
 
+  // Chat history hook
+  const {
+    conversations,
+    activeConversationId,
+    isLoaded: historyLoaded,
+    saveConversation,
+    getConversation,
+    deleteConversation,
+    setActiveConversation,
+    fetchConversationFromBackend,
+  } = useChatHistory();
+
   // Auto-open artifact panel when artifact is detected
   useEffect(() => {
     if (artifact) {
@@ -59,7 +72,120 @@ export default function MainContainer() {
     }
   }, [artifact]);
 
+  // Refs to hold stable function references
+  const getConversationRef = useRef(getConversation);
+  const saveConversationRef = useRef(saveConversation);
+  getConversationRef.current = getConversation;
+  saveConversationRef.current = saveConversation;
+
+  // Load active conversation on mount or when activeConversationId changes
+  useEffect(() => {
+    if (historyLoaded && activeConversationId) {
+      const conv = getConversationRef.current(activeConversationId);
+      if (conv && conv.messages.length > 0) {
+        setMessages(conv.messages);
+        conversationIdRef.current = activeConversationId;
+      }
+    }
+  }, [historyLoaded, activeConversationId]);
+
+  // Track if we're in the middle of loading a conversation to avoid save loops
+  const isLoadingConversation = useRef(false);
+  
+  // Save messages only when user sends a new message (not on load)
+  const prevMessagesLength = useRef(0);
+  useEffect(() => {
+    // Skip if still loading, not loaded yet, or no conversation
+    if (isLoadingConversation.current || !historyLoaded || !conversationIdRef.current) {
+      prevMessagesLength.current = messages.length;
+      return;
+    }
+    
+    // Only save if messages increased (new message added, not loaded)
+    if (messages.length > 0 && messages.length > prevMessagesLength.current) {
+      saveConversationRef.current(conversationIdRef.current, messages);
+    }
+    prevMessagesLength.current = messages.length;
+  }, [messages, historyLoaded]);
+
+  // Handler for creating new chat
+  const handleNewChat = useCallback(() => {
+    // Save current conversation if it has messages
+    if (conversationIdRef.current && messages.length > 0) {
+      saveConversationRef.current(conversationIdRef.current, messages);
+    }
+    
+    // Reset state for new chat
+    const newId = generateConversationId();
+    conversationIdRef.current = newId;
+    prevMessagesLength.current = 0;
+    setMessages([]);
+    setArtifact(null);
+    setArtifactPanelOpen(false);
+    setActiveConversation(newId);
+  }, [messages, setActiveConversation]);
+
+  // Handler for selecting a conversation
+  const handleSelectConversation = useCallback(async (id: string) => {
+    isLoadingConversation.current = true;
+    
+    try {
+      // Save current conversation if it has messages
+      if (conversationIdRef.current && messages.length > 0) {
+        saveConversationRef.current(conversationIdRef.current, messages);
+      }
+      
+      // Load selected conversation
+      let conv = getConversationRef.current(id);
+      
+      // If conversation has no messages (metadata-only from list), fetch from backend
+      if (!conv || conv.messages.length === 0) {
+        const fullConv = await fetchConversationFromBackend(id);
+        if (fullConv) {
+          conv = fullConv;
+          // Save to local state so it's available next time
+          saveConversationRef.current(id, fullConv.messages, false); // Don't sync back to backend
+        }
+      }
+      
+      if (conv && conv.messages.length > 0) {
+        conversationIdRef.current = id;
+        prevMessagesLength.current = conv.messages.length;
+        setMessages(conv.messages);
+        setActiveConversation(id);
+        // Clear artifact when switching conversations
+        setArtifact(null);
+        setArtifactPanelOpen(false);
+      }
+    } finally {
+      // Always reset the loading flag
+      isLoadingConversation.current = false;
+    }
+  }, [messages, setActiveConversation, fetchConversationFromBackend]);
+
+  // Handler for deleting a conversation
+  const handleDeleteConversation = useCallback((id: string) => {
+    deleteConversation(id);
+    
+    // If deleting active conversation, reset to new chat
+    if (conversationIdRef.current === id) {
+      const newId = generateConversationId();
+      conversationIdRef.current = newId;
+      prevMessagesLength.current = 0;
+      setMessages([]);
+      setArtifact(null);
+      setArtifactPanelOpen(false);
+      setActiveConversation(newId);
+    }
+  }, [deleteConversation, setActiveConversation]);
+
   const handleSendMessage = useCallback(async (content: string) => {
+    // Ensure we have a conversation ID
+    if (!conversationIdRef.current) {
+      conversationIdRef.current = generateConversationId();
+      setActiveConversation(conversationIdRef.current);
+    }
+
     // Add user message immediately
     const userMessage: Message = {
       id: `user_${Date.now()}`,
@@ -259,7 +385,7 @@ export default function MainContainer() {
     } finally {
       setIsLoading(false);
     }
-  }, [selectedModel]);
+  }, [selectedModel, setActiveConversation]);
 
   const hasMessages = messages.length > 0;
 
@@ -269,6 +395,11 @@ export default function MainContainer() {
       <ChatSidebar
         isCollapsed={sidebarCollapsed}
         onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+        conversations={conversations}
+        activeConversationId={activeConversationId}
+        onNewChat={handleNewChat}
+        onSelectConversation={handleSelectConversation}
+        onDeleteConversation={handleDeleteConversation}
       />
 
       {/* Main content area - flexes to share space with artifact panel */}

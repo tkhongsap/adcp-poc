@@ -1,0 +1,687 @@
+{
+  "startedAt": "2026-02-01T06:34:04.889Z",
+  "baseUrl": "http://localhost:3001",
+  "health": {
+    "httpStatus": 200,
+    "httpOk": true,
+    "body": {
+      "status": "ok",
+      "timestamp": "2026-02-01T06:34:04.929Z",
+      "dataLoaded": true,
+      "websocket": {
+        "initialized": true,
+        "connectedClients": 0
+      }
+    }
+  },
+  "toolTests": [
+    {
+      "toolName": "get_products",
+      "input": {
+        "category": "Sports"
+      },
+      "httpStatus": 200,
+      "httpOk": true,
+      "elapsedMs": 13,
+      "response": {
+        "success": true,
+        "products": [
+          {
+            "product_id": "prod_espn_premium",
+            "name": "ESPN Premium Sports",
+            "description": "Premium placements across ESPN's sports content including live games, highlights, and sports news",
+            "category": "Sports",
+            "pricing_options": [
+              {
+                "pricing_option_id": "po_espn_standard",
+                "currency": "USD",
+                "cpm": 18,
+                "pricing_model": "fixed_cpm"
+              },
+              {
+                "pricing_option_id": "po_espn_premium",
+                "currency": "USD",
+                "cpm": 25,
+                "pricing_model": "fixed_cpm"
+              }
+            ]
+          },
+          {
+            "product_id": "prod_si_sports",
+            "name": "Sports Illustrated",
+            "description": "Classic sports journalism audience across Sports Illustrated digital properties",
+            "category": "Sports",
+            "pricing_options": [
+              {
+                "pricing_option_id": "po_si_ros",
+                "currency": "USD",
+                "cpm": 15,
+                "pricing_model": "fixed_cpm"
+              },
+              {
+                "pricing_option_id": "po_si_premium",
+                "currency": "USD",
+                "cpm": 20,
+                "pricing_model": "fixed_cpm"
+              }
+            ]
+          },
+          {
+            "product_id": "prod_bleacher",
+            "name": "Bleacher Report",
+            "description": "Younger sports fan audience on Bleacher Report with strong mobile engagement",
+            "category": "Sports",
+            "pricing_options": [
+              {
+                "pricing_option_id": "po_br_standard",
+                "currency": "USD",
+                "cpm": 12,
+                "pricing_model": "fixed_cpm"
+              },
+              {
+                "pricing_option_id": "po_br_video",
+                "currency": "USD",
+                "cpm": 18,
+                "pricing_model": "fixed_cpm"
+              }
+            ]
+          }
+        ],
+        "count": 3,
+        "filters_applied": {
+          "category": "Sports"
+        }
+      }
+    },
+    {
+      "toolName": "list_creative_formats",
+      "input": {},
+      "httpStatus": 200,
+      "httpOk": true,
+      "elapsedMs": 4,
+      "response": {
+        "success": true,
+        "formats": [
+          {
+            "format_id": "display_300x250_image",
+            "name": "Medium Rectangle",
+            "type": "display",
+            "dimensions": "300x250",
+            "specs": {
+              "max_file_size": "150KB",
+              "file_types": [
+                "jpg",
+                "png",
+                "gif"
+              ]
+            }
+          },
+          {
+            "format_id": "display_728x90_image",
+            "name": "Leaderboard",
+            "type": "display",
+            "dimensions": "728x90",
+            "specs": {
+              "max_file_size": "150KB",
+              "file_types": [
+                "jpg",
+                "png",
+                "gif"
+              ]
+            }
+          },
+          {
+            "format_id": "display_970x250_image",
+            "name": "Billboard",
+            "type": "display",
+            "dimensions": "970x250",
+            "specs": {
+              "max_file_size": "200KB",
+              "file_types": [
+                "jpg",
+                "png",
+                "gif"
+              ]
+            }
+          },
+          {
+            "format_id": "display_300x600_image",
+            "name": "Half Page",
+            "type": "display",
+            "dimensions": "300x600",
+            "specs": {
+              "max_file_size": "200KB",
+              "file_types": [
+                "jpg",
+                "png",
+                "gif"
+              ]
+            }
+          },
+          {
+            "format_id": "display_320x50_image",
+            "name": "Mobile Leaderboard",
+            "type": "display",
+            "dimensions": "320x50",
+            "specs": {
+              "max_file_size": "100KB",
+              "file_types": [
+                "jpg",
+                "png",
+                "gif"
+              ]
+            }
+          },
+          {
+            "format_id": "display_320x480_image",
+            "name": "Mobile Interstitial",
+            "type": "display",
+            "dimensions": "320x480",
+            "specs": {
+              "max_file_size": "200KB",
+              "file_types": [
+                "jpg",
+                "png",
+                "gif"
+              ]
+            }
+          },
+          {
+            "format_id": "rich_media_expandable",
+            "name": "Expandable Rich Media",
+            "type": "display",
+            "dimensions": "300x250 -> 600x400",
+            "specs": {
+              "max_file_size": "500KB",
+              "file_types": [
+                "html5",
+                "js"
+              ],
+              "interaction": "click_to_expand"
+            }
+          },
+          {
+            "format_id": "video_preroll_15s",
+            "name": "Pre-roll 15s",
+            "type": "video",
+            "specs": {
+              "max_file_size": "10MB",
+              "file_types": [
+                "mp4",
+                "webm"
+              ],
+              "max_duration": 15
+            }
+          },
+          {
+            "format_id": "video_preroll_30s",
+            "name": "Pre-roll 30s",
+            "type": "video",
+            "specs": {
+              "max_file_size": "20MB",
+              "file_types": [
+                "mp4",
+                "webm"
+              ],
+              "max_duration": 30,
+              "skip_after": 5
+            }
+          },
+          {
+            "format_id": "video_outstream_15s",
+            "name": "Outstream 15s",
+            "type": "video",
+            "specs": {
+              "max_file_size": "10MB",
+              "file_types": [
+                "mp4",
+                "webm"
+              ],
+              "max_duration": 15
+            }
+          },
+          {
+            "format_id": "video_ctv_30s",
+            "name": "CTV 30s",
+            "type": "video",
+            "specs": {
+              "max_file_size": "50MB",
+              "file_types": [
+                "mp4"
+              ],
+              "max_duration": 30
+            }
+          },
+          {
+            "format_id": "native_article_card",
+            "name": "Native Article Card",
+            "type": "native",
+            "specs": {
+              "headline_max": 50,
+              "description_max": 150,
+              "image_dimensions": "1200x628",
+              "cta_max": 15
+            }
+          },
+          {
+            "format_id": "native_content_rec",
+            "name": "Content Recommendation",
+            "type": "native",
+            "specs": {
+              "headline_max": 70,
+              "image_dimensions": "400x300"
+            }
+          },
+          {
+            "format_id": "audio_30s",
+            "name": "Audio 30s",
+            "type": "audio",
+            "specs": {
+              "max_file_size": "5MB",
+              "file_types": [
+                "mp3",
+                "wav",
+                "ogg"
+              ],
+              "max_duration": 30
+            }
+          }
+        ],
+        "count": 14,
+        "filters_applied": {}
+      }
+    },
+    {
+      "toolName": "list_authorized_properties",
+      "input": {},
+      "httpStatus": 200,
+      "httpOk": true,
+      "elapsedMs": 3,
+      "response": {
+        "success": true,
+        "properties": [
+          {
+            "property_id": "prop_espn",
+            "name": "ESPN",
+            "domain": "espn.com",
+            "category": "Sports",
+            "monthly_uniques": 85000000,
+            "authorization_level": "premium",
+            "available_formats": [
+              "display_300x250_image",
+              "display_728x90_image",
+              "video_preroll_15s",
+              "video_preroll_30s"
+            ],
+            "discount_percent": 15,
+            "audience_profile": "Sports enthusiasts, 18-54, male-skewing"
+          },
+          {
+            "property_id": "prop_cnn",
+            "name": "CNN Digital",
+            "domain": "cnn.com",
+            "category": "News",
+            "monthly_uniques": 120000000,
+            "authorization_level": "standard",
+            "available_formats": [
+              "display_970x250_image",
+              "display_300x600_image",
+              "display_300x250_image",
+              "video_ctv_30s"
+            ],
+            "audience_profile": "News consumers, broad demographics, high-income skew on business sections"
+          },
+          {
+            "property_id": "prop_weather",
+            "name": "Weather.com",
+            "domain": "weather.com",
+            "category": "Weather/Local",
+            "monthly_uniques": 150000000,
+            "authorization_level": "standard",
+            "available_formats": [
+              "display_300x250_image",
+              "display_320x50_image"
+            ],
+            "audience_profile": "Broad reach, location-based targeting",
+            "special_capabilities": [
+              "weather-triggered creative swap",
+              "real-time temperature targeting",
+              "severe weather exclusion"
+            ]
+          },
+          {
+            "property_id": "prop_techcrunch",
+            "name": "TechCrunch",
+            "domain": "techcrunch.com",
+            "category": "Technology",
+            "monthly_uniques": 25000000,
+            "authorization_level": "premium",
+            "available_formats": [
+              "display_300x250_image",
+              "native_article_card"
+            ],
+            "discount_percent": 12,
+            "audience_profile": "Tech professionals, startup founders, developers"
+          },
+          {
+            "property_id": "prop_si",
+            "name": "Sports Illustrated",
+            "domain": "si.com",
+            "category": "Sports",
+            "monthly_uniques": 40000000,
+            "authorization_level": "standard",
+            "available_formats": [
+              "display_300x250_image",
+              "display_728x90_image"
+            ],
+            "audience_profile": "Sports fans, classic sports journalism audience"
+          },
+          {
+            "property_id": "prop_bleacher",
+            "name": "Bleacher Report",
+            "domain": "bleacherreport.com",
+            "category": "Sports",
+            "monthly_uniques": 60000000,
+            "authorization_level": "standard",
+            "available_formats": [
+              "display_300x250_image",
+              "video_outstream_15s"
+            ],
+            "audience_profile": "Younger sports fans 18-34, strong mobile engagement"
+          },
+          {
+            "property_id": "prop_forbes",
+            "name": "Forbes",
+            "domain": "forbes.com",
+            "category": "Business",
+            "monthly_uniques": 70000000,
+            "authorization_level": "premium",
+            "available_formats": [
+              "display_300x250_image",
+              "native_article_card"
+            ],
+            "discount_percent": 8,
+            "audience_profile": "58% HHI $100K+, 72% college educated, business decision-makers"
+          },
+          {
+            "property_id": "prop_auto_news",
+            "name": "Automotive News Network",
+            "domain": "autonews.com",
+            "category": "Automotive",
+            "monthly_uniques": 15000000,
+            "authorization_level": "premium",
+            "available_formats": [
+              "display_300x250_image",
+              "display_970x250_image",
+              "video_preroll_30s"
+            ],
+            "discount_percent": 10,
+            "audience_profile": "Auto enthusiasts, in-market car buyers"
+          },
+          {
+            "property_id": "prop_spotify",
+            "name": "Spotify",
+            "domain": "spotify.com",
+            "category": "Audio/Music",
+            "monthly_uniques": 220000000,
+            "authorization_level": "exclusive",
+            "available_formats": [
+              "audio_30s",
+              "video_preroll_15s"
+            ],
+            "audience_profile": "Music streamers, broad demographics, high engagement",
+            "special_capabilities": [
+              "podcast advertising",
+              "music genre targeting",
+              "playlist targeting"
+            ]
+          },
+          {
+            "property_id": "prop_nyt",
+            "name": "New York Times",
+            "domain": "nytimes.com",
+            "category": "News",
+            "monthly_uniques": 90000000,
+            "authorization_level": "premium",
+            "available_formats": [
+              "display_300x250_image",
+              "display_970x250_image",
+              "native_article_card"
+            ],
+            "discount_percent": 5,
+            "audience_profile": "85% college educated, high-income, opinion leaders",
+            "special_capabilities": [
+              "section sponsorship",
+              "creative approval required (48h lead time)"
+            ]
+          }
+        ],
+        "count": 10
+      }
+    },
+    {
+      "toolName": "create_media_buy",
+      "input": {
+        "brand_name": "Test Corp",
+        "product_id": "prod_espn_premium",
+        "budget": 5000,
+        "targeting": {
+          "geo_country_any_of": [
+            "US"
+          ],
+          "device_type": [
+            "mobile",
+            "desktop"
+          ]
+        },
+        "start_time": "2026-02-01T00:00:00Z",
+        "end_time": "2026-03-01T23:59:59Z"
+      },
+      "httpStatus": 200,
+      "httpOk": true,
+      "elapsedMs": 4,
+      "response": {
+        "success": true,
+        "media_buy": {
+          "media_buy_id": "mb_test_corp_1",
+          "status": "submitted",
+          "estimated_impressions": 277777,
+          "brand_name": "Test Corp",
+          "product_id": "prod_espn_premium",
+          "budget": 5000,
+          "start_time": "2026-02-01T00:00:00Z",
+          "end_time": "2026-03-01T23:59:59Z"
+        }
+      }
+    },
+    {
+      "toolName": "get_media_buy_delivery",
+      "input": {
+        "media_buy_id": "mb_apex_motors_q1"
+      },
+      "httpStatus": 200,
+      "httpOk": true,
+      "elapsedMs": 3,
+      "response": {
+        "success": true,
+        "metrics": {
+          "media_buy_id": "mb_apex_motors_q1",
+          "brand": "Apex Motors",
+          "total_budget": 50000,
+          "total_spend": 32450,
+          "pacing": "behind",
+          "health": "poor",
+          "summary": {
+            "impressions": 3850000,
+            "clicks": 4620,
+            "conversions": 45,
+            "ctr": 0.12,
+            "cpm": 8.43,
+            "cpa": 721.11,
+            "viewability": 0.68,
+            "completion_rate": 0.72
+          },
+          "by_device": {
+            "mobile": {
+              "impressions": 2310000,
+              "clicks": 1848,
+              "ctr": 0.08,
+              "spend": 19470,
+              "cpm": 8.43
+            },
+            "desktop": {
+              "impressions": 1540000,
+              "clicks": 2772,
+              "ctr": 0.18,
+              "spend": 12980,
+              "cpm": 8.43
+            }
+          },
+          "by_geo": {
+            "US": {
+              "impressions": 1925000,
+              "clicks": 2695,
+              "ctr": 0.14,
+              "spend": 16225
+            },
+            "UK": {
+              "impressions": 1155000,
+              "clicks": 1617,
+              "ctr": 0.14,
+              "spend": 9735
+            },
+            "DE": {
+              "impressions": 770000,
+              "clicks": 308,
+              "ctr": 0.04,
+              "spend": 6490
+            }
+          },
+          "recommendations": [
+            "Reduce mobile bid - CTR significantly below desktop",
+            "Consider pausing Germany - CTR well below other markets",
+            "Shift budget from mobile to desktop placements"
+          ]
+        }
+      }
+    },
+    {
+      "toolName": "update_media_buy",
+      "input": {
+        "media_buy_id": "mb_apex_motors_q1",
+        "updates": {
+          "adjust_bid": {
+            "device": "mobile",
+            "change_percent": -20
+          }
+        }
+      },
+      "httpStatus": 200,
+      "httpOk": true,
+      "elapsedMs": 3,
+      "response": {
+        "success": true,
+        "result": {
+          "media_buy_id": "mb_apex_motors_q1",
+          "success": true,
+          "changes_applied": [
+            {
+              "operation": "adjust_bid",
+              "details": "Adjusted mobile bid by -20%",
+              "previous_value": 8.5,
+              "new_value": 6.8
+            }
+          ],
+          "estimated_impact": {
+            "efficiency_improvement": "CPM reduced by $1.70",
+            "description": "Bid efficiency improved"
+          }
+        }
+      }
+    },
+    {
+      "toolName": "provide_performance_feedback",
+      "input": {
+        "media_buy_id": "mb_apex_motors_q1",
+        "feedback_type": "conversion_data",
+        "data": {
+          "conversions": 25,
+          "conversion_value": 125000,
+          "attribution_window": "30-day"
+        }
+      },
+      "httpStatus": 200,
+      "httpOk": true,
+      "elapsedMs": 3,
+      "response": {
+        "success": true,
+        "result": {
+          "feedback_id": "fb_mb_apex_motors_q1_conversion_1769927644969",
+          "media_buy_id": "mb_apex_motors_q1",
+          "status": "processed",
+          "impact": "Strong ROAS of 3.9x with 25 conversions in 30-day window. Recommend increasing budget."
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0,
+    "assertions": [
+      {
+        "toolName": "get_products",
+        "ok": true,
+        "assertions": [
+          "sports_products_present"
+        ]
+      },
+      {
+        "toolName": "list_creative_formats",
+        "ok": true,
+        "assertions": [
+          "formats_count_14"
+        ]
+      },
+      {
+        "toolName": "list_authorized_properties",
+        "ok": true,
+        "assertions": [
+          "properties_count_10"
+        ]
+      },
+      {
+        "toolName": "create_media_buy",
+        "ok": true,
+        "assertions": [
+          "created_submitted"
+        ]
+      },
+      {
+        "toolName": "get_media_buy_delivery",
+        "ok": true,
+        "assertions": [
+          "apex_metrics_match_prd_core_fields"
+        ]
+      },
+      {
+        "toolName": "update_media_buy",
+        "ok": true,
+        "assertions": [
+          "adjust_bid_mobile_20pct"
+        ]
+      },
+      {
+        "toolName": "provide_performance_feedback",
+        "ok": true,
+        "assertions": [
+          "feedback_processed"
+        ]
+      }
+    ],
+    "responseTimeMs": {
+      "max": 13,
+      "avg": 5
+    }
+  }
+}

@@ -1,10 +1,56 @@
 import { Router, Request, Response } from 'express';
 import { processChat, processChatStream, type ChatMessage } from '../claude/client.js';
+import {
+  saveConversation as saveConversationToFile,
+  loadConversation as loadConversationFromFile,
+  listConversations,
+  deleteConversation as deleteConversationFromFile,
+  loadAllConversations,
+  initConversationsDirectory,
+  type StoredConversation,
+} from '../data/conversationStore.js';
 
 const router = Router();
 
+// Initialize conversations directory
+initConversationsDirectory();
+
 // In-memory conversation storage (for demo purposes)
+// Load existing conversations from disk on startup
 const conversations: Map<string, ChatMessage[]> = new Map();
+
+// Load persisted conversations into memory
+const storedConversations = loadAllConversations();
+for (const [id, stored] of storedConversations) {
+  conversations.set(id, stored.messages);
+}
+
+// Helper to generate title from first message
+function generateTitle(messages: ChatMessage[]): string {
+  const firstUserMessage = messages.find((m) => m.role === 'user');
+  if (!firstUserMessage) return 'New conversation';
+  const content = firstUserMessage.content.trim();
+  return content.length > 40 ? content.substring(0, 37) + '...' : content;
+}
+
+// Helper to persist conversation to file
+function persistConversation(id: string, messages: ChatMessage[]): void {
+  const stored: StoredConversation = {
+    id,
+    title: generateTitle(messages),
+    messages,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+  
+  // Check if conversation already exists to preserve createdAt
+  const existing = loadConversationFromFile(id);
+  if (existing) {
+    stored.createdAt = existing.createdAt;
+  }
+  
+  saveConversationToFile(stored);
+}
 
 /**
  * POST /api/chat
@@ -44,6 +90,9 @@ router.post('/', async (req: Request, res: Response) => {
     if (history.length > 40) {
       conversations.set(id, history.slice(-40));
     }
+
+    // Persist to file
+    persistConversation(id, conversations.get(id) || history);
 
     res.json({
       message: response.message,
@@ -119,6 +168,9 @@ router.post('/stream', async (req: Request, res: Response) => {
       conversations.set(id, history.slice(-40));
     }
 
+    // Persist to file
+    persistConversation(id, conversations.get(id) || history);
+
     // Send completion event
     res.write(
       `event: done\ndata: ${JSON.stringify({
@@ -176,6 +228,102 @@ router.get('/:conversationId/history', (req: Request, res: Response) => {
     res.json({ conversationId, messages: history });
   } else {
     res.status(404).json({ error: 'Conversation not found' });
+  }
+});
+
+/**
+ * GET /api/chat/conversations
+ * List all conversations (for sidebar)
+ */
+router.get('/conversations', (_req: Request, res: Response) => {
+  try {
+    const conversationList = listConversations();
+    res.json({ conversations: conversationList });
+  } catch (error) {
+    console.error('Failed to list conversations:', error);
+    res.status(500).json({ error: 'Failed to list conversations' });
+  }
+});
+
+/**
+ * POST /api/chat/conversations
+ * Save/sync a conversation from frontend
+ */
+router.post('/conversations', (req: Request, res: Response) => {
+  try {
+    const { id, title, messages, createdAt, updatedAt } = req.body;
+
+    if (!id || !messages) {
+      res.status(400).json({ error: 'id and messages are required' });
+      return;
+    }
+
+    const conversation: StoredConversation = {
+      id,
+      title: title || generateTitle(messages),
+      messages: messages.map((m: { role: string; content: string }) => ({
+        role: m.role as 'user' | 'assistant',
+        content: m.content,
+      })),
+      createdAt: createdAt || new Date().toISOString(),
+      updatedAt: updatedAt || new Date().toISOString(),
+    };
+
+    // Save to file
+    saveConversationToFile(conversation);
+
+    // Update in-memory cache
+    conversations.set(id, conversation.messages);
+
+    res.json({ success: true, conversation: { id, title: conversation.title } });
+  } catch (error) {
+    console.error('Failed to save conversation:', error);
+    res.status(500).json({ error: 'Failed to save conversation' });
+  }
+});
+
+/**
+ * GET /api/chat/conversations/:id
+ * Get a specific conversation
+ */
+router.get('/conversations/:id', (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const conversation = loadConversationFromFile(id);
+
+    if (conversation) {
+      res.json(conversation);
+    } else {
+      res.status(404).json({ error: 'Conversation not found' });
+    }
+  } catch (error) {
+    console.error('Failed to get conversation:', error);
+    res.status(500).json({ error: 'Failed to get conversation' });
+  }
+});
+
+/**
+ * DELETE /api/chat/conversations/:id
+ * Delete a specific conversation
+ */
+router.delete('/conversations/:id', (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    // Delete from file
+    const deleted = deleteConversationFromFile(id);
+
+    // Delete from memory
+    conversations.delete(id);
+
+    if (deleted) {
+      res.json({ success: true, message: 'Conversation deleted' });
+    } else {
+      res.status(404).json({ error: 'Conversation not found' });
+    }
+  } catch (error) {
+    console.error('Failed to delete conversation:', error);
+    res.status(500).json({ error: 'Failed to delete conversation' });
   }
 });
 

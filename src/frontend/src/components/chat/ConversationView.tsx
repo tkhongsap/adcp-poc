@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { Message } from "@/types/chat";
 import { cn } from "@/lib/utils";
 
@@ -51,9 +52,13 @@ function MessageBubble({ message, index }: { message: Message; index: number }) 
           "prose-headings:mt-4 prose-headings:mb-2",
           "prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-foreground",
           "prose-pre:bg-claude-sidebar prose-pre:text-white",
+          // Table styling for GFM tables
+          "prose-table:w-full prose-table:border-collapse prose-table:my-4",
+          "prose-th:border prose-th:border-border prose-th:px-3 prose-th:py-2 prose-th:bg-muted prose-th:text-left prose-th:font-medium prose-th:text-foreground",
+          "prose-td:border prose-td:border-border prose-td:px-3 prose-td:py-2",
           "dark:prose-invert"
         )}>
-          <ReactMarkdown>{message.content}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
         </div>
       </div>
     </motion.div>
