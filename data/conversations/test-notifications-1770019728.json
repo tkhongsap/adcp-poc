@@ -1,0 +1,16 @@
+{
+  "id": "test-notifications-1770019728",
+  "title": "Remove Germany targeting from Apex Mo...",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Remove Germany targeting from Apex Motors"
+    },
+    {
+      "role": "assistant",
+      "content": "✅ **Germany targeting removed successfully from Apex Motors campaign!**\n\n**Changes Applied:**\n- **Removed:** Germany (DE) from geo targeting\n- **Previous targeting:** US, UK, DE\n- **New targeting:** US, UK\n\n**Context:** Germany had the lowest performance with only 0.04% CTR (compared to 0.14% in US and UK), so removing it will allow the budget to be reallocated to better-performing markets.\n\n**Estimated Impact:**\n- Reach will decrease by approximately 10%\n- However, overall campaign efficiency and ROI should improve by focusing spend on US and UK where engagement is 3.5x higher\n\n**Notifications:**\n- Slack notification sent to #adcp-demo\n- Email draft generated for the team\n\nThe campaign will now focus exclusively on the US and UK markets where user engagement is significantly stronger."
+    }
+  ],
+  "createdAt": "2026-02-02T08:09:01.513Z",
+  "updatedAt": "2026-02-02T08:09:01.513Z"
+}

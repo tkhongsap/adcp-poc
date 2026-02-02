@@ -6,6 +6,7 @@ import {
   resolveMediaBuyId,
 } from '../data/loader.js';
 import { broadcastMediaBuyUpdated } from '../websocket/socket.js';
+import { sendNotifications, type NotificationResult } from '../services/notificationService.js';
 import type { MediaBuy, DeliveryMetrics, TargetingOverlay } from '../types/data.js';
 
 /**
@@ -98,6 +99,7 @@ export interface UpdateMediaBuyOutput {
     efficiency_improvement?: string;
     description: string;
   };
+  notifications?: NotificationResult;
 }
 
 /**
@@ -495,11 +497,12 @@ function normalizeUpdates(updates: Record<string, unknown>): MediaBuyUpdates {
  * update_media_buy tool implementation
  *
  * Updates an existing media buy with various optimization operations.
+ * Triggers Slack and Email notifications after successful updates.
  *
  * @param input - Media buy ID and updates object containing operations
- * @returns Success status, changes applied, and estimated impact
+ * @returns Success status, changes applied, estimated impact, and notification results
  */
-export function updateMediaBuy(input: UpdateMediaBuyInput): UpdateMediaBuyResult {
+export async function updateMediaBuy(input: UpdateMediaBuyInput): Promise<UpdateMediaBuyResult> {
   // Validate required fields
   if (!input.media_buy_id) {
     return {
@@ -597,14 +600,31 @@ export function updateMediaBuy(input: UpdateMediaBuyInput): UpdateMediaBuyResult
   // Calculate estimated impact
   const estimatedImpact = calculateEstimatedImpact(mediaBuy, metrics, changesApplied);
 
-  // Broadcast update to all connected clients
+  // Send notifications and broadcast update to all connected clients
+  let notificationResult: NotificationResult | undefined;
+
   if (changesApplied.length > 0) {
+    // Send notifications (Slack auto-sends, email draft is generated)
+    try {
+      notificationResult = await sendNotifications({
+        mediaBuyId: resolvedId,
+        mediaBuy,
+        deliveryMetrics: metrics,
+        changes: changesApplied,
+      });
+    } catch (error) {
+      // Log notification error but don't fail the update
+      console.error('[updateMediaBuy] Notification error:', error);
+    }
+
+    // Broadcast update to all connected clients with notification info
     broadcastMediaBuyUpdated({
       media_buy_id: resolvedId,
       media_buy: mediaBuy,
       delivery_metrics: metrics,
       changes_applied: changesApplied,
       timestamp: new Date().toISOString(),
+      notifications: notificationResult,
     });
   }
 
@@ -615,6 +635,7 @@ export function updateMediaBuy(input: UpdateMediaBuyInput): UpdateMediaBuyResult
       success: changesApplied.length > 0,
       changes_applied: changesApplied,
       estimated_impact: estimatedImpact,
+      notifications: notificationResult,
     },
   };
 }

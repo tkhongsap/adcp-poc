@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import { API_BASE_URL } from "../lib/apiBaseUrl";
+import type { NotificationResult, CampaignUpdateNotification, ChangeApplied } from "../types/notifications";
 
 // Mirror the backend types for the dashboard state
 export interface MediaBuy {
@@ -76,6 +77,9 @@ export interface DashboardState {
   isConnected: boolean;
   lastUpdated: Date | null;
   recentlyUpdatedIds: Set<string>;
+  // Notification tracking
+  latestNotification: CampaignUpdateNotification | null;
+  activeCampaignId: string | null;
 }
 
 interface InitialStatePayload {
@@ -90,13 +94,9 @@ interface MediaBuyUpdatedPayload {
   media_buy_id: string;
   media_buy: MediaBuy;
   delivery_metrics: DeliveryMetrics | null;
-  changes_applied: Array<{
-    operation: string;
-    details: string;
-    previous_value?: string | number | string[];
-    new_value?: string | number | string[];
-  }>;
+  changes_applied: ChangeApplied[];
   timestamp: string;
+  notifications?: NotificationResult;
 }
 
 interface MediaBuyCreatedPayload {
@@ -119,6 +119,8 @@ const SOCKET_URL = API_BASE_URL;
 
 export function useWebSocket(): DashboardState & {
   requestRefresh: () => void;
+  setActiveCampaign: (id: string | null) => void;
+  clearNotification: () => void;
 } {
   const [mediaBuys, setMediaBuys] = useState<MediaBuy[]>([]);
   const [deliveryMetrics, setDeliveryMetrics] = useState<
@@ -129,6 +131,8 @@ export function useWebSocket(): DashboardState & {
   const [recentlyUpdatedIds, setRecentlyUpdatedIds] = useState<Set<string>>(
     new Set()
   );
+  const [latestNotification, setLatestNotification] = useState<CampaignUpdateNotification | null>(null);
+  const [activeCampaignId, setActiveCampaignId] = useState<string | null>(null);
 
   const socketRef = useRef<Socket | null>(null);
 
@@ -169,6 +173,21 @@ export function useWebSocket(): DashboardState & {
         }));
       }
 
+      // Track notification data if present
+      if (data.notifications) {
+        const brandName = data.media_buy.brand_manifest?.name || 'Unknown';
+        setLatestNotification({
+          mediaBuyId: data.media_buy_id,
+          brandName,
+          campaignName: brandName,
+          changes: data.changes_applied,
+          notifications: data.notifications,
+          timestamp: data.timestamp,
+        });
+        // Auto-set active campaign when notification arrives
+        setActiveCampaignId(data.media_buy_id);
+      }
+
       setLastUpdated(new Date());
       markAsUpdated(data.media_buy_id);
     },
@@ -203,6 +222,16 @@ export function useWebSocket(): DashboardState & {
     if (socketRef.current?.connected) {
       socketRef.current.emit("request_state");
     }
+  }, []);
+
+  // Set active campaign (for panel display)
+  const setActiveCampaign = useCallback((id: string | null) => {
+    setActiveCampaignId(id);
+  }, []);
+
+  // Clear latest notification
+  const clearNotification = useCallback(() => {
+    setLatestNotification(null);
   }, []);
 
   // Set up socket connection
@@ -264,6 +293,10 @@ export function useWebSocket(): DashboardState & {
     isConnected,
     lastUpdated,
     recentlyUpdatedIds,
+    latestNotification,
+    activeCampaignId,
     requestRefresh,
+    setActiveCampaign,
+    clearNotification,
   };
 }

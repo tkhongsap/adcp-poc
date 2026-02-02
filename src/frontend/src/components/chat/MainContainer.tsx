@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Message, Artifact } from "@/types/chat";
 import { cn } from "@/lib/utils";
 import ChatSidebar from "./ChatSidebar";
@@ -9,10 +9,14 @@ import WelcomeScreen from "./WelcomeScreen";
 import ConversationView from "./ConversationView";
 import MessageInput, { ClaudeModelId, DEFAULT_MODEL } from "./MessageInput";
 import ArtifactPanel from "./ArtifactPanel";
+import CampaignDetailsPanel from "./CampaignDetailsPanel";
+import EmailDraftCard from "./EmailDraftCard";
+import SlackConfirmation from "./SlackConfirmation";
 import ThemeToggle from "../ui/ThemeToggle";
 import { detectArtifact, ToolCallData } from "@/utils/artifactDetection";
 import { API_BASE_URL } from "@/lib/apiBaseUrl";
 import { useChatHistory, generateConversationId } from "@/hooks/useChatHistory";
+import { useWebSocket } from "@/hooks/useWebSocket";
 
 function OpenDashboardButton() {
   const handleOpenDashboard = () => {
@@ -50,7 +54,9 @@ export default function MainContainer() {
   const [artifact, setArtifact] = useState<Artifact | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [artifactPanelOpen, setArtifactPanelOpen] = useState(false);
+  const [campaignPanelOpen, setCampaignPanelOpen] = useState(false);
   const [selectedModel, setSelectedModel] = useState<ClaudeModelId>(DEFAULT_MODEL);
+  const [showNotificationCards, setShowNotificationCards] = useState(true);
   const conversationIdRef = useRef<string | null>(null);
 
   // Chat history hook
@@ -65,12 +71,42 @@ export default function MainContainer() {
     fetchConversationFromBackend,
   } = useChatHistory();
 
+  // WebSocket hook for real-time updates
+  const {
+    mediaBuys,
+    deliveryMetrics,
+    latestNotification,
+    activeCampaignId,
+    recentlyUpdatedIds,
+    clearNotification,
+    setActiveCampaign,
+  } = useWebSocket();
+
+  // Get active campaign data
+  const activeCampaign = activeCampaignId
+    ? mediaBuys.find((mb) => mb.media_buy_id === activeCampaignId)
+    : null;
+  const activeMetrics = activeCampaignId
+    ? deliveryMetrics[activeCampaignId]
+    : null;
+  const isActiveCampaignHighlighted = activeCampaignId
+    ? recentlyUpdatedIds.has(activeCampaignId)
+    : false;
+
   // Auto-open artifact panel when artifact is detected
   useEffect(() => {
     if (artifact) {
       setArtifactPanelOpen(true);
     }
   }, [artifact]);
+
+  // Auto-open campaign panel when notification arrives
+  useEffect(() => {
+    if (latestNotification) {
+      setCampaignPanelOpen(true);
+      setShowNotificationCards(true);
+    }
+  }, [latestNotification]);
 
   // Refs to hold stable function references
   const getConversationRef = useRef(getConversation);
@@ -114,7 +150,7 @@ export default function MainContainer() {
     if (conversationIdRef.current && messages.length > 0) {
       saveConversationRef.current(conversationIdRef.current, messages);
     }
-    
+
     // Reset state for new chat
     const newId = generateConversationId();
     conversationIdRef.current = newId;
@@ -122,8 +158,11 @@ export default function MainContainer() {
     setMessages([]);
     setArtifact(null);
     setArtifactPanelOpen(false);
+    setCampaignPanelOpen(false);
+    setShowNotificationCards(true);
+    clearNotification();
     setActiveConversation(newId);
-  }, [messages, setActiveConversation]);
+  }, [messages, setActiveConversation, clearNotification]);
 
   // Handler for selecting a conversation
   const handleSelectConversation = useCallback(async (id: string) => {
@@ -437,11 +476,46 @@ export default function MainContainer() {
             <>
               <ConversationView messages={messages} isLoading={isLoading} />
 
+              {/* Notification cards (Slack confirmation + Email draft) */}
+              <AnimatePresence>
+                {showNotificationCards && latestNotification && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="flex-shrink-0 border-t border-border bg-muted/30"
+                  >
+                    <div className={cn(
+                      "mx-auto px-4 py-3 space-y-3 transition-all duration-300",
+                      (artifactPanelOpen && artifact) || campaignPanelOpen ? "max-w-2xl" : "max-w-3xl"
+                    )}>
+                      {/* Slack confirmation */}
+                      {latestNotification.notifications.slack.sent && (
+                        <SlackConfirmation
+                          notification={latestNotification.notifications.slack}
+                        />
+                      )}
+
+                      {/* Email draft card */}
+                      {latestNotification.notifications.email.draft && (
+                        <EmailDraftCard
+                          draft={latestNotification.notifications.email.draft}
+                          onDismiss={() => setShowNotificationCards(false)}
+                          onSent={() => {
+                            // Optionally refresh or update state after email sent
+                          }}
+                        />
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               {/* Sticky bottom input */}
               <div className="flex-shrink-0 border-t border-border bg-background">
                 <div className={cn(
                   "mx-auto px-4 py-4 transition-all duration-300",
-                  artifactPanelOpen && artifact ? "max-w-2xl" : "max-w-3xl"
+                  (artifactPanelOpen && artifact) || campaignPanelOpen ? "max-w-2xl" : "max-w-3xl"
                 )}>
                   <MessageInput
                     onSendMessage={handleSendMessage}
@@ -462,6 +536,19 @@ export default function MainContainer() {
         artifact={artifact}
         isOpen={artifactPanelOpen}
         onClose={() => setArtifactPanelOpen(false)}
+      />
+
+      {/* Campaign details panel - right side */}
+      <CampaignDetailsPanel
+        mediaBuy={activeCampaign || null}
+        metrics={activeMetrics || null}
+        isOpen={campaignPanelOpen && !!activeCampaign}
+        onClose={() => {
+          setCampaignPanelOpen(false);
+          setActiveCampaign(null);
+        }}
+        recentChanges={latestNotification?.changes}
+        isHighlighted={isActiveCampaignHighlighted}
       />
     </div>
   );

@@ -330,8 +330,8 @@ export const TOOL_DEFINITIONS: Tool[] = [
   },
 ];
 
-// Tool execution function
-function executeTool(toolName: string, toolInput: Record<string, unknown>): unknown {
+// Tool execution function (async to support tools like updateMediaBuy that send notifications)
+async function executeTool(toolName: string, toolInput: Record<string, unknown>): Promise<unknown> {
   switch (toolName) {
     case 'get_products':
       return getProducts(toolInput as { category?: string; max_cpm?: number });
@@ -344,7 +344,8 @@ function executeTool(toolName: string, toolInput: Record<string, unknown>): unkn
     case 'get_media_buy_delivery':
       return getMediaBuyDelivery(toolInput as { media_buy_id?: string });
     case 'update_media_buy':
-      return updateMediaBuy(toolInput as unknown as Parameters<typeof updateMediaBuy>[0]);
+      // updateMediaBuy is async because it sends Slack/Email notifications
+      return await updateMediaBuy(toolInput as unknown as Parameters<typeof updateMediaBuy>[0]);
     case 'provide_performance_feedback':
       return providePerformanceFeedback(toolInput as unknown as Parameters<typeof providePerformanceFeedback>[0]);
     default:
@@ -412,7 +413,7 @@ export async function processChat(
     const toolResults: ToolResultBlockParam[] = [];
 
     for (const toolUse of toolUseBlocks) {
-      const result = executeTool(toolUse.name, toolUse.input as Record<string, unknown>);
+      const result = await executeTool(toolUse.name, toolUse.input as Record<string, unknown>);
 
       toolCalls.push({
         name: toolUse.name,
@@ -529,7 +530,7 @@ export async function processChatStream(
         onToolCall(toolUse.name, toolUse.input as Record<string, unknown>);
       }
 
-      const result = executeTool(toolUse.name, toolUse.input as Record<string, unknown>);
+      const result = await executeTool(toolUse.name, toolUse.input as Record<string, unknown>);
 
       toolCalls.push({
         name: toolUse.name,
