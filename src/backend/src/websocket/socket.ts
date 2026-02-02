@@ -2,6 +2,7 @@ import { Server as HttpServer } from 'http';
 import { Server, Socket } from 'socket.io';
 import { getFullState } from '../data/loader.js';
 import type { MediaBuy, DeliveryMetrics, PerformanceFeedback } from '../types/data.js';
+import type { NotificationResult } from '../services/notificationService.js';
 
 /**
  * WebSocket event types for the AdCP demo
@@ -28,6 +29,7 @@ export interface MediaBuyUpdatedPayload {
     new_value?: string | number | string[];
   }>;
   timestamp: string;
+  notifications?: NotificationResult;
 }
 
 export interface MediaBuyCreatedPayload {

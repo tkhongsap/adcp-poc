@@ -24,13 +24,30 @@ This is a Claude.ai-style chat interface with artifacts and a live dashboard for
 - `NEXT_PUBLIC_API_URL`: Backend API URL for frontend to connect to (in Replit this must include `:3001`, e.g. `https://<your-replit-domain>:3001`)
 - `BACKEND_PORT`: Port for the backend server (default: 3001)
 
+### Notification Configuration (Secrets)
+- `SLACK_WEBHOOK_URL`: Slack Incoming Webhook URL for posting notifications
+- `RESEND_API_KEY`: Resend API key for sending emails
+
+### Notification Configuration (Environment Variables)
+- `SLACK_CHANNEL_NAME`: Display name for Slack channel (e.g., `#adcp-demo`)
+- `EMAIL_FROM`: Sender email address (use `onboarding@resend.dev` for sandbox, or verify your domain in Resend)
+- `DEMO_EMAIL_RECIPIENT`: Email address to receive demo notifications
+
 ## Key Features
 - Chat interface with streaming responses
 - Real-time dashboard with WebSocket updates
 - Artifact panel for visualizing tool results
 - Dark/light theme toggle
+- **Notification Agents**: Automated Slack and email notifications on campaign changes
+  - Slack: Posts to configured channel when `update_media_buy` is called
+  - Email: Generates draft emails, sends on user confirmation via Resend API
+  - Campaign Details Panel: Shows live updates with highlight animations
 
 ## Recent Changes
+- February 2, 2026: Added notification agents
+  - Configured Slack webhook integration for `#adcp-demo` channel
+  - Configured Resend email integration with sandbox domain
+  - Tested end-to-end notification flow: chat → Slack → email
 - February 1, 2026: Fixed React performance issues
   - Fixed infinite re-render loop in MainContainer.tsx caused by unstable function references in useEffect dependencies
   - Added refs for callback functions to prevent dependency array triggers
