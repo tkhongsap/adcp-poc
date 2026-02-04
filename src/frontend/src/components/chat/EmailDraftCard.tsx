@@ -68,7 +68,7 @@ export default function EmailDraftCard({ draft, onDismiss, onSent }: EmailDraftC
           </div>
           <div className="flex-1">
             <p className="text-sm font-medium text-green-800 dark:text-green-200">
-              Email sent to {draft.to}
+              Email sent to {Array.isArray(draft.to) ? draft.to.join(', ') : draft.to}
             </p>
             <p className="text-xs text-green-600 dark:text-green-400">
               {draft.subject}
@@ -104,7 +104,7 @@ export default function EmailDraftCard({ draft, onDismiss, onSent }: EmailDraftC
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-foreground">Email Draft</p>
-          <p className="text-xs text-muted-foreground truncate">To: {draft.to}</p>
+          <p className="text-xs text-muted-foreground truncate">To: {Array.isArray(draft.to) ? draft.to.join(', ') : draft.to}</p>
         </div>
         <button
           onClick={() => setIsExpanded(!isExpanded)}
