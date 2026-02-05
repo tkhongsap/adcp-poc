@@ -1,0 +1,16 @@
+{
+  "id": "conv_1769928104111_f04a81t",
+  "title": "how are you?",
+  "messages": [
+    {
+      "role": "user",
+      "content": "how are you?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm doing great, thank you for asking! I'm the Signal42.ai Campaign Agent, powered by Claude Sonnet 4.5, and I'm here to help you manage your digital advertising campaigns.\n\nI'm ready to assist you with:\n- **Discovering advertising inventory** (display, video, native, audio products)\n- **Launching new campaigns** with specific targeting and budgets\n- **Monitoring performance** of your active campaigns\n- **Optimizing campaigns** by adjusting bids, targeting, or budgets\n- **Managing campaign operations** like pausing, resuming, or shifting strategies\n\nHow can I help you with your advertising campaigns today? Would you like to check on"
+    }
+  ],
+  "createdAt": "2026-02-01T06:41:55.765Z",
+  "updatedAt": "2026-02-05T02:06:16.679Z"
+}
