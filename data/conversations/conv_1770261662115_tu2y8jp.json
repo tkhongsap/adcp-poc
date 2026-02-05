@@ -1,0 +1,16 @@
+{
+  "id": "conv_1770261662115_tu2y8jp",
+  "title": "Show me an overview of all active cam...",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Show me an overview of all active campaigns"
+    },
+    {
+      "role": "assistant",
+      "content": "## Campaign Overview - All Active Campaigns\n\nHere's a summary of all **8 active campaigns**:\n\n### Performance Summary\n\n| Campaign | Budget | Spend | Pacing | Health | Impressions | CTR | CPA | Conversions |\n|----------|--------|-------|--------|--------|-------------|-----|-----|-------------|\n| **Apex Motors** | $50,000 | $32,450 (65%) | Behind | ⚠️ Poor | 3,850,000 | 0.12% | $721.11 | 45 |\n| **TechFlow SaaS** | $25,000 | $28,200 (113%) | Overspend | ⚠️ Warning | 890,000 | 0.60% | $316.85 | 89 |\n| **SportMax Apparel** | $35,000 | $29,800 (85%) | On Track | ✅ Good | 1,450,000 | 0.35% | $234.65 | 127 |\n| **FinanceFirst Bank** | $40,000 | $22,100 (55%) | On Track | ✅ Good | 720,000 | 0.35% | $613.89 | 36 |\n| **GreenEnergy Co** | $20,000 | $14,900 (75%) | On Track | ✅ Good | 1,120,000 | 0.35% | $266.07 | 56 |\n| **Signal 42** (Campaign 1) | $20,000 | $0 (0%) | On Track | ✅ Good | 0 | - | - | 0 |\n| **Signal 42** (Campaign 2) | $18,000 | $0 (0%) | On Track | ✅ Good | 0 | - | - | 0 |\n| **Signal 42** (Campaign 3) | $12,000 | $0 (0%) | On Track | ✅ Good | 0 | - | - | 0 |\n\n### Key Insights\n\n**🚨 Needs Attention:**\n- **Apex Motors** - Behind pace with poor health. Germany showing low CTR (0.04%), mobile underperforming\n- **TechFlow SaaS** - Overspending budget by 13%, needs daily cap adjustment\n\n**✅ Performing Well:**\n- **SportMax Apparel** - Strong conversion rate with 85% video completion\n- **FinanceFirst Bank** - High viewability (85%), good desktop performance\n- **GreenEnergy Co** - Efficient CPA, California region performing best\n\n**📊 Just Launched:**\n- Three Signal 42 campaigns with no delivery data yet\n\nWould you like me to dive deeper into any specific campaign or make optimizations to address the issues with Apex Motors or TechFlow SaaS?"
+    }
+  ],
+  "createdAt": "2026-02-05T03:21:04.758Z",
+  "updatedAt": "2026-02-05T03:21:17.235Z"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "conv_1770260097992_8kjv54m",
+  "title": "deleate signal 42 campaign",
+  "messages": [
+    {
+      "role": "user",
+      "content": "deleate signal 42 campaign"
+    },
+    {
+      "role": "assistant",
+      "content": "I found **3 Signal42 campaigns**:\n\n1. **mb_signal_42_1** - Budget: $20,000 (just launched)\n2. **mb_signal_42_2** - Budget: $18,000 (just launched)\n3. **mb_signal_42_3** - Budget: $12,000 (just launched)\n\nI need to clarify - I don't have a \"delete\" function available. However, I can **pause** campaigns to stop them from running. \n\nWould you like me to:\n1. **Pause all 3 Signal42 campaigns?**\n2. **Pause a specific one?** (please specify which)\n\nNote: The campaigns appear to have just launched with no spend yet, so pausing them now would prevent any budget from being used."
+    },
+    {
+      "role": "user",
+      "content": "they look off turn them on"
+    },
+    {
+      "role": "assistant",
+      "content": "✅ **All 3 Signal42 campaigns are now ACTIVE!**\n\n**Changes Applied:**\n\n1. **mb_signal_42_1** ($20,000 budget)\n   - Status: submitted → **active**\n\n2. **mb_signal_42_2** ($18,000 budget)\n   - Status: submitted → **active**\n\n3. **mb_signal_42_3** ($12,000 budget)\n   - Status: submitted → **active**\n\n**Impact:** All campaigns will begin delivering immediately. Total combined budget of **$50,000** is now live.\n\nNotifications have been sent to #adcp-demo on Slack and email drafts have been generated for the team at jasonliew@signal42.ai."
+    }
+  ],
+  "createdAt": "2026-02-05T02:55:09.211Z",
+  "updatedAt": "2026-02-05T02:56:11.647Z"
+}

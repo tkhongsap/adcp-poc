@@ -1,0 +1,16 @@
+{
+  "id": "conv_1770261954377_3upadu2",
+  "title": "add germany back in to apex motors",
+  "messages": [
+    {
+      "role": "user",
+      "content": "add germany back in to apex motors"
+    },
+    {
+      "role": "assistant",
+      "content": "Perfect! Germany (DE) has been successfully added back to the Apex Motors campaign targeting.\n\n**Changes Applied:**\n- **Geo Targeting Updated:** US, UK → **US, UK, DE**\n- **Estimated Impact:** ~8% reach increase by expanding to the German market\n\n**Notifications Sent:**\n- ✅ Slack notification sent to #adcp-demo\n- ✅ Email draft generated for jasonliew@signal42.ai\n\nThe campaign will now serve ads to audiences in Germany along with the US and UK, which should expand your reach and potential conversions in the German market."
+    }
+  ],
+  "createdAt": "2026-02-05T03:26:02.207Z",
+  "updatedAt": "2026-02-05T03:26:07.726Z"
+}

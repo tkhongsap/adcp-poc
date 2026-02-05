@@ -1,0 +1,16 @@
+{
+  "id": "conv_1770261978814_ahqi7nb",
+  "title": "remove signal 42 line items",
+  "messages": [
+    {
+      "role": "user",
+      "content": "remove signal 42 line items"
+    },
+    {
+      "role": "assistant",
+      "content": "✅ **All Signal 42 line items have been removed (paused)**\n\nI've successfully paused all 3 Signal 42 campaigns:\n\n| Campaign ID | Budget | Status | Impact |\n|-------------|--------|--------|--------|\n| mb_signal_42_1 | $20,000 | ✓ Paused | Delivery stopped |\n| mb_signal_42_2 | $18,000 | ✓ Paused | Delivery stopped |\n| mb_signal_42_3 | $12,000 | ✓ Paused | Delivery stopped |\n\n**Total Budget Affected:** $50,000\n\nSince none of these campaigns had started spending yet (all had $0 spend), there's no budget waste. Notifications have been sent to the #adcp-demo Slack channel and email drafts have been generated for the team."
+    }
+  ],
+  "createdAt": "2026-02-05T03:26:25.634Z",
+  "updatedAt": "2026-02-05T03:26:39.605Z"
+}
