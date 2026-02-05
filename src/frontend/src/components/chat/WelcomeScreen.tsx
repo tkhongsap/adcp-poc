@@ -32,7 +32,7 @@ export default function WelcomeScreen({
           transition={{ delay: 0.1, duration: 0.4 }}
           className="text-2xl md:text-3xl font-semibold text-foreground mb-2"
         >
-          Signal42 Agent
+          AdCP Agent
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 10 }}

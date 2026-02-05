@@ -43,7 +43,31 @@ This is a Claude.ai-style chat interface with artifacts and a live dashboard for
   - Email: Generates draft emails, sends on user confirmation via Resend API
   - Campaign Details Panel: Shows live updates with highlight animations
 
+## Testing
+- **Test Framework**: Playwright for E2E and API testing
+- **Test Commands**:
+  - `npm run test` - Run all tests
+  - `npm run test:api` - Run API endpoint tests only
+  - `npm run test:tools` - Run AdCP tools integration tests
+  - `npm run test:chat` - Run chat page UI tests
+  - `npm run test:dashboard` - Run dashboard page UI tests
+  - `npm run test:report` - View HTML test report
+
+### Test Coverage
+- **API Tests** (`tests/api.spec.ts`): 12 tests covering /api/tools, /api/chat, /api/notifications endpoints
+- **Tools Integration Tests** (`tests/tools.spec.ts`): 12 tests covering all 7 AdCP tools (get_products, list_creative_formats, list_authorized_properties, get_media_buy_delivery, update_media_buy, create_media_buy, provide_performance_feedback)
+- **Chat UI Tests** (`tests/chat.spec.ts`): Tests for chat page elements and navigation
+- **Dashboard UI Tests** (`tests/dashboard.spec.ts`): Tests for dashboard elements and real-time features
+
+### Environment Limitations
+Browser-based E2E tests (chat, dashboard) may not run in sandboxed environments due to browser launch restrictions. API tests work reliably in all environments.
+
 ## Recent Changes
+- February 5, 2026: Added end-to-end testing with Playwright
+  - Created comprehensive API tests for all backend endpoints
+  - Added AdCP tools integration tests with schema validation
+  - Created UI tests for chat and dashboard pages
+  - Added test scripts to package.json for easy execution
 - February 2, 2026: Added notification agents
   - Configured Slack webhook integration for `#adcp-demo` channel
   - Configured Resend email integration with sandbox domain

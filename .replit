@@ -4,7 +4,7 @@ expertMode = true
 
 [nix]
 channel = "stable-25_05"
-packages = ["jq"]
+packages = ["jq", "glib", "nss", "nspr", "dbus", "at-spi2-core", "cups", "libdrm", "xorg.libX11", "xorg.libXcomposite", "xorg.libXdamage", "xorg.libXext", "xorg.libXfixes", "xorg.libXrandr", "xorg.libxcb", "mesa", "expat", "alsa-lib", "pango", "cairo", "libGL", "gtk3"]
 
 [userenv]
 
