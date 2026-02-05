@@ -15,8 +15,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "AdCP Sales Demo",
-  description: "AdCP Sales Agent Demo - Claude.ai-style chat with artifacts",
+  title: "Signal42",
+  description: "Signal42 - AdCP Sales Agent",
 };
 
 export default function RootLayout({
