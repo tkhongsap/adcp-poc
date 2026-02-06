@@ -448,17 +448,21 @@ export default function MainContainer() {
           artifactPanelOpen && artifact ? "flex-1" : "flex-1"
         )}
       >
-        {/* Minimal header */}
+        {/* Header with logo */}
         <motion.header
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           className={cn(
-            "flex-shrink-0 h-12 flex items-center justify-end px-4 gap-3",
+            "flex-shrink-0 h-12 flex items-center justify-between px-4",
             "bg-background"
           )}
         >
-          <ThemeToggle />
-          <OpenDashboardButton />
+          <div className="flex items-center gap-2">
+          </div>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <OpenDashboardButton />
+          </div>
         </motion.header>
 
         {/* Chat content area */}

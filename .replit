@@ -77,6 +77,6 @@ externalPort = 3000
 exposeLocalhost = true
 
 [deployment]
-deploymentTarget = "cloudrun"
+deploymentTarget = "autoscale"
 run = ["npm", "run", "start"]
 build = ["npm", "run", "build"]

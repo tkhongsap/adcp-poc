@@ -20,10 +20,18 @@
     "typecheck": "npm run typecheck:frontend && npm run typecheck:backend",
     "typecheck:frontend": "npm run typecheck --workspace=src/frontend",
     "typecheck:backend": "npm run typecheck --workspace=src/backend",
-    "lint": "npm run lint --workspace=src/frontend"
+    "lint": "npm run lint --workspace=src/frontend",
+    "test": "npx playwright test",
+    "test:api": "npx playwright test tests/api.spec.ts",
+    "test:chat": "npx playwright test tests/chat.spec.ts",
+    "test:dashboard": "npx playwright test tests/dashboard.spec.ts",
+    "test:tools": "npx playwright test tests/tools.spec.ts",
+    "test:report": "npx playwright show-report"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "@playwright/test": "^1.58.1",
+    "concurrently": "^8.2.2",
+    "playwright": "^1.58.1"
   },
   "engines": {
     "node": ">=18.0.0"
