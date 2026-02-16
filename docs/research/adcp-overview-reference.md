@@ -263,9 +263,9 @@ User Query → AI Assistant → MCP → AdCP Server → DSP API → Response →
 - **Claude API**: https://docs.anthropic.com
 
 ### Demo Materials
-- PRD: `prd-s42-lab-adcp-sale-demo.md`
-- AdCP vs ARTF Analysis: `AI in Advertising - AdCP vs ARTF.md`
-- Mock Data: `adcp_demo_complete_data.json`
+- PRD: `docs/product/prd-s42-lab-adcp-sales-demo.md`
+- AdCP vs ARTF Analysis: `docs/research/ai-in-advertising-adcp-vs-artf.md`
+- Mock Data: `data/adcp_demo_complete_data.json`
 
 ### Key Contacts
 - Jason Liew (Signal42): jasonliew@signal42.uk

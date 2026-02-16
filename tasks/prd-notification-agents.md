@@ -3,7 +3,7 @@
 **Version:** 1.0
 **Date:** 2026-02-02
 **Status:** Draft
-**Source Spec:** `docs/02-adcp_notification_agents_spec_v2.md`
+**Source Spec:** `docs/product/adcp-notification-agents-spec-v2.md`
 
 ---
 

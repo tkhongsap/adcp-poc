@@ -488,7 +488,7 @@ The system consists of:
 - Dashboard Content: max 1200px centered
 
 ### Reference
-See Section 4.7 of the Comprehensive PRD (`docs/PRD-AdCP-Sales-Demo-Comprehensive.md`) for complete design specifications.
+See Section 4.7 of the Comprehensive PRD (`docs/product/prd-adcp-sales-demo-comprehensive.md`) for complete design specifications.
 
 ---
 
@@ -582,7 +582,7 @@ None - the comprehensive PRD provides complete specifications.
 
 ## References
 
-- **Comprehensive PRD**: `docs/PRD-AdCP-Sales-Demo-Comprehensive.md`
+- **Comprehensive PRD**: `docs/product/prd-adcp-sales-demo-comprehensive.md`
 - **Mock Data**: `data/adcp_demo_complete_data.json`
 - **AdCP Docs**: https://docs.adcontextprotocol.org
 - **MCP Docs**: https://modelcontextprotocol.io
