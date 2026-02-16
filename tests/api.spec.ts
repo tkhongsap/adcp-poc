@@ -125,6 +125,74 @@ test.describe('API Endpoints', () => {
       expect(Array.isArray(data.conversations)).toBe(true);
     });
 
+    test('POST/GET /api/chat/conversations - should preserve structured message content', async ({ request }) => {
+      const conversationId = `conv_structured_${Date.now()}`;
+      const payload = {
+        id: conversationId,
+        title: `Structured Content Test ${Date.now()}`,
+        messages: [
+          { role: 'user', content: 'Pause Apex campaign' },
+          {
+            role: 'assistant',
+            content: [
+              { type: 'text', text: 'I will pause Apex campaign now.' },
+              {
+                type: 'tool_use',
+                id: 'toolu_test_pause',
+                name: 'update_media_buy',
+                input: {
+                  media_buy_id: 'mb_apex_motors_q1',
+                  updates: { set_status: { status: 'paused' } }
+                }
+              }
+            ]
+          },
+          {
+            role: 'user',
+            content: [
+              {
+                type: 'tool_result',
+                tool_use_id: 'toolu_test_pause',
+                content: '{"success":true}'
+              }
+            ]
+          },
+          {
+            role: 'assistant',
+            content: [
+              { type: 'text', text: 'Apex campaign is paused.' }
+            ]
+          }
+        ]
+      };
+
+      const createResponse = await request.post(`${API_BASE}/api/chat/conversations`, {
+        data: payload
+      });
+      expect(createResponse.status()).toBe(200);
+      const createData = await createResponse.json();
+      expect(createData.success).toBe(true);
+
+      const getResponse = await request.get(`${API_BASE}/api/chat/conversations/${conversationId}`);
+      expect(getResponse.status()).toBe(200);
+      const conversation = await getResponse.json();
+
+      expect(conversation.id).toBe(conversationId);
+      expect(Array.isArray(conversation.messages)).toBe(true);
+      expect(conversation.messages.length).toBe(4);
+      expect(Array.isArray(conversation.messages[1].content)).toBe(true);
+      expect(Array.isArray(conversation.messages[2].content)).toBe(true);
+
+      const assistantBlocks = conversation.messages[1].content as Array<Record<string, unknown>>;
+      expect(assistantBlocks.some((block) => block.type === 'text')).toBe(true);
+      expect(assistantBlocks.some((block) => block.type === 'tool_use')).toBe(true);
+
+      const toolResultBlocks = conversation.messages[2].content as Array<Record<string, unknown>>;
+      expect(toolResultBlocks[0].type).toBe('tool_result');
+
+      await request.delete(`${API_BASE}/api/chat/conversations/${conversationId}`);
+    });
+
     test('DELETE /api/chat/nonexistent - should return 404', async ({ request }) => {
       const response = await request.delete(`${API_BASE}/api/chat/nonexistent_conv_id`);
       expect(response.status()).toBe(404);

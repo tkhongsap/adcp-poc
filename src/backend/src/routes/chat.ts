@@ -302,10 +302,15 @@ router.post('/conversations', (req: Request, res: Response) => {
       return;
     }
 
+    type IncomingConversationMessage = {
+      role: string;
+      content: string | unknown[];
+    };
+
     const conversation: StoredConversation = {
       id,
       title: title || generateTitle(messages),
-      messages: messages.map((m: { role: string; content: string }) => ({
+      messages: messages.map((m: IncomingConversationMessage) => ({
         role: m.role as 'user' | 'assistant',
         content: m.content,
       })),

@@ -3,8 +3,8 @@
 ## Status
 - `type`: bug
 - `priority`: medium
-- `state`: backlog
-- `branch`: `fix/chat-session-followup-action-context`
+- `state`: in_review
+- `branch`: `fix/chat-history-structured-content-reload`
 
 ## Problem Summary
 Sequential action context was fixed by preserving rich message history (`tool_use` / `tool_result` blocks).
@@ -37,3 +37,23 @@ Frontend mapping in `src/frontend/src/hooks/useChatHistory.ts`:
 
 ## Notes
 This is a targeted frontend parsing fix and should be low effort.
+
+## Implementation Summary (2026-02-16)
+- Added frontend normalization for message `content` when loading from localStorage and backend:
+  - `src/frontend/src/hooks/useChatHistory.ts`
+- Added defensive string rendering guard in chat UI:
+  - `src/frontend/src/components/chat/ConversationView.tsx`
+- Clarified frontend message type contract (UI stores normalized text):
+  - `src/frontend/src/types/chat.ts`
+- Hardened backend conversation sync typing for structured message payloads:
+  - `src/backend/src/routes/chat.ts`
+- Added API regression test for structured conversation persistence:
+  - `tests/api.spec.ts`
+- Added chat UI regression test for reload path (`[object Object]` guard):
+  - `tests/chat.spec.ts`
+
+## Validation (2026-02-16)
+- `npm run typecheck` ✅
+- `npm run lint` ✅
+- `npm run test:api` ✅ (13/13 passed)
+- `npm run test:chat` ⚠️ blocked in Replit due missing Playwright host libraries (`libgtk`, `libx11-xcb`, etc.)

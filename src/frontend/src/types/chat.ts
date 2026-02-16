@@ -3,6 +3,7 @@ export type MessageRole = "user" | "assistant";
 export interface Message {
   id: string;
   role: MessageRole;
+  // UI state stores normalized plain text; structured tool blocks are flattened at load boundaries.
   content: string;
   timestamp: Date;
 }

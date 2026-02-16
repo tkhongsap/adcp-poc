@@ -22,11 +22,57 @@ const MAX_CONVERSATIONS = 50;
 const MAX_MESSAGES_PER_CONVERSATION = 100;
 const SAVE_DEBOUNCE_MS = 1000;
 const DEBUG_CHAT_HISTORY_FLOW = process.env.NODE_ENV !== "production";
+type MessageContentBlock = Record<string, unknown>;
 
 function logChatHistoryFlow(message: string, payload: Record<string, unknown>) {
   if (DEBUG_CHAT_HISTORY_FLOW) {
     console.debug(`[chat-history] ${message}`, payload);
   }
+}
+
+function extractTextFromStructuredContent(content: unknown): string {
+  if (!Array.isArray(content)) return "";
+
+  const textSegments: string[] = [];
+  for (const block of content) {
+    if (typeof block === "string") {
+      if (block.trim().length > 0) {
+        textSegments.push(block);
+      }
+      continue;
+    }
+
+    if (!block || typeof block !== "object") continue;
+
+    const typedBlock = block as MessageContentBlock;
+    if (typedBlock.type === "text" && typeof typedBlock.text === "string") {
+      if (typedBlock.text.trim().length > 0) {
+        textSegments.push(typedBlock.text);
+      }
+    }
+  }
+
+  return textSegments.join("\n\n");
+}
+
+function normalizeMessageContent(content: unknown): string {
+  if (typeof content === "string") return content;
+  return extractTextFromStructuredContent(content);
+}
+
+function normalizeMessageTimestamp(timestamp: unknown): Date {
+  if (timestamp instanceof Date && !Number.isNaN(timestamp.getTime())) {
+    return timestamp;
+  }
+
+  if (typeof timestamp === "string" || typeof timestamp === "number") {
+    const parsed = new Date(timestamp);
+    if (!Number.isNaN(parsed.getTime())) {
+      return parsed;
+    }
+  }
+
+  return new Date();
 }
 
 // Helper to serialize dates for localStorage
@@ -50,10 +96,10 @@ function deserializeConversation(data: Record<string, unknown>): Conversation {
     createdAt: new Date(data.createdAt as string),
     updatedAt: new Date(data.updatedAt as string),
     messages: ((data.messages as Array<Record<string, unknown>>) || []).map((m) => ({
-      id: m.id as string,
+      id: (m.id as string) || `msg_${Date.now()}_${Math.random().toString(36).substring(7)}`,
       role: m.role as "user" | "assistant",
-      content: m.content as string,
-      timestamp: new Date(m.timestamp as string),
+      content: normalizeMessageContent(m.content),
+      timestamp: normalizeMessageTimestamp(m.timestamp),
     })),
   };
 }
@@ -62,8 +108,8 @@ function deserializeConversation(data: Record<string, unknown>): Conversation {
 function generateTitle(messages: Message[]): string {
   const firstUserMessage = messages.find((m) => m.role === "user");
   if (!firstUserMessage) return "New conversation";
-  
-  const content = firstUserMessage.content.trim();
+
+  const content = normalizeMessageContent(firstUserMessage.content).trim();
   // Truncate to 40 chars and add ellipsis if needed
   return content.length > 40 ? content.substring(0, 37) + "..." : content;
 }
@@ -168,10 +214,10 @@ export function useChatHistory() {
           id: conv.id,
           title: conv.title,
           messages: (conv.messages || []).map((m: Record<string, unknown>) => ({
-            id: m.id || `msg_${Date.now()}_${Math.random().toString(36).substring(7)}`,
-            role: m.role as "user" | "assistant",
-            content: m.content as string,
-            timestamp: new Date((m.timestamp as string) || Date.now()),
+            id: (m.id as string) || `msg_${Date.now()}_${Math.random().toString(36).substring(7)}`,
+            role: m.role === "assistant" ? "assistant" : "user",
+            content: normalizeMessageContent(m.content),
+            timestamp: normalizeMessageTimestamp(m.timestamp),
           })),
           createdAt: new Date(conv.createdAt),
           updatedAt: new Date(conv.updatedAt),
