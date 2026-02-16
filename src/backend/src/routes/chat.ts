@@ -11,6 +11,13 @@ import {
 } from '../data/conversationStore.js';
 
 const router = Router();
+const DEBUG_CHAT_FLOW = process.env.NODE_ENV !== 'production';
+
+function logChatFlow(message: string, payload: Record<string, unknown>): void {
+  if (DEBUG_CHAT_FLOW) {
+    console.log(`[chat-flow] ${message}`, payload);
+  }
+}
 
 // Initialize conversations directory
 initConversationsDirectory();
@@ -127,6 +134,15 @@ router.post('/stream', async (req: Request, res: Response) => {
     const id = conversationId || `conv_${Date.now()}_${Math.random().toString(36).substring(7)}`;
     const history = conversations.get(id) || [];
 
+    logChatFlow('stream request', {
+      requestedConversationId: conversationId || null,
+      resolvedConversationId: id,
+      historyLength: history.length,
+      firstHistoryRole: history[0]?.role ?? null,
+      lastHistoryRole: history[history.length - 1]?.role ?? null,
+      messagePreview: typeof message === 'string' ? message.slice(0, 80) : null,
+    });
+
     // Set up SSE headers
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
@@ -162,6 +178,13 @@ router.post('/stream', async (req: Request, res: Response) => {
     history.push({ role: 'user', content: message });
     history.push({ role: 'assistant', content: response.message || fullMessage });
     conversations.set(id, history);
+
+    logChatFlow('stream history updated', {
+      conversationId: id,
+      historyLength: history.length,
+      lastAssistantLength: (response.message || fullMessage).length,
+      toolCallCount: response.toolCalls?.length || 0,
+    });
 
     // Keep conversation history manageable
     if (history.length > 40) {
@@ -269,11 +292,51 @@ router.post('/conversations', (req: Request, res: Response) => {
       updatedAt: updatedAt || new Date().toISOString(),
     };
 
+    const existingMessages = conversations.get(id) || [];
+    const previousLength = existingMessages.length;
+    const incomingLength = conversation.messages.length;
+    const existingLastMessage = existingMessages[existingMessages.length - 1];
+    const incomingLastMessage = conversation.messages[conversation.messages.length - 1];
+    const incomingLastIsIncompleteAssistant =
+      incomingLastMessage?.role === 'assistant' && incomingLastMessage.content.trim().length === 0;
+
+    // Guard against stale frontend syncs overwriting richer backend history.
+    const shouldIgnoreSync =
+      previousLength > incomingLength ||
+      (previousLength === incomingLength &&
+        incomingLastIsIncompleteAssistant &&
+        existingLastMessage?.role === 'assistant' &&
+        existingLastMessage.content.trim().length > 0);
+
+    if (shouldIgnoreSync) {
+      logChatFlow('frontend sync ignored to protect richer history', {
+        conversationId: id,
+        previousLength,
+        incomingLength,
+        existingLastRole: existingLastMessage?.role ?? null,
+        incomingLastRole: incomingLastMessage?.role ?? null,
+      });
+
+      res.json({
+        success: true,
+        ignored: true,
+        conversation: { id, title: conversation.title },
+      });
+      return;
+    }
+
     // Save to file
     saveConversationToFile(conversation);
 
     // Update in-memory cache
     conversations.set(id, conversation.messages);
+    logChatFlow('frontend sync applied', {
+      conversationId: id,
+      previousLength,
+      incomingLength,
+      firstRole: conversation.messages[0]?.role ?? null,
+      lastRole: conversation.messages[conversation.messages.length - 1]?.role ?? null,
+    });
 
     res.json({ success: true, conversation: { id, title: conversation.title } });
   } catch (error) {
