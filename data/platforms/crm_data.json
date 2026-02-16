@@ -1,0 +1,1077 @@
+{
+  "platform": "crm_data",
+  "platform_display_name": "CRM & Customer Data",
+  "products": [
+    {
+      "product_id": "prod_crm_email",
+      "platform": "crm_data",
+      "name": "Email Campaign",
+      "description": "Targeted email campaigns to segmented customer lists with personalized content, dynamic fields, and automated send-time optimization",
+      "category": "CRM/Email",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_crm_email_standard",
+          "currency": "USD",
+          "cpm": 1.50,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_crm_email_premium",
+          "currency": "USD",
+          "cpm": 3.00,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "crm_email_template"
+        }
+      ],
+      "targeting_capabilities": [
+        "customer_segment",
+        "purchase_history",
+        "engagement_score",
+        "lifecycle_stage",
+        "product_affinity",
+        "email_engagement_tier"
+      ],
+      "minimum_budget": 500,
+      "available_inventory": 85000000
+    },
+    {
+      "product_id": "prod_crm_sms",
+      "platform": "crm_data",
+      "name": "SMS Campaign",
+      "description": "Direct SMS messaging to opted-in customers with high open rates, link tracking, and compliance-managed delivery",
+      "category": "CRM/SMS",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_crm_sms_standard",
+          "currency": "USD",
+          "cpm": 5.00,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_crm_sms_premium",
+          "currency": "USD",
+          "cpm": 10.00,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "crm_sms_message"
+        }
+      ],
+      "targeting_capabilities": [
+        "customer_segment",
+        "geo_region",
+        "purchase_recency",
+        "sms_opt_in_status",
+        "time_zone"
+      ],
+      "minimum_budget": 1000,
+      "available_inventory": 12000000
+    },
+    {
+      "product_id": "prod_crm_push",
+      "platform": "crm_data",
+      "name": "Push Notification Campaign",
+      "description": "Mobile and web push notifications with rich media support, deep linking, and behavioral trigger automation",
+      "category": "CRM/Push",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_crm_push_standard",
+          "currency": "USD",
+          "cpm": 2.00,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_crm_push_rich",
+          "currency": "USD",
+          "cpm": 5.00,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "crm_push_notification"
+        }
+      ],
+      "targeting_capabilities": [
+        "customer_segment",
+        "app_activity",
+        "device_type",
+        "push_opt_in_status",
+        "last_app_session",
+        "behavioral_trigger"
+      ],
+      "minimum_budget": 750,
+      "available_inventory": 42000000
+    },
+    {
+      "product_id": "prod_crm_loyalty",
+      "platform": "crm_data",
+      "name": "Loyalty Program",
+      "description": "Points-based loyalty program campaigns with tier-specific offers, reward redemption prompts, and gamified engagement mechanics",
+      "category": "CRM/Loyalty",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_crm_loyalty_standard",
+          "currency": "USD",
+          "cpm": 3.00,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_crm_loyalty_premium",
+          "currency": "USD",
+          "cpm": 8.00,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "crm_email_template"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "crm_in_app_message"
+        }
+      ],
+      "targeting_capabilities": [
+        "loyalty_tier",
+        "points_balance",
+        "reward_eligibility",
+        "purchase_frequency",
+        "lifetime_value_tier"
+      ],
+      "minimum_budget": 2000,
+      "available_inventory": 18000000
+    },
+    {
+      "product_id": "prod_crm_retargeting",
+      "platform": "crm_data",
+      "name": "Retargeting Audience Sync",
+      "description": "CRM-powered audience sync to advertising platforms for retargeting, lookalike modeling, and suppression list management",
+      "category": "CRM/Retargeting",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_crm_retarget_standard",
+          "currency": "USD",
+          "cpm": 8.00,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_crm_retarget_lookalike",
+          "currency": "USD",
+          "cpm": 15.00,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "crm_email_template"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "crm_push_notification"
+        }
+      ],
+      "targeting_capabilities": [
+        "website_behavior",
+        "cart_abandonment",
+        "browse_history",
+        "purchase_intent_score",
+        "cross_platform_identity",
+        "suppression_lists"
+      ],
+      "minimum_budget": 3000,
+      "available_inventory": 25000000
+    },
+    {
+      "product_id": "prod_crm_winback",
+      "platform": "crm_data",
+      "name": "Customer Win-Back",
+      "description": "Re-engagement campaigns targeting lapsed and at-risk customers with personalized incentives, escalating offers, and win-back sequences",
+      "category": "CRM/Retention",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_crm_winback_standard",
+          "currency": "USD",
+          "cpm": 4.00,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_crm_winback_premium",
+          "currency": "USD",
+          "cpm": 10.00,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "crm_email_template"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "crm_sms_message"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "crm_direct_mail"
+        }
+      ],
+      "targeting_capabilities": [
+        "churn_risk_score",
+        "days_since_last_purchase",
+        "lifetime_value",
+        "previous_engagement_channel",
+        "win_back_stage"
+      ],
+      "minimum_budget": 1500,
+      "available_inventory": 8000000
+    },
+    {
+      "product_id": "prod_crm_onboarding",
+      "platform": "crm_data",
+      "name": "Onboarding Sequence",
+      "description": "Automated multi-step onboarding flows for new customers with progressive profiling, feature adoption nudges, and milestone-based messaging",
+      "category": "CRM/Onboarding",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_crm_onboard_standard",
+          "currency": "USD",
+          "cpm": 2.00,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_crm_onboard_premium",
+          "currency": "USD",
+          "cpm": 6.00,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "crm_email_template"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "crm_push_notification"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "crm_in_app_message"
+        }
+      ],
+      "targeting_capabilities": [
+        "signup_date",
+        "onboarding_step",
+        "feature_adoption",
+        "activation_status",
+        "referral_source"
+      ],
+      "minimum_budget": 1000,
+      "available_inventory": 15000000
+    }
+  ],
+  "media_buys": [
+    {
+      "media_buy_id": "mb_crm_techflow",
+      "platform": "crm_data",
+      "buyer_ref": "techflow_crm_q1_2026",
+      "brand_manifest": {
+        "name": "TechFlow SaaS",
+        "url": "https://techflow.io"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_crm_tf_001",
+          "product_id": "prod_crm_email",
+          "pricing_option_id": "po_crm_email_premium",
+          "budget": 10000,
+          "targeting_overlay": {
+            "customer_segment": ["existing_customers", "trial_users"],
+            "engagement_score": "medium_to_high",
+            "lifecycle_stage": ["active", "at_risk"]
+          }
+        },
+        {
+          "package_id": "pkg_crm_tf_002",
+          "product_id": "prod_crm_push",
+          "pricing_option_id": "po_crm_push_rich",
+          "budget": 8000,
+          "targeting_overlay": {
+            "customer_segment": ["existing_customers", "trial_users"],
+            "app_activity": ["active_last_7d", "active_last_30d"],
+            "device_type": ["mobile", "desktop"]
+          }
+        }
+      ],
+      "start_time": "2026-01-15T00:00:00Z",
+      "end_time": "2026-03-15T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-10T09:00:00Z"
+    },
+    {
+      "media_buy_id": "mb_crm_financefirst",
+      "platform": "crm_data",
+      "buyer_ref": "financefirst_crm_q1_2026",
+      "brand_manifest": {
+        "name": "FinanceFirst Bank",
+        "url": "https://financefirst.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_crm_ff_001",
+          "product_id": "prod_crm_email",
+          "pricing_option_id": "po_crm_email_premium",
+          "budget": 9000,
+          "targeting_overlay": {
+            "customer_segment": ["account_holders", "prospects"],
+            "lifecycle_stage": ["active", "new", "prospect"],
+            "product_affinity": ["savings", "credit_card", "mortgage"]
+          }
+        },
+        {
+          "package_id": "pkg_crm_ff_002",
+          "product_id": "prod_crm_sms",
+          "pricing_option_id": "po_crm_sms_standard",
+          "budget": 6000,
+          "targeting_overlay": {
+            "customer_segment": ["account_holders"],
+            "sms_opt_in_status": "opted_in",
+            "purchase_recency": "last_90_days"
+          }
+        },
+        {
+          "package_id": "pkg_crm_ff_003",
+          "product_id": "prod_crm_loyalty",
+          "pricing_option_id": "po_crm_loyalty_standard",
+          "budget": 7000,
+          "targeting_overlay": {
+            "loyalty_tier": ["silver", "gold", "platinum"],
+            "reward_eligibility": true
+          }
+        }
+      ],
+      "start_time": "2026-01-01T00:00:00Z",
+      "end_time": "2026-03-31T23:59:59Z",
+      "status": "active",
+      "created_at": "2025-12-20T11:00:00Z"
+    },
+    {
+      "media_buy_id": "mb_crm_luxebeauty",
+      "platform": "crm_data",
+      "buyer_ref": "luxebeauty_crm_spring_2026",
+      "brand_manifest": {
+        "name": "LuxeBeauty",
+        "url": "https://luxebeauty.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_crm_lb_001",
+          "product_id": "prod_crm_email",
+          "pricing_option_id": "po_crm_email_standard",
+          "budget": 5000,
+          "targeting_overlay": {
+            "customer_segment": ["past_purchasers", "loyalty_members"],
+            "purchase_history": ["skincare", "makeup", "fragrance"],
+            "engagement_score": "high"
+          }
+        },
+        {
+          "package_id": "pkg_crm_lb_002",
+          "product_id": "prod_crm_push",
+          "pricing_option_id": "po_crm_push_standard",
+          "budget": 4000,
+          "targeting_overlay": {
+            "customer_segment": ["past_purchasers", "loyalty_members"],
+            "app_activity": ["active_last_14d"],
+            "push_opt_in_status": "opted_in"
+          }
+        },
+        {
+          "package_id": "pkg_crm_lb_003",
+          "product_id": "prod_crm_loyalty",
+          "pricing_option_id": "po_crm_loyalty_premium",
+          "budget": 6000,
+          "targeting_overlay": {
+            "loyalty_tier": ["gold", "platinum", "vip"],
+            "points_balance": "redeemable",
+            "purchase_frequency": "monthly_plus"
+          }
+        }
+      ],
+      "start_time": "2026-01-10T00:00:00Z",
+      "end_time": "2026-04-10T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-05T14:30:00Z"
+    },
+    {
+      "media_buy_id": "mb_crm_urbanliving",
+      "platform": "crm_data",
+      "buyer_ref": "urbanliving_crm_q1_2026",
+      "brand_manifest": {
+        "name": "UrbanLiving Real Estate",
+        "url": "https://urbanliving.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_crm_ul_001",
+          "product_id": "prod_crm_email",
+          "pricing_option_id": "po_crm_email_premium",
+          "budget": 7000,
+          "targeting_overlay": {
+            "customer_segment": ["property_seekers", "past_clients"],
+            "lifecycle_stage": ["prospect", "active_search", "past_buyer"],
+            "geo_region": ["New York", "Los Angeles", "Chicago", "Miami"]
+          }
+        },
+        {
+          "package_id": "pkg_crm_ul_002",
+          "product_id": "prod_crm_retargeting",
+          "pricing_option_id": "po_crm_retarget_standard",
+          "budget": 5000,
+          "targeting_overlay": {
+            "website_behavior": ["property_viewed", "saved_search", "mortgage_calculator"],
+            "browse_history": "last_30_days",
+            "cross_platform_identity": "matched"
+          }
+        }
+      ],
+      "start_time": "2026-01-20T00:00:00Z",
+      "end_time": "2026-03-20T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-15T10:00:00Z"
+    }
+  ],
+  "delivery_metrics": {
+    "mb_crm_techflow": {
+      "media_buy_id": "mb_crm_techflow",
+      "platform": "crm_data",
+      "brand": "TechFlow SaaS",
+      "total_budget": 18000,
+      "total_spend": 11340,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 2850000,
+        "clicks": 42750,
+        "conversions": 1140,
+        "ctr": 1.50,
+        "cpm": 3.98,
+        "cpa": 9.95,
+        "viewability": null,
+        "completion_rate": null
+      },
+      "platform_specific_metrics": {
+        "open_rate": 0.28,
+        "click_to_open_rate": 0.18,
+        "unsubscribe_rate": 0.002,
+        "conversion_rate": 0.04,
+        "customer_acquisition_cost": 15.80,
+        "customer_lifetime_value": 2400,
+        "churn_rate": 0.035,
+        "attribution_source": {
+          "primary_ad_campaign": "mb_gads_techflow",
+          "platform": "google_ads",
+          "correlation_type": "first_touch_to_crm_conversion",
+          "attributed_conversions": 312,
+          "attributed_revenue": 74880
+        }
+      },
+      "by_device": {
+        "new_customers": {
+          "impressions": 570000,
+          "clicks": 10260,
+          "ctr": 1.80,
+          "spend": 2268,
+          "cpm": 3.98
+        },
+        "active_customers": {
+          "impressions": 1425000,
+          "clicks": 22800,
+          "ctr": 1.60,
+          "spend": 5670,
+          "cpm": 3.98
+        },
+        "at_risk_customers": {
+          "impressions": 570000,
+          "clicks": 6840,
+          "ctr": 1.20,
+          "spend": 2268,
+          "cpm": 3.98
+        },
+        "churned_customers": {
+          "impressions": 285000,
+          "clicks": 2850,
+          "ctr": 1.00,
+          "spend": 1134,
+          "cpm": 3.98
+        }
+      },
+      "by_geo": {
+        "onboarding": {
+          "impressions": 427500,
+          "clicks": 8550,
+          "ctr": 2.00,
+          "spend": 1701
+        },
+        "activation": {
+          "impressions": 855000,
+          "clicks": 14535,
+          "ctr": 1.70,
+          "spend": 3402
+        },
+        "retention": {
+          "impressions": 1140000,
+          "clicks": 14820,
+          "ctr": 1.30,
+          "spend": 4536
+        },
+        "expansion": {
+          "impressions": 427500,
+          "clicks": 4845,
+          "ctr": 1.13,
+          "spend": 1701
+        }
+      },
+      "current_bids": {
+        "email_cpm": 3.00,
+        "push_cpm": 5.00
+      },
+      "recommendations": [
+        "Strong engagement from new customers - expand onboarding sequence reach",
+        "At-risk segment showing declining open rates - test re-engagement offers",
+        "Push notifications driving 22% higher CTR than email for trial users - shift budget allocation",
+        "Cross-reference with Google Ads campaign mb_gads_techflow for full-funnel attribution"
+      ]
+    },
+    "mb_crm_financefirst": {
+      "media_buy_id": "mb_crm_financefirst",
+      "platform": "crm_data",
+      "brand": "FinanceFirst Bank",
+      "total_budget": 22000,
+      "total_spend": 14080,
+      "pacing": "on_track",
+      "health": "warning",
+      "summary": {
+        "impressions": 3200000,
+        "clicks": 57600,
+        "conversions": 384,
+        "ctr": 1.80,
+        "cpm": 4.40,
+        "cpa": 36.67,
+        "viewability": null,
+        "completion_rate": null
+      },
+      "platform_specific_metrics": {
+        "open_rate": 0.35,
+        "click_to_open_rate": 0.22,
+        "unsubscribe_rate": 0.001,
+        "conversion_rate": 0.012,
+        "customer_acquisition_cost": 42.50,
+        "customer_lifetime_value": 8500,
+        "churn_rate": 0.018,
+        "attribution_source": {
+          "primary_ad_campaign": "mb_gads_financefirst",
+          "platform": "google_ads",
+          "correlation_type": "multi_touch_attribution",
+          "attributed_conversions": 187,
+          "attributed_revenue": 935000
+        }
+      },
+      "by_device": {
+        "new_customers": {
+          "impressions": 640000,
+          "clicks": 14080,
+          "ctr": 2.20,
+          "spend": 2816,
+          "cpm": 4.40
+        },
+        "active_customers": {
+          "impressions": 1280000,
+          "clicks": 24320,
+          "ctr": 1.90,
+          "spend": 5632,
+          "cpm": 4.40
+        },
+        "at_risk_customers": {
+          "impressions": 960000,
+          "clicks": 14400,
+          "ctr": 1.50,
+          "spend": 4224,
+          "cpm": 4.40
+        },
+        "churned_customers": {
+          "impressions": 320000,
+          "clicks": 4800,
+          "ctr": 1.50,
+          "spend": 1408,
+          "cpm": 4.40
+        }
+      },
+      "by_geo": {
+        "onboarding": {
+          "impressions": 480000,
+          "clicks": 11520,
+          "ctr": 2.40,
+          "spend": 2112
+        },
+        "activation": {
+          "impressions": 960000,
+          "clicks": 19200,
+          "ctr": 2.00,
+          "spend": 4224
+        },
+        "retention": {
+          "impressions": 1280000,
+          "clicks": 19200,
+          "ctr": 1.50,
+          "spend": 5632
+        },
+        "expansion": {
+          "impressions": 480000,
+          "clicks": 7680,
+          "ctr": 1.60,
+          "spend": 2112
+        }
+      },
+      "current_bids": {
+        "email_cpm": 3.00,
+        "sms_cpm": 5.00,
+        "loyalty_cpm": 3.00
+      },
+      "recommendations": [
+        "OPTIMIZATION OPPORTUNITY: Email open rate is excellent at 35% but conversion rate is only 1.2% - significant drop-off between engagement and action",
+        "A/B test CTA button copy and placement - current CTAs may not be compelling enough for financial products",
+        "Test alternative landing pages - the current post-click experience may have friction points (form length, page load time, trust signals)",
+        "Consider adding urgency elements (limited-time rate offers, application deadline reminders) to improve conversion",
+        "SMS channel showing 92% open rate but sending to a smaller opted-in base - expand SMS consent collection",
+        "Loyalty tier engagement correlates with CLV - prioritize platinum and gold tier communications",
+        "Cross-reference with Google Ads campaign mb_gads_financefirst to measure full-funnel impact on account openings"
+      ]
+    },
+    "mb_crm_luxebeauty": {
+      "media_buy_id": "mb_crm_luxebeauty",
+      "platform": "crm_data",
+      "brand": "LuxeBeauty",
+      "total_budget": 15000,
+      "total_spend": 7650,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 1950000,
+        "clicks": 33150,
+        "conversions": 975,
+        "ctr": 1.70,
+        "cpm": 3.92,
+        "cpa": 7.85,
+        "viewability": null,
+        "completion_rate": null
+      },
+      "platform_specific_metrics": {
+        "open_rate": 0.32,
+        "click_to_open_rate": 0.24,
+        "unsubscribe_rate": 0.0015,
+        "conversion_rate": 0.05,
+        "customer_acquisition_cost": 12.40,
+        "customer_lifetime_value": 1850,
+        "churn_rate": 0.042,
+        "attribution_source": {
+          "primary_ad_campaign": "mb_fb_luxebeauty",
+          "platform": "facebook_ads",
+          "correlation_type": "last_touch_to_crm_conversion",
+          "attributed_conversions": 428,
+          "attributed_revenue": 64200
+        }
+      },
+      "by_device": {
+        "new_customers": {
+          "impressions": 292500,
+          "clicks": 5850,
+          "ctr": 2.00,
+          "spend": 1148,
+          "cpm": 3.92
+        },
+        "active_customers": {
+          "impressions": 975000,
+          "clicks": 18525,
+          "ctr": 1.90,
+          "spend": 3825,
+          "cpm": 3.92
+        },
+        "at_risk_customers": {
+          "impressions": 487500,
+          "clicks": 6825,
+          "ctr": 1.40,
+          "spend": 1913,
+          "cpm": 3.92
+        },
+        "churned_customers": {
+          "impressions": 195000,
+          "clicks": 1950,
+          "ctr": 1.00,
+          "spend": 765,
+          "cpm": 3.92
+        }
+      },
+      "by_geo": {
+        "onboarding": {
+          "impressions": 292500,
+          "clicks": 6435,
+          "ctr": 2.20,
+          "spend": 1148
+        },
+        "activation": {
+          "impressions": 585000,
+          "clicks": 11115,
+          "ctr": 1.90,
+          "spend": 2295
+        },
+        "retention": {
+          "impressions": 780000,
+          "clicks": 11700,
+          "ctr": 1.50,
+          "spend": 3060
+        },
+        "expansion": {
+          "impressions": 292500,
+          "clicks": 3900,
+          "ctr": 1.33,
+          "spend": 1148
+        }
+      },
+      "current_bids": {
+        "email_cpm": 1.50,
+        "push_cpm": 2.00,
+        "loyalty_cpm": 8.00
+      },
+      "recommendations": [
+        "Loyalty program driving highest engagement - VIP tier open rate at 45%",
+        "Push notifications for flash sales showing 3x conversion rate vs scheduled sends",
+        "Skincare segment outperforming makeup by 40% in click-to-open rate",
+        "Cross-reference with Facebook Ads campaign mb_fb_luxebeauty for social-to-CRM attribution"
+      ]
+    },
+    "mb_crm_urbanliving": {
+      "media_buy_id": "mb_crm_urbanliving",
+      "platform": "crm_data",
+      "brand": "UrbanLiving Real Estate",
+      "total_budget": 12000,
+      "total_spend": 5160,
+      "pacing": "behind",
+      "health": "warning",
+      "summary": {
+        "impressions": 780000,
+        "clicks": 10920,
+        "conversions": 156,
+        "ctr": 1.40,
+        "cpm": 6.62,
+        "cpa": 33.08,
+        "viewability": null,
+        "completion_rate": null
+      },
+      "platform_specific_metrics": {
+        "open_rate": 0.24,
+        "click_to_open_rate": 0.15,
+        "unsubscribe_rate": 0.004,
+        "conversion_rate": 0.02,
+        "customer_acquisition_cost": 85.00,
+        "customer_lifetime_value": 45000,
+        "churn_rate": 0.08,
+        "attribution_source": {
+          "primary_ad_campaign": "mb_gads_urbanliving",
+          "platform": "google_ads",
+          "correlation_type": "first_touch_to_crm_conversion",
+          "attributed_conversions": 67,
+          "attributed_revenue": 1340000
+        }
+      },
+      "by_device": {
+        "new_customers": {
+          "impressions": 234000,
+          "clicks": 3978,
+          "ctr": 1.70,
+          "spend": 1548,
+          "cpm": 6.62
+        },
+        "active_customers": {
+          "impressions": 312000,
+          "clicks": 4680,
+          "ctr": 1.50,
+          "spend": 2064,
+          "cpm": 6.62
+        },
+        "at_risk_customers": {
+          "impressions": 156000,
+          "clicks": 1872,
+          "ctr": 1.20,
+          "spend": 1032,
+          "cpm": 6.62
+        },
+        "churned_customers": {
+          "impressions": 78000,
+          "clicks": 390,
+          "ctr": 0.50,
+          "spend": 516,
+          "cpm": 6.62
+        }
+      },
+      "by_geo": {
+        "onboarding": {
+          "impressions": 117000,
+          "clicks": 2340,
+          "ctr": 2.00,
+          "spend": 774
+        },
+        "activation": {
+          "impressions": 234000,
+          "clicks": 3978,
+          "ctr": 1.70,
+          "spend": 1548
+        },
+        "retention": {
+          "impressions": 312000,
+          "clicks": 3744,
+          "ctr": 1.20,
+          "spend": 2064
+        },
+        "expansion": {
+          "impressions": 117000,
+          "clicks": 858,
+          "ctr": 0.73,
+          "spend": 774
+        }
+      },
+      "current_bids": {
+        "email_cpm": 3.00,
+        "retargeting_cpm": 8.00
+      },
+      "recommendations": [
+        "Campaign pacing behind - increase email send frequency for active property seekers",
+        "High unsubscribe rate (0.4%) - review email frequency and content relevance",
+        "Retargeting audience sync showing strong property-viewed to inquiry conversion",
+        "New York and Miami markets responding best - consider geo-specific property listing emails",
+        "Cross-reference with Google Ads campaign mb_gads_urbanliving for search-to-email nurture funnel"
+      ]
+    }
+  },
+  "creative_formats": [
+    {
+      "format_id": "crm_email_template",
+      "name": "Email Template",
+      "type": "native",
+      "specs": {
+        "format": "responsive_html",
+        "max_file_size": "100KB",
+        "subject_line_max": 60,
+        "preheader_max": 90,
+        "supported_personalization": ["first_name", "product_name", "offer_code", "dynamic_content_blocks"],
+        "required_elements": ["unsubscribe_link", "physical_address", "sender_name"]
+      }
+    },
+    {
+      "format_id": "crm_sms_message",
+      "name": "SMS Message",
+      "type": "native",
+      "specs": {
+        "standard_length": 160,
+        "extended_length_with_link": 320,
+        "supported_personalization": ["first_name", "offer_code", "short_url"],
+        "compliance": ["TCPA", "opt_out_keyword_STOP"],
+        "link_tracking": true
+      }
+    },
+    {
+      "format_id": "crm_push_notification",
+      "name": "Push Notification",
+      "type": "native",
+      "specs": {
+        "title_max": 50,
+        "body_max": 150,
+        "deep_link": true,
+        "rich_media_optional": true,
+        "rich_media_max_size": "1MB",
+        "rich_media_formats": ["jpg", "png", "gif"],
+        "action_buttons_max": 2
+      }
+    },
+    {
+      "format_id": "crm_in_app_message",
+      "name": "In-App Message",
+      "type": "display",
+      "specs": {
+        "layouts": ["modal", "banner", "fullscreen"],
+        "custom_html": true,
+        "max_file_size": "500KB",
+        "action_buttons_max": 3,
+        "dismiss_behavior": ["close_button", "background_tap", "timeout"],
+        "trigger_events": ["app_open", "feature_use", "inactivity", "custom_event"]
+      }
+    },
+    {
+      "format_id": "crm_direct_mail",
+      "name": "Direct Mail",
+      "type": "native",
+      "specs": {
+        "formats": ["letter", "postcard_4x6", "postcard_6x9"],
+        "variable_data_printing": true,
+        "qr_code_tracking": true,
+        "personalization_fields": ["name", "address", "offer", "qr_destination"],
+        "lead_time_days": 5,
+        "proof_required": true
+      }
+    }
+  ],
+  "authorized_properties": [
+    {
+      "property_id": "prop_crm_salesforce",
+      "name": "Salesforce",
+      "domain": "salesforce.com",
+      "category": "CRM Platform",
+      "monthly_uniques": 150000000,
+      "authorization_level": "premium",
+      "available_formats": ["crm_email_template", "crm_push_notification", "crm_in_app_message"],
+      "discount_percent": 10,
+      "audience_profile": "Enterprise B2B customers, sales teams, marketing operations professionals",
+      "special_capabilities": ["journey_builder", "einstein_ai_scoring", "marketing_cloud_integration", "contact_deduplication"]
+    },
+    {
+      "property_id": "prop_crm_hubspot",
+      "name": "HubSpot",
+      "domain": "hubspot.com",
+      "category": "CRM Platform",
+      "monthly_uniques": 80000000,
+      "authorization_level": "standard",
+      "available_formats": ["crm_email_template", "crm_push_notification", "crm_in_app_message"],
+      "audience_profile": "Mid-market B2B and B2C companies, marketing and sales teams",
+      "special_capabilities": ["workflow_automation", "lead_scoring", "smart_content", "a_b_testing"]
+    },
+    {
+      "property_id": "prop_crm_klaviyo",
+      "name": "Klaviyo",
+      "domain": "klaviyo.com",
+      "category": "Email/SMS Platform",
+      "monthly_uniques": 45000000,
+      "authorization_level": "standard",
+      "available_formats": ["crm_email_template", "crm_sms_message"],
+      "audience_profile": "Ecommerce brands, DTC retailers, Shopify merchants",
+      "special_capabilities": ["predictive_analytics", "product_recommendations", "browse_abandonment", "back_in_stock_alerts"]
+    },
+    {
+      "property_id": "prop_crm_braze",
+      "name": "Braze",
+      "domain": "braze.com",
+      "category": "Customer Engagement",
+      "monthly_uniques": 60000000,
+      "authorization_level": "premium",
+      "available_formats": ["crm_email_template", "crm_push_notification", "crm_sms_message", "crm_in_app_message"],
+      "discount_percent": 8,
+      "audience_profile": "Enterprise mobile-first brands, app-based businesses, media companies",
+      "special_capabilities": ["canvas_journey_orchestration", "intelligent_delivery_timing", "content_cards", "real_time_triggers"]
+    },
+    {
+      "property_id": "prop_crm_mailchimp",
+      "name": "Mailchimp",
+      "domain": "mailchimp.com",
+      "category": "Email Marketing",
+      "monthly_uniques": 120000000,
+      "authorization_level": "standard",
+      "available_formats": ["crm_email_template", "crm_direct_mail"],
+      "audience_profile": "Small and medium businesses, solopreneurs, local businesses",
+      "special_capabilities": ["audience_segmentation", "send_time_optimization", "content_optimizer", "postcard_campaigns"]
+    }
+  ],
+  "performance_feedback_log": [
+    {
+      "feedback_id": "fb_crm_001",
+      "media_buy_id": "mb_crm_techflow",
+      "submitted_at": "2026-02-01T10:30:00Z",
+      "feedback_type": "conversion_data",
+      "data": {
+        "conversions": 1140,
+        "conversion_value": 342000,
+        "attribution_window": "7_day_click",
+        "conversion_breakdown": {
+          "trial_to_paid": 312,
+          "feature_upgrade": 485,
+          "plan_expansion": 198,
+          "referral_signup": 145
+        },
+        "cross_platform_correlation": {
+          "ad_campaign_id": "mb_gads_techflow",
+          "ad_platform": "google_ads",
+          "ad_driven_crm_entries": 856,
+          "ad_to_email_conversion_rate": 0.047,
+          "multi_touch_attribution_share": 0.38
+        }
+      },
+      "status": "processed",
+      "impact": "Full-funnel attribution model updated; Google Ads driving 38% of CRM conversions via first-touch"
+    },
+    {
+      "feedback_id": "fb_crm_002",
+      "media_buy_id": "mb_crm_financefirst",
+      "submitted_at": "2026-02-05T14:00:00Z",
+      "feedback_type": "lead_quality",
+      "data": {
+        "leads_submitted": 384,
+        "leads_qualified": 192,
+        "qualification_rate": 0.50,
+        "pipeline_value": 4800000,
+        "conversion_funnel": {
+          "email_opened": 1120000,
+          "email_clicked": 246400,
+          "landing_page_visited": 198000,
+          "form_started": 42000,
+          "form_completed": 8400,
+          "account_opened": 384
+        },
+        "cross_platform_correlation": {
+          "ad_campaign_id": "mb_gads_financefirst",
+          "ad_platform": "google_ads",
+          "ad_driven_crm_entries": 1240,
+          "search_to_email_nurture_rate": 0.62,
+          "multi_touch_attribution_share": 0.45
+        },
+        "optimization_notes": "High open rate (35%) but only 1.2% conversion suggests strong subject lines but weak CTA or landing page experience. Recommend A/B testing: (1) CTA button text variations, (2) simplified application form, (3) landing page with rate calculator vs. standard product page"
+      },
+      "status": "processed",
+      "impact": "Identified conversion bottleneck between email engagement and account opening; A/B test plan created for CTA optimization"
+    },
+    {
+      "feedback_id": "fb_crm_003",
+      "media_buy_id": "mb_crm_luxebeauty",
+      "submitted_at": "2026-02-08T09:45:00Z",
+      "feedback_type": "conversion_data",
+      "data": {
+        "conversions": 975,
+        "conversion_value": 78000,
+        "attribution_window": "14_day_click",
+        "conversion_breakdown": {
+          "first_purchase": 245,
+          "repeat_purchase": 510,
+          "loyalty_redemption": 220
+        },
+        "cross_platform_correlation": {
+          "ad_campaign_id": "mb_fb_luxebeauty",
+          "ad_platform": "facebook_ads",
+          "ad_driven_crm_entries": 634,
+          "social_to_email_signup_rate": 0.085,
+          "multi_touch_attribution_share": 0.44
+        }
+      },
+      "status": "processed",
+      "impact": "Facebook Ads campaign driving 44% of CRM conversions; loyalty redemption campaigns showing 3.2x ROI vs standard email"
+    }
+  ]
+}

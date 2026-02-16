@@ -6,6 +6,7 @@ import type { DeliveryMetrics, MetricsSummary, DeviceMetrics, GeoMetrics } from 
  */
 export interface GetMediaBuyDeliveryInput {
   media_buy_id?: string;
+  platform?: string;
 }
 
 /**
@@ -14,6 +15,7 @@ export interface GetMediaBuyDeliveryInput {
 export interface DeliveryMetricsOutput {
   media_buy_id: string;
   brand: string;
+  platform?: string;
   total_budget: number;
   total_spend: number;
   pacing: 'on_track' | 'behind' | 'overspend';
@@ -22,6 +24,7 @@ export interface DeliveryMetricsOutput {
   by_device: Record<string, DeviceMetrics>;
   by_geo: Record<string, GeoMetrics>;
   recommendations: string[];
+  platform_specific_metrics?: Record<string, unknown>;
 }
 
 /**
@@ -55,6 +58,7 @@ function toDeliveryMetricsOutput(metrics: DeliveryMetrics): DeliveryMetricsOutpu
   return {
     media_buy_id: metrics.media_buy_id,
     brand: metrics.brand,
+    platform: metrics.platform,
     total_budget: metrics.total_budget,
     total_spend: metrics.total_spend,
     pacing: metrics.pacing,
@@ -63,6 +67,7 @@ function toDeliveryMetricsOutput(metrics: DeliveryMetrics): DeliveryMetricsOutpu
     by_device: metrics.by_device,
     by_geo: metrics.by_geo,
     recommendations: metrics.recommendations,
+    platform_specific_metrics: metrics.platform_specific_metrics,
   };
 }
 
@@ -104,8 +109,8 @@ export function getMediaBuyDelivery(input: GetMediaBuyDeliveryInput): GetMediaBu
     };
   }
 
-  // No media_buy_id provided, return all metrics
-  const allMetrics = getDeliveryMetrics();
+  // No media_buy_id provided, return all metrics (optionally filtered by platform)
+  const allMetrics = getDeliveryMetrics(undefined, input.platform);
 
   if (!allMetrics || !Array.isArray(allMetrics)) {
     return {

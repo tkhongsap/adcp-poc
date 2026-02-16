@@ -1,16 +1,16 @@
 {
-  "startedAt": "2026-02-01T06:34:04.889Z",
+  "startedAt": "2026-02-16T08:27:18.806Z",
   "baseUrl": "http://localhost:3001",
   "health": {
     "httpStatus": 200,
     "httpOk": true,
     "body": {
       "status": "ok",
-      "timestamp": "2026-02-01T06:34:04.929Z",
+      "timestamp": "2026-02-16T08:27:18.843Z",
       "dataLoaded": true,
       "websocket": {
         "initialized": true,
-        "connectedClients": 0
+        "connectedClients": 2
       }
     }
   },
@@ -22,7 +22,7 @@
       },
       "httpStatus": 200,
       "httpOk": true,
-      "elapsedMs": 13,
+      "elapsedMs": 9,
       "response": {
         "success": true,
         "products": [
@@ -31,6 +31,7 @@
             "name": "ESPN Premium Sports",
             "description": "Premium placements across ESPN's sports content including live games, highlights, and sports news",
             "category": "Sports",
+            "platform": "display_programmatic",
             "pricing_options": [
               {
                 "pricing_option_id": "po_espn_standard",
@@ -51,6 +52,7 @@
             "name": "Sports Illustrated",
             "description": "Classic sports journalism audience across Sports Illustrated digital properties",
             "category": "Sports",
+            "platform": "display_programmatic",
             "pricing_options": [
               {
                 "pricing_option_id": "po_si_ros",
@@ -71,6 +73,7 @@
             "name": "Bleacher Report",
             "description": "Younger sports fan audience on Bleacher Report with strong mobile engagement",
             "category": "Sports",
+            "platform": "display_programmatic",
             "pricing_options": [
               {
                 "pricing_option_id": "po_br_standard",
@@ -98,10 +101,223 @@
       "input": {},
       "httpStatus": 200,
       "httpOk": true,
-      "elapsedMs": 4,
+      "elapsedMs": 3,
       "response": {
         "success": true,
         "formats": [
+          {
+            "format_id": "car_gallery_carousel",
+            "name": "Vehicle Gallery Carousel",
+            "type": "display",
+            "dimensions": "600x400",
+            "specs": {
+              "max_file_size": "2MB",
+              "file_types": [
+                "jpg",
+                "png",
+                "webp"
+              ],
+              "max_images": 10,
+              "features": [
+                "360-degree view",
+                "pricing overlay",
+                "swipe navigation",
+                "zoom capability"
+              ],
+              "image_dimensions": "1200x800"
+            }
+          },
+          {
+            "format_id": "car_comparison",
+            "name": "Comparison Tool Ad",
+            "type": "native",
+            "specs": {
+              "max_file_size": "500KB",
+              "file_types": [
+                "html5",
+                "js"
+              ],
+              "max_vehicles": 3,
+              "features": [
+                "side-by-side comparison",
+                "interactive specs",
+                "pricing comparison",
+                "feature highlights"
+              ],
+              "interaction": "click_to_compare"
+            }
+          },
+          {
+            "format_id": "car_configurator",
+            "name": "Configurator Interactive Ad",
+            "type": "display",
+            "dimensions": "728x500",
+            "specs": {
+              "max_file_size": "1MB",
+              "file_types": [
+                "html5",
+                "js",
+                "webgl"
+              ],
+              "features": [
+                "color selector",
+                "trim selector",
+                "real-time pricing",
+                "monthly payment calculator",
+                "save configuration"
+              ],
+              "interaction": "interactive_configurator"
+            }
+          },
+          {
+            "format_id": "car_dealer_locator",
+            "name": "Dealer Locator",
+            "type": "native",
+            "specs": {
+              "max_file_size": "300KB",
+              "file_types": [
+                "html5",
+                "js"
+              ],
+              "features": [
+                "map integration",
+                "nearest dealer",
+                "hours and directions",
+                "click-to-call",
+                "appointment scheduling"
+              ],
+              "interaction": "location_based"
+            }
+          },
+          {
+            "format_id": "car_dynamic_inventory",
+            "name": "Dynamic Inventory Ad",
+            "type": "display",
+            "dimensions": "300x250",
+            "specs": {
+              "max_file_size": "200KB",
+              "file_types": [
+                "html5",
+                "jpg",
+                "png"
+              ],
+              "features": [
+                "real-time inventory feed",
+                "pricing and availability",
+                "auto-updated",
+                "stock countdown",
+                "VIN-level tracking"
+              ],
+              "interaction": "dynamic_feed"
+            }
+          },
+          {
+            "format_id": "crm_email_template",
+            "name": "Email Template",
+            "type": "native",
+            "specs": {
+              "format": "responsive_html",
+              "max_file_size": "100KB",
+              "subject_line_max": 60,
+              "preheader_max": 90,
+              "supported_personalization": [
+                "first_name",
+                "product_name",
+                "offer_code",
+                "dynamic_content_blocks"
+              ],
+              "required_elements": [
+                "unsubscribe_link",
+                "physical_address",
+                "sender_name"
+              ]
+            }
+          },
+          {
+            "format_id": "crm_sms_message",
+            "name": "SMS Message",
+            "type": "native",
+            "specs": {
+              "standard_length": 160,
+              "extended_length_with_link": 320,
+              "supported_personalization": [
+                "first_name",
+                "offer_code",
+                "short_url"
+              ],
+              "compliance": [
+                "TCPA",
+                "opt_out_keyword_STOP"
+              ],
+              "link_tracking": true
+            }
+          },
+          {
+            "format_id": "crm_push_notification",
+            "name": "Push Notification",
+            "type": "native",
+            "specs": {
+              "title_max": 50,
+              "body_max": 150,
+              "deep_link": true,
+              "rich_media_optional": true,
+              "rich_media_max_size": "1MB",
+              "rich_media_formats": [
+                "jpg",
+                "png",
+                "gif"
+              ],
+              "action_buttons_max": 2
+            }
+          },
+          {
+            "format_id": "crm_in_app_message",
+            "name": "In-App Message",
+            "type": "display",
+            "specs": {
+              "layouts": [
+                "modal",
+                "banner",
+                "fullscreen"
+              ],
+              "custom_html": true,
+              "max_file_size": "500KB",
+              "action_buttons_max": 3,
+              "dismiss_behavior": [
+                "close_button",
+                "background_tap",
+                "timeout"
+              ],
+              "trigger_events": [
+                "app_open",
+                "feature_use",
+                "inactivity",
+                "custom_event"
+              ]
+            }
+          },
+          {
+            "format_id": "crm_direct_mail",
+            "name": "Direct Mail",
+            "type": "native",
+            "specs": {
+              "formats": [
+                "letter",
+                "postcard_4x6",
+                "postcard_6x9"
+              ],
+              "variable_data_printing": true,
+              "qr_code_tracking": true,
+              "personalization_fields": [
+                "name",
+                "address",
+                "offer",
+                "qr_destination"
+              ],
+              "lead_time_days": 5,
+              "proof_required": true
+            }
+          },
           {
             "format_id": "display_300x250_image",
             "name": "Medium Rectangle",
@@ -285,9 +501,348 @@
               ],
               "max_duration": 30
             }
+          },
+          {
+            "format_id": "fb_carousel",
+            "name": "Carousel Ad",
+            "type": "display",
+            "specs": {
+              "max_cards": 10,
+              "image_size": "1080x1080",
+              "aspect_ratio": "1:1",
+              "headline_max_chars": 40,
+              "primary_text_max_chars": 125,
+              "description_max_chars": 20,
+              "file_types": [
+                "JPG",
+                "PNG"
+              ],
+              "max_file_size": "30MB",
+              "video_per_card": true,
+              "video_max_length": "240min"
+            }
+          },
+          {
+            "format_id": "fb_single_image",
+            "name": "Single Image Ad",
+            "type": "display",
+            "specs": {
+              "image_size": "1200x628",
+              "aspect_ratio": "1.91:1",
+              "headline_max_chars": 40,
+              "primary_text_max_chars": 125,
+              "description_max_chars": 30,
+              "file_types": [
+                "JPG",
+                "PNG"
+              ],
+              "max_file_size": "30MB"
+            }
+          },
+          {
+            "format_id": "fb_single_video",
+            "name": "Single Video Ad",
+            "type": "video",
+            "specs": {
+              "max_duration": "240min",
+              "recommended_duration": "15-60s",
+              "resolution": "1080p",
+              "aspect_ratios": [
+                "16:9",
+                "1:1",
+                "9:16",
+                "4:5"
+              ],
+              "file_types": [
+                "MP4",
+                "MOV",
+                "GIF"
+              ],
+              "max_file_size": "4GB",
+              "captions": "recommended",
+              "sound": "optional_autoplay_muted"
+            }
+          },
+          {
+            "format_id": "fb_collection",
+            "name": "Collection Ad",
+            "type": "display",
+            "specs": {
+              "cover_media": "image_or_video",
+              "product_images": 4,
+              "cover_image_size": "1200x628",
+              "product_image_size": "1080x1080",
+              "headline_max_chars": 40,
+              "primary_text_max_chars": 125,
+              "requires_product_catalog": true
+            }
+          },
+          {
+            "format_id": "fb_instant_experience",
+            "name": "Instant Experience",
+            "type": "display",
+            "specs": {
+              "type": "fullscreen_mobile",
+              "format": "HTML5",
+              "max_size": "2MB",
+              "components": [
+                "header",
+                "image",
+                "video",
+                "carousel",
+                "product_set",
+                "button",
+                "text_block"
+              ],
+              "load_time": "instant",
+              "supports_tilt_to_pan": true
+            }
+          },
+          {
+            "format_id": "fb_lead_form",
+            "name": "Lead Form Ad",
+            "type": "native",
+            "specs": {
+              "fields": "customizable",
+              "auto_fill": "from_profile",
+              "max_custom_questions": 15,
+              "question_types": [
+                "short_answer",
+                "multiple_choice",
+                "conditional",
+                "appointment_scheduling"
+              ],
+              "privacy_policy_required": true,
+              "thank_you_screen": true,
+              "crm_integration": "available"
+            }
+          },
+          {
+            "format_id": "gads_responsive_search",
+            "name": "Responsive Search Ad",
+            "type": "native",
+            "specs": {
+              "headlines_max_count": 15,
+              "headline_max": 30,
+              "descriptions_max_count": 4,
+              "description_max": 90,
+              "display_url_paths": 2,
+              "path_max": 15,
+              "file_types": [
+                "text"
+              ],
+              "notes": "Google automatically tests combinations of headlines and descriptions to find the best performing ad variations"
+            }
+          },
+          {
+            "format_id": "gads_responsive_display",
+            "name": "Responsive Display Ad",
+            "type": "display",
+            "specs": {
+              "image_dimensions": "1200x628, 1200x1200",
+              "logo_dimensions": "1200x1200, 1200x300",
+              "headline_max": 30,
+              "headlines_max_count": 5,
+              "long_headline_max": 90,
+              "description_max": 90,
+              "descriptions_max_count": 5,
+              "business_name_max": 25,
+              "max_file_size": "5MB",
+              "file_types": [
+                "jpg",
+                "png",
+                "gif"
+              ],
+              "notes": "Auto-optimized by Google ML to fit any ad slot across the Display Network; supports both landscape (1200x628) and square (1200x1200) images"
+            }
+          },
+          {
+            "format_id": "gads_video_instream",
+            "name": "Video Ad (In-Stream)",
+            "type": "video",
+            "specs": {
+              "max_file_size": "256MB",
+              "file_types": [
+                "mp4",
+                "mov",
+                "avi",
+                "webm"
+              ],
+              "max_duration": 180,
+              "recommended_duration": "15-30s",
+              "skip_after": 5,
+              "min_resolution": "640x360",
+              "recommended_resolution": "1920x1080",
+              "aspect_ratios": [
+                "16:9",
+                "9:16",
+                "1:1"
+              ],
+              "notes": "Skippable after 5 seconds; max 3 minutes; charged on CPV (cost per view) when viewer watches 30s or interacts"
+            }
+          },
+          {
+            "format_id": "gads_video_discovery",
+            "name": "Video Ad (Discovery)",
+            "type": "video",
+            "specs": {
+              "max_file_size": "256MB",
+              "file_types": [
+                "mp4",
+                "mov",
+                "avi",
+                "webm"
+              ],
+              "max_duration": 180,
+              "thumbnail_required": true,
+              "thumbnail_resolution": "1280x720",
+              "headline_max": 100,
+              "description_line_1_max": 35,
+              "description_line_2_max": 35,
+              "notes": "Thumbnail and headline shown in YouTube search results and related videos; user clicks to watch; max 3 minutes; charged when user clicks to watch"
+            }
+          },
+          {
+            "format_id": "gads_shopping_listing",
+            "name": "Shopping Listing",
+            "type": "native",
+            "specs": {
+              "product_image_min": "100x100",
+              "product_image_recommended": "800x800",
+              "title_max": 150,
+              "description_max": 5000,
+              "price_required": true,
+              "merchant_name_required": true,
+              "gtin_or_mpn_required": true,
+              "file_types": [
+                "jpg",
+                "png",
+                "gif",
+                "bmp",
+                "tif"
+              ],
+              "max_file_size": "16MB",
+              "notes": "Product data fed from Google Merchant Center; image, title, price, and merchant name displayed; optimized for product comparison shopping"
+            }
+          },
+          {
+            "format_id": "gads_app_install",
+            "name": "App Install Ad",
+            "type": "display",
+            "specs": {
+              "headline_max": 25,
+              "headlines_max_count": 5,
+              "description_max": 90,
+              "descriptions_max_count": 5,
+              "image_dimensions": "1200x628, 1200x1200",
+              "max_file_size": "5MB",
+              "file_types": [
+                "jpg",
+                "png"
+              ],
+              "video_max_duration": 30,
+              "notes": "Auto-generated creatives from app store listing assets; Google ML optimizes placement across Search, Play, YouTube, Display, and Discover"
+            }
+          },
+          {
+            "format_id": "inf_sponsored_post",
+            "name": "Sponsored Post",
+            "type": "native",
+            "specs": {
+              "format": "platform-native (image or video)",
+              "disclosure": "Required (#ad, #sponsored, or platform partnership label)",
+              "image_specs": "Platform-native resolution, minimum 1080x1080px for feed posts",
+              "video_specs": "Platform-native format, 15s-60s recommended for feed, up to 3min for long-form",
+              "caption": "Influencer-written with brand-approved talking points",
+              "cta_options": [
+                "swipe_up",
+                "link_in_bio",
+                "shop_now",
+                "learn_more"
+              ]
+            }
+          },
+          {
+            "format_id": "inf_story_takeover",
+            "name": "Story Takeover",
+            "type": "video",
+            "specs": {
+              "format": "vertical video/image stories",
+              "duration": "24-hour story series",
+              "story_count": "5-15 stories per takeover",
+              "style": "Behind-the-scenes, authentic, unscripted feel",
+              "resolution": "1080x1920 (9:16 aspect ratio)",
+              "max_duration_per_story": "15 seconds (video) or 5 seconds (image)",
+              "interactive_elements": [
+                "polls",
+                "questions",
+                "quizzes",
+                "countdown",
+                "link_sticker"
+              ]
+            }
+          },
+          {
+            "format_id": "inf_unboxing",
+            "name": "Unboxing Video",
+            "type": "video",
+            "specs": {
+              "format": "video",
+              "duration": "3-10 minutes",
+              "style": "Product reveal, authentic first reaction, detailed showcase",
+              "resolution": "Minimum 1080p, 4K preferred for YouTube",
+              "aspect_ratio": "16:9 (YouTube), 9:16 (TikTok/Reels), 1:1 (Feed)",
+              "required_elements": [
+                "product_closeup",
+                "genuine_reaction",
+                "feature_walkthrough"
+              ],
+              "disclosure": "Required within first 30 seconds"
+            }
+          },
+          {
+            "format_id": "inf_livestream",
+            "name": "Live Stream",
+            "type": "video",
+            "specs": {
+              "format": "live video stream",
+              "duration": "30-60 minutes",
+              "style": "Real-time engagement, product demo, audience Q&A",
+              "resolution": "Minimum 720p, 1080p recommended",
+              "required_elements": [
+                "product_demo",
+                "audience_qa",
+                "discount_code_reveal"
+              ],
+              "interactive_features": [
+                "live_chat",
+                "pinned_comments",
+                "live_polls",
+                "gifting"
+              ],
+              "scheduling": "Minimum 48-hour advance promotion recommended"
+            }
+          },
+          {
+            "format_id": "inf_product_review",
+            "name": "Product Review",
+            "type": "native",
+            "specs": {
+              "format": "post or video (platform-native)",
+              "style": "Detailed honest opinion, pros and cons, personal experience",
+              "video_duration": "5-15 minutes (long-form), 60-90 seconds (short-form)",
+              "written_length": "500-1500 words for blog/caption format",
+              "required_elements": [
+                "personal_experience",
+                "honest_assessment",
+                "use_case_demo",
+                "rating_or_verdict"
+              ],
+              "disclosure": "Required, clearly visible in post or first 30 seconds of video"
+            }
           }
         ],
-        "count": 14,
+        "count": 41,
         "filters_applied": {}
       }
     },
@@ -296,10 +851,216 @@
       "input": {},
       "httpStatus": 200,
       "httpOk": true,
-      "elapsedMs": 3,
+      "elapsedMs": 4,
       "response": {
         "success": true,
         "properties": [
+          {
+            "property_id": "prop_car_autotrader",
+            "name": "AutoTrader",
+            "domain": "autotrader.com",
+            "category": "Automotive Marketplace",
+            "monthly_uniques": 28000000,
+            "authorization_level": "premium",
+            "available_formats": [
+              "car_gallery_carousel",
+              "car_dynamic_inventory",
+              "car_dealer_locator",
+              "car_configurator"
+            ],
+            "discount_percent": 10,
+            "audience_profile": "In-market car buyers, 25-54, 60% male, high purchase intent",
+            "special_capabilities": [
+              "VIN-level inventory targeting",
+              "dealer radius geofencing",
+              "make/model search retargeting"
+            ]
+          },
+          {
+            "property_id": "prop_car_carscom",
+            "name": "Cars.com",
+            "domain": "cars.com",
+            "category": "Automotive Marketplace",
+            "monthly_uniques": 25000000,
+            "authorization_level": "premium",
+            "available_formats": [
+              "car_gallery_carousel",
+              "car_dynamic_inventory",
+              "car_comparison",
+              "car_dealer_locator"
+            ],
+            "discount_percent": 8,
+            "audience_profile": "Active car shoppers, 28-55, balanced gender, mid-to-high income",
+            "special_capabilities": [
+              "dealer review integration",
+              "price comparison widgets",
+              "vehicle history integration"
+            ]
+          },
+          {
+            "property_id": "prop_car_cargurus",
+            "name": "CarGurus",
+            "domain": "cargurus.com",
+            "category": "Automotive Marketplace",
+            "monthly_uniques": 30000000,
+            "authorization_level": "standard",
+            "available_formats": [
+              "car_dynamic_inventory",
+              "car_gallery_carousel",
+              "car_dealer_locator"
+            ],
+            "audience_profile": "Price-conscious car buyers, 22-50, deal-seekers, new and used vehicle shoppers",
+            "special_capabilities": [
+              "deal rating integration",
+              "price drop alerts",
+              "instant market value"
+            ]
+          },
+          {
+            "property_id": "prop_car_edmunds",
+            "name": "Edmunds",
+            "domain": "edmunds.com",
+            "category": "Automotive Research",
+            "monthly_uniques": 20000000,
+            "authorization_level": "premium",
+            "available_formats": [
+              "car_comparison",
+              "car_configurator",
+              "car_gallery_carousel",
+              "car_dynamic_inventory"
+            ],
+            "discount_percent": 12,
+            "audience_profile": "Research-phase car buyers, 30-55, high-income, data-driven decision makers",
+            "special_capabilities": [
+              "expert review integration",
+              "true cost to own calculator",
+              "appraisal tool integration",
+              "editorial content sponsorship"
+            ]
+          },
+          {
+            "property_id": "prop_car_kbb",
+            "name": "Kelley Blue Book",
+            "domain": "kbb.com",
+            "category": "Automotive Valuation",
+            "monthly_uniques": 22000000,
+            "authorization_level": "premium",
+            "available_formats": [
+              "car_comparison",
+              "car_dynamic_inventory",
+              "car_configurator",
+              "car_dealer_locator"
+            ],
+            "discount_percent": 10,
+            "audience_profile": "Trade-in and valuation seekers, 30-60, vehicle owners considering upgrade, balanced income",
+            "special_capabilities": [
+              "trade-in value integration",
+              "fair purchase price display",
+              "ownership cost calculator",
+              "5-year cost to own data"
+            ]
+          },
+          {
+            "property_id": "prop_crm_salesforce",
+            "name": "Salesforce",
+            "domain": "salesforce.com",
+            "category": "CRM Platform",
+            "monthly_uniques": 150000000,
+            "authorization_level": "premium",
+            "available_formats": [
+              "crm_email_template",
+              "crm_push_notification",
+              "crm_in_app_message"
+            ],
+            "discount_percent": 10,
+            "audience_profile": "Enterprise B2B customers, sales teams, marketing operations professionals",
+            "special_capabilities": [
+              "journey_builder",
+              "einstein_ai_scoring",
+              "marketing_cloud_integration",
+              "contact_deduplication"
+            ]
+          },
+          {
+            "property_id": "prop_crm_hubspot",
+            "name": "HubSpot",
+            "domain": "hubspot.com",
+            "category": "CRM Platform",
+            "monthly_uniques": 80000000,
+            "authorization_level": "standard",
+            "available_formats": [
+              "crm_email_template",
+              "crm_push_notification",
+              "crm_in_app_message"
+            ],
+            "audience_profile": "Mid-market B2B and B2C companies, marketing and sales teams",
+            "special_capabilities": [
+              "workflow_automation",
+              "lead_scoring",
+              "smart_content",
+              "a_b_testing"
+            ]
+          },
+          {
+            "property_id": "prop_crm_klaviyo",
+            "name": "Klaviyo",
+            "domain": "klaviyo.com",
+            "category": "Email/SMS Platform",
+            "monthly_uniques": 45000000,
+            "authorization_level": "standard",
+            "available_formats": [
+              "crm_email_template",
+              "crm_sms_message"
+            ],
+            "audience_profile": "Ecommerce brands, DTC retailers, Shopify merchants",
+            "special_capabilities": [
+              "predictive_analytics",
+              "product_recommendations",
+              "browse_abandonment",
+              "back_in_stock_alerts"
+            ]
+          },
+          {
+            "property_id": "prop_crm_braze",
+            "name": "Braze",
+            "domain": "braze.com",
+            "category": "Customer Engagement",
+            "monthly_uniques": 60000000,
+            "authorization_level": "premium",
+            "available_formats": [
+              "crm_email_template",
+              "crm_push_notification",
+              "crm_sms_message",
+              "crm_in_app_message"
+            ],
+            "discount_percent": 8,
+            "audience_profile": "Enterprise mobile-first brands, app-based businesses, media companies",
+            "special_capabilities": [
+              "canvas_journey_orchestration",
+              "intelligent_delivery_timing",
+              "content_cards",
+              "real_time_triggers"
+            ]
+          },
+          {
+            "property_id": "prop_crm_mailchimp",
+            "name": "Mailchimp",
+            "domain": "mailchimp.com",
+            "category": "Email Marketing",
+            "monthly_uniques": 120000000,
+            "authorization_level": "standard",
+            "available_formats": [
+              "crm_email_template",
+              "crm_direct_mail"
+            ],
+            "audience_profile": "Small and medium businesses, solopreneurs, local businesses",
+            "special_capabilities": [
+              "audience_segmentation",
+              "send_time_optimization",
+              "content_optimizer",
+              "postcard_campaigns"
+            ]
+          },
           {
             "property_id": "prop_espn",
             "name": "ESPN",
@@ -454,9 +1215,432 @@
               "section sponsorship",
               "creative approval required (48h lead time)"
             ]
+          },
+          {
+            "property_id": "prop_fb_feed",
+            "name": "Facebook Feed",
+            "category": "Social",
+            "monthly_uniques": "2B+",
+            "authorization_level": "standard",
+            "audience_profile": {
+              "age_distribution": {
+                "18-24": 0.18,
+                "25-34": 0.26,
+                "35-44": 0.22,
+                "45-54": 0.17,
+                "55+": 0.17
+              },
+              "gender_split": {
+                "male": 0.44,
+                "female": 0.56
+              }
+            }
+          },
+          {
+            "property_id": "prop_fb_ig_feed",
+            "name": "Instagram Feed",
+            "category": "Social",
+            "monthly_uniques": "1.4B",
+            "authorization_level": "standard",
+            "audience_profile": {
+              "age_distribution": {
+                "18-24": 0.27,
+                "25-34": 0.33,
+                "35-44": 0.2,
+                "45-54": 0.12,
+                "55+": 0.08
+              },
+              "gender_split": {
+                "male": 0.42,
+                "female": 0.58
+              }
+            }
+          },
+          {
+            "property_id": "prop_fb_ig_stories",
+            "name": "Instagram Stories",
+            "category": "Social",
+            "monthly_uniques": "500M",
+            "authorization_level": "standard",
+            "audience_profile": {
+              "age_distribution": {
+                "18-24": 0.32,
+                "25-34": 0.35,
+                "35-44": 0.18,
+                "45-54": 0.1,
+                "55+": 0.05
+              },
+              "gender_split": {
+                "male": 0.4,
+                "female": 0.6
+              }
+            }
+          },
+          {
+            "property_id": "prop_fb_ig_reels",
+            "name": "Instagram Reels",
+            "category": "Social",
+            "monthly_uniques": "700M",
+            "authorization_level": "standard",
+            "audience_profile": {
+              "age_distribution": {
+                "18-24": 0.35,
+                "25-34": 0.3,
+                "35-44": 0.18,
+                "45-54": 0.11,
+                "55+": 0.06
+              },
+              "gender_split": {
+                "male": 0.45,
+                "female": 0.55
+              }
+            }
+          },
+          {
+            "property_id": "prop_fb_audience_network",
+            "name": "Audience Network",
+            "category": "Network",
+            "monthly_uniques": "1B+ impressions",
+            "authorization_level": "standard",
+            "audience_profile": {
+              "age_distribution": {
+                "18-24": 0.22,
+                "25-34": 0.28,
+                "35-44": 0.22,
+                "45-54": 0.16,
+                "55+": 0.12
+              },
+              "gender_split": {
+                "male": 0.52,
+                "female": 0.48
+              }
+            }
+          },
+          {
+            "property_id": "prop_fb_messenger",
+            "name": "Messenger",
+            "category": "Messaging",
+            "monthly_uniques": "1B",
+            "authorization_level": "standard",
+            "audience_profile": {
+              "age_distribution": {
+                "18-24": 0.2,
+                "25-34": 0.28,
+                "35-44": 0.24,
+                "45-54": 0.16,
+                "55+": 0.12
+              },
+              "gender_split": {
+                "male": 0.48,
+                "female": 0.52
+              }
+            }
+          },
+          {
+            "property_id": "prop_fb_marketplace",
+            "name": "Facebook Marketplace",
+            "category": "Commerce",
+            "monthly_uniques": "800M",
+            "authorization_level": "standard",
+            "audience_profile": {
+              "age_distribution": {
+                "18-24": 0.15,
+                "25-34": 0.28,
+                "35-44": 0.25,
+                "45-54": 0.2,
+                "55+": 0.12
+              },
+              "gender_split": {
+                "male": 0.5,
+                "female": 0.5
+              }
+            }
+          },
+          {
+            "property_id": "prop_fb_watch",
+            "name": "Facebook Watch",
+            "category": "Video",
+            "monthly_uniques": "1.25B",
+            "authorization_level": "standard",
+            "audience_profile": {
+              "age_distribution": {
+                "18-24": 0.2,
+                "25-34": 0.25,
+                "35-44": 0.23,
+                "45-54": 0.18,
+                "55+": 0.14
+              },
+              "gender_split": {
+                "male": 0.47,
+                "female": 0.53
+              }
+            }
+          },
+          {
+            "property_id": "prop_gads_search",
+            "name": "Google Search",
+            "domain": "google.com",
+            "category": "Search",
+            "monthly_uniques": 8500000000,
+            "authorization_level": "premium",
+            "available_formats": [
+              "gads_responsive_search",
+              "gads_shopping_listing"
+            ],
+            "audience_profile": "Highest-intent audience across all digital channels; 8.5 billion daily searches spanning all demographics, interests, and purchase categories",
+            "special_capabilities": [
+              "keyword targeting",
+              "search intent signals",
+              "location extensions",
+              "call extensions",
+              "sitelink extensions",
+              "structured snippets"
+            ]
+          },
+          {
+            "property_id": "prop_gads_youtube",
+            "name": "YouTube",
+            "domain": "youtube.com",
+            "category": "Video",
+            "monthly_uniques": 2500000000,
+            "authorization_level": "premium",
+            "available_formats": [
+              "gads_video_instream",
+              "gads_video_discovery",
+              "gads_responsive_display"
+            ],
+            "audience_profile": "2.5 billion monthly active users; broad demographics with strong 18-49 reach; 1 billion hours of video watched daily",
+            "special_capabilities": [
+              "channel targeting",
+              "video targeting",
+              "topic targeting",
+              "custom affinity audiences",
+              "YouTube Shorts ads",
+              "bumper ads"
+            ]
+          },
+          {
+            "property_id": "prop_gads_gdn",
+            "name": "Google Display Network",
+            "domain": "various",
+            "category": "Display",
+            "monthly_uniques": 2000000000,
+            "authorization_level": "standard",
+            "available_formats": [
+              "gads_responsive_display",
+              "gads_app_install"
+            ],
+            "audience_profile": "2M+ websites and apps reaching 90%+ of internet users globally; diverse audience across news, entertainment, lifestyle, and niche verticals",
+            "special_capabilities": [
+              "contextual targeting",
+              "managed placements",
+              "remarketing lists",
+              "similar audiences",
+              "automated bidding"
+            ]
+          },
+          {
+            "property_id": "prop_gads_gmail",
+            "name": "Gmail",
+            "domain": "gmail.com",
+            "category": "Email",
+            "monthly_uniques": 1800000000,
+            "authorization_level": "standard",
+            "available_formats": [
+              "gads_responsive_display"
+            ],
+            "audience_profile": "1.8 billion active Gmail users; strong professional and personal reach; ads appear in Promotions and Social tabs",
+            "special_capabilities": [
+              "customer match",
+              "life events targeting",
+              "expandable ad units",
+              "competitor domain targeting"
+            ]
+          },
+          {
+            "property_id": "prop_gads_maps",
+            "name": "Google Maps",
+            "domain": "maps.google.com",
+            "category": "Local",
+            "monthly_uniques": 1000000000,
+            "authorization_level": "standard",
+            "available_formats": [
+              "gads_responsive_search"
+            ],
+            "audience_profile": "1 billion monthly active users; high local purchase intent; users actively searching for nearby businesses and services",
+            "special_capabilities": [
+              "local search ads",
+              "promoted pins",
+              "location extensions",
+              "store visit tracking",
+              "local inventory ads"
+            ]
+          },
+          {
+            "property_id": "prop_gads_discover",
+            "name": "Google Discover",
+            "domain": "discover.google.com",
+            "category": "Native",
+            "monthly_uniques": 800000000,
+            "authorization_level": "standard",
+            "available_formats": [
+              "gads_responsive_display"
+            ],
+            "audience_profile": "800M+ users browsing personalized content feed on mobile; interest-based discovery behavior; strong mid-funnel engagement",
+            "special_capabilities": [
+              "interest targeting",
+              "carousel ads",
+              "single image ads",
+              "auto-optimized creative",
+              "audience expansion"
+            ]
+          },
+          {
+            "property_id": "prop_gads_shopping",
+            "name": "Google Shopping",
+            "domain": "shopping.google.com",
+            "category": "Commerce",
+            "monthly_uniques": 1200000000,
+            "authorization_level": "standard",
+            "available_formats": [
+              "gads_shopping_listing"
+            ],
+            "audience_profile": "1.2 billion product searches per month; high purchase intent; product comparison shoppers across all e-commerce categories",
+            "special_capabilities": [
+              "product listing ads",
+              "local inventory ads",
+              "Merchant Center integration",
+              "price competitiveness insights",
+              "free listings alongside paid"
+            ]
+          },
+          {
+            "property_id": "prop_inf_tiktok",
+            "name": "TikTok Creator Marketplace",
+            "domain": "tiktok.com",
+            "category": "Short Video",
+            "monthly_uniques": 1000000000,
+            "authorization_level": "standard",
+            "audience_profile": {
+              "primary_age": "16-34",
+              "gender_split": "54% female, 46% male",
+              "top_content_categories": [
+                "entertainment",
+                "dance",
+                "comedy",
+                "fitness",
+                "food",
+                "beauty"
+              ],
+              "avg_session_duration_minutes": 52
+            }
+          },
+          {
+            "property_id": "prop_inf_instagram",
+            "name": "Instagram Creator Marketplace",
+            "domain": "instagram.com",
+            "category": "Social",
+            "monthly_uniques": 1400000000,
+            "authorization_level": "standard",
+            "audience_profile": {
+              "primary_age": "18-44",
+              "gender_split": "51% female, 49% male",
+              "top_content_categories": [
+                "fashion",
+                "beauty",
+                "food",
+                "travel",
+                "fitness",
+                "lifestyle"
+              ],
+              "avg_session_duration_minutes": 33
+            }
+          },
+          {
+            "property_id": "prop_inf_youtube",
+            "name": "YouTube BrandConnect",
+            "domain": "youtube.com",
+            "category": "Video",
+            "monthly_uniques": 2500000000,
+            "authorization_level": "premium",
+            "audience_profile": {
+              "primary_age": "18-49",
+              "gender_split": "54% male, 46% female",
+              "top_content_categories": [
+                "gaming",
+                "music",
+                "tech_review",
+                "how_to",
+                "vlogs",
+                "education"
+              ],
+              "avg_session_duration_minutes": 40
+            }
+          },
+          {
+            "property_id": "prop_inf_twitch",
+            "name": "Twitch",
+            "domain": "twitch.tv",
+            "category": "Live Streaming",
+            "monthly_uniques": 140000000,
+            "authorization_level": "standard",
+            "audience_profile": {
+              "primary_age": "16-34",
+              "gender_split": "65% male, 35% female",
+              "top_content_categories": [
+                "gaming",
+                "esports",
+                "just_chatting",
+                "music",
+                "creative"
+              ],
+              "avg_session_duration_minutes": 95
+            }
+          },
+          {
+            "property_id": "prop_inf_pinterest",
+            "name": "Pinterest Creators",
+            "domain": "pinterest.com",
+            "category": "Visual Discovery",
+            "monthly_uniques": 450000000,
+            "authorization_level": "standard",
+            "audience_profile": {
+              "primary_age": "25-54",
+              "gender_split": "76% female, 24% male",
+              "top_content_categories": [
+                "home_decor",
+                "fashion",
+                "food_recipes",
+                "diy",
+                "beauty",
+                "wedding"
+              ],
+              "avg_session_duration_minutes": 14
+            }
+          },
+          {
+            "property_id": "prop_inf_snapchat",
+            "name": "Snapchat Creators",
+            "domain": "snapchat.com",
+            "category": "Ephemeral",
+            "monthly_uniques": 750000000,
+            "authorization_level": "standard",
+            "audience_profile": {
+              "primary_age": "13-34",
+              "gender_split": "51% female, 49% male",
+              "top_content_categories": [
+                "lifestyle",
+                "comedy",
+                "beauty",
+                "fashion",
+                "ar_lenses",
+                "entertainment"
+              ],
+              "avg_session_duration_minutes": 30
+            }
           }
         ],
-        "count": 10
+        "count": 41
       }
     },
     {
@@ -501,12 +1685,13 @@
       },
       "httpStatus": 200,
       "httpOk": true,
-      "elapsedMs": 3,
+      "elapsedMs": 2,
       "response": {
         "success": true,
         "metrics": {
           "media_buy_id": "mb_apex_motors_q1",
           "brand": "Apex Motors",
+          "platform": "display_programmatic",
           "total_budget": 50000,
           "total_spend": 32450,
           "pacing": "behind",
@@ -578,26 +1763,8 @@
       },
       "httpStatus": 200,
       "httpOk": true,
-      "elapsedMs": 3,
-      "response": {
-        "success": true,
-        "result": {
-          "media_buy_id": "mb_apex_motors_q1",
-          "success": true,
-          "changes_applied": [
-            {
-              "operation": "adjust_bid",
-              "details": "Adjusted mobile bid by -20%",
-              "previous_value": 8.5,
-              "new_value": 6.8
-            }
-          ],
-          "estimated_impact": {
-            "efficiency_improvement": "CPM reduced by $1.70",
-            "description": "Bid efficiency improved"
-          }
-        }
-      }
+      "elapsedMs": 40,
+      "response": {}
     },
     {
       "toolName": "provide_performance_feedback",
@@ -612,11 +1779,11 @@
       },
       "httpStatus": 200,
       "httpOk": true,
-      "elapsedMs": 3,
+      "elapsedMs": 25,
       "response": {
         "success": true,
         "result": {
-          "feedback_id": "fb_mb_apex_motors_q1_conversion_1769927644969",
+          "feedback_id": "fb_mb_apex_motors_q1_conversion_1771230438937",
           "media_buy_id": "mb_apex_motors_q1",
           "status": "processed",
           "impact": "Strong ROAS of 3.9x with 25 conversions in 30-day window. Recommend increasing budget."
@@ -626,8 +1793,8 @@
   ],
   "summary": {
     "total": 7,
-    "passed": 7,
-    "failed": 0,
+    "passed": 4,
+    "failed": 3,
     "assertions": [
       {
         "toolName": "get_products",
@@ -638,16 +1805,16 @@
       },
       {
         "toolName": "list_creative_formats",
-        "ok": true,
+        "ok": false,
         "assertions": [
-          "formats_count_14"
+          "error:expected 14 formats, got 41"
         ]
       },
       {
         "toolName": "list_authorized_properties",
-        "ok": true,
+        "ok": false,
         "assertions": [
-          "properties_count_10"
+          "error:expected 10 properties, got 41"
         ]
       },
       {
@@ -666,9 +1833,9 @@
       },
       {
         "toolName": "update_media_buy",
-        "ok": true,
+        "ok": false,
         "assertions": [
-          "adjust_bid_mobile_20pct"
+          "error:response.success !== true"
         ]
       },
       {
@@ -680,8 +1847,8 @@
       }
     ],
     "responseTimeMs": {
-      "max": 13,
-      "avg": 5
+      "max": 40,
+      "avg": 12
     }
   }
 }

@@ -7,6 +7,7 @@ import type { Product, PricingOption } from '../types/data.js';
 export interface GetProductsInput {
   category?: string;
   max_cpm?: number;
+  platform?: string;
 }
 
 /**
@@ -27,6 +28,7 @@ export interface GetProductsOutput {
   name: string;
   description: string;
   category: string;
+  platform?: string;
   pricing_options: ProductPricingOutput[];
 }
 
@@ -40,6 +42,7 @@ export interface GetProductsResult {
   filters_applied: {
     category?: string;
     max_cpm?: number;
+    platform?: string;
   };
 }
 
@@ -52,6 +55,7 @@ function transformProduct(product: Product): GetProductsOutput {
     name: product.name,
     description: product.description,
     category: product.category,
+    platform: product.platform,
     pricing_options: product.pricing_options.map((po: PricingOption) => ({
       pricing_option_id: po.pricing_option_id,
       currency: po.currency,
@@ -73,6 +77,7 @@ export function getProducts(input?: GetProductsInput): GetProductsResult {
   const products = getProductsFromLoader({
     category: input?.category,
     max_cpm: input?.max_cpm,
+    platform: input?.platform,
   });
 
   const transformedProducts = products.map(transformProduct);
@@ -84,6 +89,7 @@ export function getProducts(input?: GetProductsInput): GetProductsResult {
     filters_applied: {
       category: input?.category,
       max_cpm: input?.max_cpm,
+      platform: input?.platform,
     },
   };
 }

@@ -1,0 +1,1071 @@
+{
+  "platform": "social_influencer",
+  "platform_display_name": "Social Influencer",
+  "products": [
+    {
+      "product_id": "prod_inf_micro",
+      "name": "Micro-Influencer Package",
+      "description": "Authentic partnerships with niche influencers (10K-100K followers) delivering high engagement rates and trusted recommendations to targeted communities",
+      "category": "Influencer/Micro",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_inf_micro_cpm",
+          "currency": "USD",
+          "cpm": 15.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_inf_micro_premium",
+          "currency": "USD",
+          "cpm": 25.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_inf_micro_flat",
+          "currency": "USD",
+          "cpm": null,
+          "flat_fee_per_post": 500,
+          "flat_fee_max_per_post": 2000,
+          "pricing_model": "flat_fee"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_sponsored_post"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_story_takeover"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_product_review"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "influencer_niche",
+        "follower_count_range",
+        "engagement_rate_minimum",
+        "audience_demographics",
+        "platform_selection",
+        "content_category"
+      ],
+      "minimum_budget": 2000,
+      "available_inventory": 45000,
+      "platform": "social_influencer"
+    },
+    {
+      "product_id": "prod_inf_macro",
+      "name": "Macro-Influencer Package",
+      "description": "High-reach partnerships with established influencers (100K-1M followers) combining broad awareness with credible endorsements",
+      "category": "Influencer/Macro",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_inf_macro_standard",
+          "currency": "USD",
+          "cpm": 20.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_inf_macro_premium",
+          "currency": "USD",
+          "cpm": 35.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_sponsored_post"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_unboxing"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_livestream"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "influencer_niche",
+        "follower_count_range",
+        "audience_demographics",
+        "platform_selection",
+        "content_category",
+        "brand_safety_tier"
+      ],
+      "minimum_budget": 10000,
+      "available_inventory": 12000,
+      "platform": "social_influencer"
+    },
+    {
+      "product_id": "prod_inf_celebrity",
+      "name": "Celebrity Endorsement",
+      "description": "Premium campaigns with top-tier celebrities and mega-influencers (1M+ followers) for maximum brand visibility and cultural impact",
+      "category": "Influencer/Celebrity",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_inf_celeb_standard",
+          "currency": "USD",
+          "cpm": 30.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_inf_celeb_exclusive",
+          "currency": "USD",
+          "cpm": 60.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_sponsored_post"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_livestream"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_unboxing"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "audience_demographics",
+        "platform_selection",
+        "exclusivity_window",
+        "usage_rights",
+        "brand_safety_tier"
+      ],
+      "minimum_budget": 50000,
+      "available_inventory": 2500,
+      "platform": "social_influencer"
+    },
+    {
+      "product_id": "prod_inf_ugc",
+      "name": "UGC Campaign",
+      "description": "User-generated content campaigns leveraging creator networks to produce authentic, reusable brand content at scale",
+      "category": "Influencer/Content",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_inf_ugc_standard",
+          "currency": "USD",
+          "cpm": 10.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_inf_ugc_premium",
+          "currency": "USD",
+          "cpm": 18.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_unboxing"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_product_review"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_sponsored_post"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "content_category",
+        "content_style",
+        "platform_selection",
+        "usage_rights",
+        "audience_demographics"
+      ],
+      "minimum_budget": 3000,
+      "available_inventory": 80000,
+      "platform": "social_influencer"
+    },
+    {
+      "product_id": "prod_inf_ambassador",
+      "name": "Brand Ambassador Program",
+      "description": "Long-term influencer partnerships with recurring content deliverables, building sustained brand affinity over 3-12 month commitments",
+      "category": "Influencer/Long-term",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_inf_ambassador_standard",
+          "currency": "USD",
+          "cpm": 12.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_inf_ambassador_premium",
+          "currency": "USD",
+          "cpm": 22.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_sponsored_post"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_story_takeover"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_livestream"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_product_review"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "influencer_niche",
+        "audience_demographics",
+        "platform_selection",
+        "content_frequency",
+        "exclusivity_window",
+        "brand_affinity_score"
+      ],
+      "minimum_budget": 15000,
+      "available_inventory": 8000,
+      "platform": "social_influencer"
+    },
+    {
+      "product_id": "prod_inf_affiliate",
+      "name": "Affiliate Partnership",
+      "description": "Performance-driven influencer campaigns with trackable affiliate links and commission-based compensation for measurable ROI",
+      "category": "Influencer/Performance",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_inf_affiliate_standard",
+          "currency": "USD",
+          "cpm": 8.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_inf_affiliate_premium",
+          "currency": "USD",
+          "cpm": 15.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_sponsored_post"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_product_review"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "inf_unboxing"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "influencer_niche",
+        "audience_demographics",
+        "platform_selection",
+        "conversion_tracking",
+        "commission_structure",
+        "content_category"
+      ],
+      "minimum_budget": 5000,
+      "available_inventory": 60000,
+      "platform": "social_influencer"
+    }
+  ],
+  "media_buys": [
+    {
+      "media_buy_id": "mb_inf_sportmax",
+      "buyer_ref": "sportmax_influencer_q1_2026",
+      "brand_manifest": {
+        "name": "SportMax Apparel",
+        "url": "https://sportmax.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_inf_sm_001",
+          "product_id": "prod_inf_micro",
+          "pricing_option_id": "po_inf_micro_cpm",
+          "budget": 12000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "influencer_niche": ["fitness", "sports", "activewear"],
+            "age_range": "18-34",
+            "platform_selection": ["instagram", "tiktok"]
+          }
+        },
+        {
+          "package_id": "pkg_inf_sm_002",
+          "product_id": "prod_inf_macro",
+          "pricing_option_id": "po_inf_macro_standard",
+          "budget": 28000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "influencer_niche": ["fitness", "sports", "lifestyle"],
+            "age_range": "18-34",
+            "platform_selection": ["instagram", "youtube"]
+          }
+        }
+      ],
+      "start_time": "2026-01-15T00:00:00Z",
+      "end_time": "2026-04-15T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-08T10:00:00Z",
+      "platform": "social_influencer"
+    },
+    {
+      "media_buy_id": "mb_inf_luxebeauty",
+      "buyer_ref": "luxebeauty_spring_2026",
+      "brand_manifest": {
+        "name": "LuxeBeauty",
+        "url": "https://luxebeauty.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_inf_lb_001",
+          "product_id": "prod_inf_macro",
+          "pricing_option_id": "po_inf_macro_premium",
+          "budget": 35000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US", "UK"],
+            "influencer_niche": ["beauty", "skincare", "makeup"],
+            "gender": "female",
+            "age_range": "18-45",
+            "platform_selection": ["instagram", "youtube", "tiktok"]
+          }
+        },
+        {
+          "package_id": "pkg_inf_lb_002",
+          "product_id": "prod_inf_celebrity",
+          "pricing_option_id": "po_inf_celeb_standard",
+          "budget": 25000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US", "UK"],
+            "influencer_niche": ["beauty", "fashion", "lifestyle"],
+            "gender": "female",
+            "age_range": "18-45",
+            "platform_selection": ["instagram", "youtube"]
+          }
+        }
+      ],
+      "start_time": "2026-02-01T00:00:00Z",
+      "end_time": "2026-04-30T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-20T14:30:00Z",
+      "platform": "social_influencer"
+    },
+    {
+      "media_buy_id": "mb_inf_freshbite",
+      "buyer_ref": "freshbite_creator_q1",
+      "brand_manifest": {
+        "name": "FreshBite Foods",
+        "url": "https://freshbitefoods.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_inf_fb_001",
+          "product_id": "prod_inf_micro",
+          "pricing_option_id": "po_inf_micro_premium",
+          "budget": 10000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "influencer_niche": ["food", "cooking", "healthy_eating", "meal_prep"],
+            "platform_selection": ["instagram", "tiktok", "youtube"]
+          }
+        },
+        {
+          "package_id": "pkg_inf_fb_002",
+          "product_id": "prod_inf_affiliate",
+          "pricing_option_id": "po_inf_affiliate_standard",
+          "budget": 10000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "influencer_niche": ["food", "cooking", "grocery"],
+            "platform_selection": ["instagram", "tiktok"],
+            "commission_structure": "10_percent_sales"
+          }
+        }
+      ],
+      "start_time": "2026-01-20T00:00:00Z",
+      "end_time": "2026-03-31T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-12T09:45:00Z",
+      "platform": "social_influencer"
+    },
+    {
+      "media_buy_id": "mb_inf_sportmax_ugc",
+      "buyer_ref": "sportmax_ugc_q1_2026",
+      "brand_manifest": {
+        "name": "SportMax Apparel",
+        "url": "https://sportmax.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_inf_sm_ugc_001",
+          "product_id": "prod_inf_ugc",
+          "pricing_option_id": "po_inf_ugc_standard",
+          "budget": 8000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "influencer_niche": ["fitness", "gym", "running"],
+            "content_style": "workout_transformation",
+            "platform_selection": ["tiktok", "instagram"]
+          }
+        },
+        {
+          "package_id": "pkg_inf_sm_ugc_002",
+          "product_id": "prod_inf_ugc",
+          "pricing_option_id": "po_inf_ugc_premium",
+          "budget": 7000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "influencer_niche": ["sports", "athleisure", "streetwear"],
+            "content_style": "lifestyle_integration",
+            "platform_selection": ["instagram", "youtube"]
+          }
+        }
+      ],
+      "start_time": "2026-01-25T00:00:00Z",
+      "end_time": "2026-03-25T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-18T11:15:00Z",
+      "platform": "social_influencer"
+    }
+  ],
+  "delivery_metrics": {
+    "mb_inf_sportmax": {
+      "media_buy_id": "mb_inf_sportmax",
+      "brand": "SportMax Apparel",
+      "total_budget": 40000,
+      "total_spend": 26800,
+      "pacing": "on_track",
+      "health": "warning",
+      "summary": {
+        "impressions": 2850000,
+        "clicks": 74100,
+        "conversions": 312,
+        "ctr": 2.6,
+        "cpm": 9.4,
+        "cpa": 85.9,
+        "viewability": null,
+        "completion_rate": 0.78,
+        "engagement_rate": 3.8
+      },
+      "platform_specific_metrics": {
+        "engagement_rate": 3.8,
+        "earned_media_value": 62400,
+        "cost_per_engagement": 0.25,
+        "brand_mention_sentiment": 0.87,
+        "audience_overlap_percent": 12.3
+      },
+      "by_device": {
+        "micro": {
+          "impressions": 820000,
+          "clicks": 50840,
+          "ctr": 6.2,
+          "spend": 6400,
+          "cpm": 7.8,
+          "engagement_rate": 6.2,
+          "cost_per_engagement": 0.08,
+          "posts_delivered": 48,
+          "avg_likes_per_post": 3200,
+          "avg_comments_per_post": 185
+        },
+        "macro": {
+          "impressions": 2030000,
+          "clicks": 23260,
+          "ctr": 2.1,
+          "spend": 20400,
+          "cpm": 10.05,
+          "engagement_rate": 2.1,
+          "cost_per_engagement": 0.76,
+          "posts_delivered": 18,
+          "avg_likes_per_post": 28500,
+          "avg_comments_per_post": 640
+        }
+      },
+      "by_geo": {
+        "tiktok": {
+          "impressions": 1425000,
+          "clicks": 42750,
+          "ctr": 3.0,
+          "spend": 10720,
+          "engagement_rate": 4.5,
+          "avg_video_watch_time_seconds": 18.2
+        },
+        "instagram": {
+          "impressions": 997500,
+          "clicks": 22942,
+          "ctr": 2.3,
+          "spend": 11280,
+          "engagement_rate": 3.4,
+          "avg_saves_per_post": 420
+        },
+        "youtube": {
+          "impressions": 427500,
+          "clicks": 8408,
+          "ctr": 1.97,
+          "spend": 4800,
+          "engagement_rate": 2.8,
+          "avg_video_watch_time_seconds": 142.5
+        }
+      },
+      "current_bids": {
+        "micro_cpm": 15.0,
+        "macro_cpm": 20.0
+      },
+      "recommendations": [
+        "CRITICAL: Micro-influencers outperforming macro by 3x on engagement rate (6.2% vs 2.1%) at 1/10 the cost per engagement ($0.08 vs $0.76)",
+        "Recommend reallocating $15,000 from macro to micro-influencer package for significantly higher ROI",
+        "TikTok delivering highest engagement rate (4.5%) - increase platform allocation",
+        "Consider shifting 60% of remaining macro budget to micro-tier creators"
+      ]
+    },
+    "mb_inf_luxebeauty": {
+      "media_buy_id": "mb_inf_luxebeauty",
+      "brand": "LuxeBeauty",
+      "total_budget": 60000,
+      "total_spend": 18200,
+      "pacing": "behind",
+      "health": "good",
+      "summary": {
+        "impressions": 4200000,
+        "clicks": 142800,
+        "conversions": 486,
+        "ctr": 3.4,
+        "cpm": 4.33,
+        "cpa": 37.45,
+        "viewability": null,
+        "completion_rate": 0.82,
+        "engagement_rate": 4.1
+      },
+      "platform_specific_metrics": {
+        "engagement_rate": 4.1,
+        "earned_media_value": 94500,
+        "cost_per_engagement": 0.11,
+        "brand_mention_sentiment": 0.92,
+        "audience_overlap_percent": 8.7
+      },
+      "by_device": {
+        "macro": {
+          "impressions": 3100000,
+          "clicks": 99200,
+          "ctr": 3.2,
+          "spend": 12600,
+          "cpm": 4.06,
+          "engagement_rate": 3.8,
+          "cost_per_engagement": 0.12,
+          "posts_delivered": 22,
+          "avg_likes_per_post": 42000,
+          "avg_comments_per_post": 1850
+        },
+        "celebrity": {
+          "impressions": 1100000,
+          "clicks": 43600,
+          "ctr": 3.96,
+          "spend": 5600,
+          "cpm": 5.09,
+          "engagement_rate": 1.4,
+          "cost_per_engagement": 0.38,
+          "posts_delivered": 3,
+          "avg_likes_per_post": 185000,
+          "avg_comments_per_post": 4200
+        }
+      },
+      "by_geo": {
+        "instagram": {
+          "impressions": 2520000,
+          "clicks": 90720,
+          "ctr": 3.6,
+          "spend": 10920,
+          "engagement_rate": 4.5,
+          "avg_saves_per_post": 2800
+        },
+        "youtube": {
+          "impressions": 1050000,
+          "clicks": 33600,
+          "ctr": 3.2,
+          "spend": 4550,
+          "engagement_rate": 3.1,
+          "avg_video_watch_time_seconds": 285.0
+        },
+        "tiktok": {
+          "impressions": 630000,
+          "clicks": 18480,
+          "ctr": 2.93,
+          "spend": 2730,
+          "engagement_rate": 5.2,
+          "avg_video_watch_time_seconds": 22.4
+        }
+      },
+      "current_bids": {
+        "macro_cpm": 35.0,
+        "celebrity_cpm": 30.0
+      },
+      "recommendations": [
+        "Campaign pacing behind schedule - only 30% spent with 17% of flight elapsed",
+        "Celebrity posts generating massive reach but lower engagement rate - expected for tier",
+        "Instagram performing strongest - consider increasing allocation from YouTube",
+        "Brand sentiment exceptionally positive at 0.92 - creative resonating well"
+      ]
+    },
+    "mb_inf_freshbite": {
+      "media_buy_id": "mb_inf_freshbite",
+      "brand": "FreshBite Foods",
+      "total_budget": 20000,
+      "total_spend": 11450,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 980000,
+        "clicks": 44100,
+        "conversions": 678,
+        "ctr": 4.5,
+        "cpm": 11.68,
+        "cpa": 16.89,
+        "viewability": null,
+        "completion_rate": 0.85,
+        "engagement_rate": 5.8
+      },
+      "platform_specific_metrics": {
+        "engagement_rate": 5.8,
+        "earned_media_value": 28900,
+        "cost_per_engagement": 0.14,
+        "brand_mention_sentiment": 0.89,
+        "audience_overlap_percent": 6.2
+      },
+      "by_device": {
+        "micro": {
+          "impressions": 620000,
+          "clicks": 34720,
+          "ctr": 5.6,
+          "spend": 5800,
+          "cpm": 9.35,
+          "engagement_rate": 7.1,
+          "cost_per_engagement": 0.09,
+          "posts_delivered": 35,
+          "avg_likes_per_post": 4800,
+          "avg_comments_per_post": 310
+        },
+        "affiliate": {
+          "impressions": 360000,
+          "clicks": 9380,
+          "ctr": 2.61,
+          "spend": 5650,
+          "cpm": 15.69,
+          "engagement_rate": 3.2,
+          "cost_per_engagement": 0.42,
+          "posts_delivered": 28,
+          "affiliate_clicks": 8420,
+          "affiliate_conversions": 534,
+          "affiliate_revenue": 18690
+        }
+      },
+      "by_geo": {
+        "tiktok": {
+          "impressions": 441000,
+          "clicks": 22932,
+          "ctr": 5.2,
+          "spend": 4580,
+          "engagement_rate": 7.3,
+          "avg_video_watch_time_seconds": 24.6
+        },
+        "instagram": {
+          "impressions": 372400,
+          "clicks": 14896,
+          "ctr": 4.0,
+          "spend": 4870,
+          "engagement_rate": 5.1,
+          "avg_saves_per_post": 890
+        },
+        "youtube": {
+          "impressions": 166600,
+          "clicks": 6272,
+          "ctr": 3.76,
+          "spend": 2000,
+          "engagement_rate": 3.9,
+          "avg_video_watch_time_seconds": 195.0
+        }
+      },
+      "current_bids": {
+        "micro_cpm": 25.0,
+        "affiliate_cpm": 8.0
+      },
+      "recommendations": [
+        "Strong overall performance - food/cooking niche highly engaging",
+        "Affiliate channel driving strong conversion at $16.89 CPA",
+        "TikTok recipe content outperforming all other platform/format combinations",
+        "Consider expanding micro-influencer pool in healthy eating niche"
+      ]
+    },
+    "mb_inf_sportmax_ugc": {
+      "media_buy_id": "mb_inf_sportmax_ugc",
+      "brand": "SportMax Apparel",
+      "total_budget": 15000,
+      "total_spend": 5200,
+      "pacing": "behind",
+      "health": "good",
+      "summary": {
+        "impressions": 520000,
+        "clicks": 18720,
+        "conversions": 89,
+        "ctr": 3.6,
+        "cpm": 10.0,
+        "cpa": 58.43,
+        "viewability": null,
+        "completion_rate": 0.88,
+        "engagement_rate": 5.4
+      },
+      "platform_specific_metrics": {
+        "engagement_rate": 5.4,
+        "earned_media_value": 15600,
+        "cost_per_engagement": 0.12,
+        "brand_mention_sentiment": 0.91,
+        "audience_overlap_percent": 18.5
+      },
+      "by_device": {
+        "micro": {
+          "impressions": 520000,
+          "clicks": 18720,
+          "ctr": 3.6,
+          "spend": 5200,
+          "cpm": 10.0,
+          "engagement_rate": 5.4,
+          "cost_per_engagement": 0.12,
+          "posts_delivered": 42,
+          "ugc_pieces_created": 38,
+          "ugc_repurpose_ready": 28
+        }
+      },
+      "by_geo": {
+        "tiktok": {
+          "impressions": 312000,
+          "clicks": 12480,
+          "ctr": 4.0,
+          "spend": 2860,
+          "engagement_rate": 6.8,
+          "avg_video_watch_time_seconds": 16.8
+        },
+        "instagram": {
+          "impressions": 208000,
+          "clicks": 6240,
+          "ctr": 3.0,
+          "spend": 2340,
+          "engagement_rate": 3.9,
+          "avg_saves_per_post": 520
+        }
+      },
+      "current_bids": {
+        "ugc_standard_cpm": 10.0,
+        "ugc_premium_cpm": 18.0
+      },
+      "recommendations": [
+        "UGC campaign producing high-quality reusable content - 28 pieces ready for paid amplification",
+        "High audience overlap (18.5%) with main SportMax influencer campaign - coordinate messaging",
+        "TikTok UGC significantly outperforming Instagram UGC on engagement",
+        "Consider boosting top-performing UGC pieces as paid ads for additional reach"
+      ]
+    }
+  },
+  "creative_formats": [
+    {
+      "format_id": "inf_sponsored_post",
+      "name": "Sponsored Post",
+      "type": "native",
+      "description": "Platform-native sponsored content featuring brand integration within the influencer's regular content style",
+      "specs": {
+        "format": "platform-native (image or video)",
+        "disclosure": "Required (#ad, #sponsored, or platform partnership label)",
+        "image_specs": "Platform-native resolution, minimum 1080x1080px for feed posts",
+        "video_specs": "Platform-native format, 15s-60s recommended for feed, up to 3min for long-form",
+        "caption": "Influencer-written with brand-approved talking points",
+        "cta_options": ["swipe_up", "link_in_bio", "shop_now", "learn_more"]
+      },
+      "avg_engagement_rate": 3.8,
+      "supported_platforms": ["instagram", "tiktok", "youtube", "pinterest", "snapchat"]
+    },
+    {
+      "format_id": "inf_story_takeover",
+      "name": "Story Takeover",
+      "type": "video",
+      "description": "24-hour story series featuring behind-the-scenes content, product integration, and authentic day-in-the-life narrative",
+      "specs": {
+        "format": "vertical video/image stories",
+        "duration": "24-hour story series",
+        "story_count": "5-15 stories per takeover",
+        "style": "Behind-the-scenes, authentic, unscripted feel",
+        "resolution": "1080x1920 (9:16 aspect ratio)",
+        "max_duration_per_story": "15 seconds (video) or 5 seconds (image)",
+        "interactive_elements": ["polls", "questions", "quizzes", "countdown", "link_sticker"]
+      },
+      "avg_engagement_rate": 5.2,
+      "supported_platforms": ["instagram", "snapchat", "tiktok"]
+    },
+    {
+      "format_id": "inf_unboxing",
+      "name": "Unboxing Video",
+      "type": "video",
+      "description": "Product reveal and first-impression video content capturing authentic reactions and detailed product showcase",
+      "specs": {
+        "format": "video",
+        "duration": "3-10 minutes",
+        "style": "Product reveal, authentic first reaction, detailed showcase",
+        "resolution": "Minimum 1080p, 4K preferred for YouTube",
+        "aspect_ratio": "16:9 (YouTube), 9:16 (TikTok/Reels), 1:1 (Feed)",
+        "required_elements": ["product_closeup", "genuine_reaction", "feature_walkthrough"],
+        "disclosure": "Required within first 30 seconds"
+      },
+      "avg_engagement_rate": 4.5,
+      "supported_platforms": ["youtube", "tiktok", "instagram"]
+    },
+    {
+      "format_id": "inf_livestream",
+      "name": "Live Stream",
+      "type": "video",
+      "description": "Real-time live streaming session with audience interaction, product demonstration, and Q&A engagement",
+      "specs": {
+        "format": "live video stream",
+        "duration": "30-60 minutes",
+        "style": "Real-time engagement, product demo, audience Q&A",
+        "resolution": "Minimum 720p, 1080p recommended",
+        "required_elements": ["product_demo", "audience_qa", "discount_code_reveal"],
+        "interactive_features": ["live_chat", "pinned_comments", "live_polls", "gifting"],
+        "scheduling": "Minimum 48-hour advance promotion recommended"
+      },
+      "avg_engagement_rate": 7.2,
+      "supported_platforms": ["instagram", "tiktok", "youtube", "twitch"]
+    },
+    {
+      "format_id": "inf_product_review",
+      "name": "Product Review",
+      "type": "native",
+      "description": "In-depth honest review post or video providing detailed product assessment with authentic creator perspective",
+      "specs": {
+        "format": "post or video (platform-native)",
+        "style": "Detailed honest opinion, pros and cons, personal experience",
+        "video_duration": "5-15 minutes (long-form), 60-90 seconds (short-form)",
+        "written_length": "500-1500 words for blog/caption format",
+        "required_elements": ["personal_experience", "honest_assessment", "use_case_demo", "rating_or_verdict"],
+        "disclosure": "Required, clearly visible in post or first 30 seconds of video"
+      },
+      "avg_engagement_rate": 4.8,
+      "supported_platforms": ["youtube", "instagram", "tiktok", "pinterest"]
+    }
+  ],
+  "authorized_properties": [
+    {
+      "property_id": "prop_inf_tiktok",
+      "name": "TikTok Creator Marketplace",
+      "domain": "tiktok.com",
+      "category": "Short Video",
+      "monthly_uniques": 1000000000,
+      "monthly_uniques_display": "1B+",
+      "authorization_level": "standard",
+      "description": "Access to TikTok's official creator marketplace with verified influencer profiles, audience analytics, and campaign management tools",
+      "supported_formats": ["inf_sponsored_post", "inf_story_takeover", "inf_unboxing", "inf_livestream"],
+      "audience_profile": {
+        "primary_age": "16-34",
+        "gender_split": "54% female, 46% male",
+        "top_content_categories": ["entertainment", "dance", "comedy", "fitness", "food", "beauty"],
+        "avg_session_duration_minutes": 52
+      },
+      "platform": "social_influencer"
+    },
+    {
+      "property_id": "prop_inf_instagram",
+      "name": "Instagram Creator Marketplace",
+      "domain": "instagram.com",
+      "category": "Social",
+      "monthly_uniques": 1400000000,
+      "monthly_uniques_display": "1.4B",
+      "authorization_level": "standard",
+      "description": "Instagram's native creator partnership platform with branded content tools, shopping integration, and cross-posting to Facebook",
+      "supported_formats": ["inf_sponsored_post", "inf_story_takeover", "inf_unboxing", "inf_livestream", "inf_product_review"],
+      "audience_profile": {
+        "primary_age": "18-44",
+        "gender_split": "51% female, 49% male",
+        "top_content_categories": ["fashion", "beauty", "food", "travel", "fitness", "lifestyle"],
+        "avg_session_duration_minutes": 33
+      },
+      "platform": "social_influencer"
+    },
+    {
+      "property_id": "prop_inf_youtube",
+      "name": "YouTube BrandConnect",
+      "domain": "youtube.com",
+      "category": "Video",
+      "monthly_uniques": 2500000000,
+      "monthly_uniques_display": "2.5B",
+      "authorization_level": "premium",
+      "description": "YouTube's official influencer marketing platform connecting brands with creators for sponsored integrations, dedicated videos, and Shorts campaigns",
+      "supported_formats": ["inf_sponsored_post", "inf_unboxing", "inf_livestream", "inf_product_review"],
+      "audience_profile": {
+        "primary_age": "18-49",
+        "gender_split": "54% male, 46% female",
+        "top_content_categories": ["gaming", "music", "tech_review", "how_to", "vlogs", "education"],
+        "avg_session_duration_minutes": 40
+      },
+      "platform": "social_influencer"
+    },
+    {
+      "property_id": "prop_inf_twitch",
+      "name": "Twitch",
+      "domain": "twitch.tv",
+      "category": "Live Streaming",
+      "monthly_uniques": 140000000,
+      "monthly_uniques_display": "140M",
+      "authorization_level": "standard",
+      "description": "Live streaming platform with highly engaged gaming and entertainment communities, offering real-time brand integration during live broadcasts",
+      "supported_formats": ["inf_sponsored_post", "inf_livestream"],
+      "audience_profile": {
+        "primary_age": "16-34",
+        "gender_split": "65% male, 35% female",
+        "top_content_categories": ["gaming", "esports", "just_chatting", "music", "creative"],
+        "avg_session_duration_minutes": 95
+      },
+      "platform": "social_influencer"
+    },
+    {
+      "property_id": "prop_inf_pinterest",
+      "name": "Pinterest Creators",
+      "domain": "pinterest.com",
+      "category": "Visual Discovery",
+      "monthly_uniques": 450000000,
+      "monthly_uniques_display": "450M",
+      "authorization_level": "standard",
+      "description": "Visual discovery platform connecting brands with creators for Idea Pins, product showcases, and shoppable inspirational content",
+      "supported_formats": ["inf_sponsored_post", "inf_product_review"],
+      "audience_profile": {
+        "primary_age": "25-54",
+        "gender_split": "76% female, 24% male",
+        "top_content_categories": ["home_decor", "fashion", "food_recipes", "diy", "beauty", "wedding"],
+        "avg_session_duration_minutes": 14
+      },
+      "platform": "social_influencer"
+    },
+    {
+      "property_id": "prop_inf_snapchat",
+      "name": "Snapchat Creators",
+      "domain": "snapchat.com",
+      "category": "Ephemeral",
+      "monthly_uniques": 750000000,
+      "monthly_uniques_display": "750M",
+      "authorization_level": "standard",
+      "description": "Ephemeral content platform with AR lens integration, Spotlight creator content, and Story-based influencer partnerships reaching Gen Z audiences",
+      "supported_formats": ["inf_sponsored_post", "inf_story_takeover"],
+      "audience_profile": {
+        "primary_age": "13-34",
+        "gender_split": "51% female, 49% male",
+        "top_content_categories": ["lifestyle", "comedy", "beauty", "fashion", "ar_lenses", "entertainment"],
+        "avg_session_duration_minutes": 30
+      },
+      "platform": "social_influencer"
+    }
+  ],
+  "performance_feedback_log": [
+    {
+      "feedback_id": "fb_inf_001",
+      "media_buy_id": "mb_inf_sportmax",
+      "submitted_at": "2026-02-05T10:30:00Z",
+      "feedback_type": "brand_lift",
+      "data": {
+        "awareness_lift": 0.12,
+        "consideration_lift": 0.09,
+        "purchase_intent_lift": 0.06,
+        "sample_size": 3200,
+        "methodology": "exposed_vs_control_survey",
+        "micro_vs_macro_awareness": {
+          "micro_awareness_lift": 0.15,
+          "macro_awareness_lift": 0.08,
+          "note": "Micro-influencer audiences showed 87.5% higher awareness lift than macro audiences"
+        }
+      },
+      "status": "processed",
+      "impact": "Validates micro-influencer strategy - higher authenticity driving stronger brand recall"
+    },
+    {
+      "feedback_id": "fb_inf_002",
+      "media_buy_id": "mb_inf_luxebeauty",
+      "submitted_at": "2026-02-10T14:00:00Z",
+      "feedback_type": "conversion_data",
+      "data": {
+        "conversions": 486,
+        "conversion_value": 72900,
+        "avg_order_value": 150.0,
+        "attribution_window": "14_day_click",
+        "attribution_breakdown": {
+          "instagram_conversions": 298,
+          "youtube_conversions": 124,
+          "tiktok_conversions": 64
+        },
+        "promo_code_usage": {
+          "total_codes_redeemed": 412,
+          "unique_codes_tracked": 25,
+          "top_performing_code": "LUXE_BEAUTY_GLOW",
+          "top_code_redemptions": 89
+        }
+      },
+      "status": "processed",
+      "impact": "Instagram driving 61% of conversions at $36.58 CPA - strongest channel for beauty vertical"
+    },
+    {
+      "feedback_id": "fb_inf_003",
+      "media_buy_id": "mb_inf_freshbite",
+      "submitted_at": "2026-02-12T09:15:00Z",
+      "feedback_type": "conversion_data",
+      "data": {
+        "conversions": 678,
+        "conversion_value": 20340,
+        "avg_order_value": 30.0,
+        "attribution_window": "7_day_click",
+        "affiliate_performance": {
+          "total_affiliate_clicks": 8420,
+          "affiliate_conversions": 534,
+          "affiliate_revenue": 18690,
+          "conversion_rate": 6.34,
+          "avg_commission_paid": 1.87,
+          "roas": 3.31
+        },
+        "top_performing_creators": [
+          {
+            "creator_handle": "@healthychefmia",
+            "platform": "tiktok",
+            "conversions": 142,
+            "revenue": 4260
+          },
+          {
+            "creator_handle": "@mealprep_marcus",
+            "platform": "instagram",
+            "conversions": 98,
+            "revenue": 2940
+          },
+          {
+            "creator_handle": "@plantbased_paula",
+            "platform": "tiktok",
+            "conversions": 87,
+            "revenue": 2610
+          }
+        ]
+      },
+      "status": "processed",
+      "impact": "Affiliate program delivering 3.31x ROAS - recommend expanding creator pool in food vertical"
+    }
+  ]
+}
