@@ -1,0 +1,51 @@
+{
+  "id": "conv_1771230965192_sxim3k",
+  "title": "Show me all Facebook products",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Show me all Facebook products"
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "I'll retrieve all Facebook Ads products for you."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_01XDTEKSAtz59YuL71GvZkyK",
+          "name": "get_products",
+          "input": {
+            "platform": "facebook_ads"
+          },
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01XDTEKSAtz59YuL71GvZkyK",
+          "content": "{\"success\":true,\"products\":[{\"product_id\":\"prod_fb_news_feed\",\"name\":\"Facebook News Feed Ads\",\"description\":\"High-visibility in-feed placements within the Facebook News Feed, reaching users as they scroll through posts from friends, groups, and pages\",\"category\":\"Social/Feed\",\"platform\":\"facebook_ads\",\"pricing_options\":[{\"pricing_option_id\":\"po_fb_feed_standard\",\"currency\":\"USD\",\"cpm\":12,\"pricing_model\":\"fixed_cpm\"},{\"pricing_option_id\":\"po_fb_feed_premium\",\"currency\":\"USD\",\"cpm\":18,\"pricing_model\":\"fixed_cpm\"}]},{\"product_id\":\"prod_fb_stories\",\"name\":\"Facebook Stories Ads\",\"description\":\"Full-screen vertical ads between Facebook Stories, delivering immersive visual experiences with swipe-up CTAs\",\"category\":\"Social/Stories\",\"platform\":\"facebook_ads\",\"pricing_options\":[{\"pricing_option_id\":\"po_fb_stories_standard\",\"currency\":\"USD\",\"cpm\":8,\"pricing_model\":\"fixed_cpm\"},{\"pricing_option_id\":\"po_fb_stories_premium\",\"currency\":\"USD\",\"cpm\":14,\"pricing_model\":\"fixed_cpm\"}]},{\"product_id\":\"prod_fb_reels\",\"name\":\"Facebook Reels Ads\",\"description\":\"Short-form video ads within Facebook Reels, capturing attention with engaging vertical video content between organic reels\",\"category\":\"Social/Video\",\"platform\":\"facebook_ads\",\"pricing_options\":[{\"pricing_option_id\":\"po_fb_reels_standard\",\"currency\":\"USD\",\"cpm\":10,\"pricing_model\":\"fixed_cpm\"},{\"pricing_option_id\":\"po_fb_reels_premium\",\"currency\":\"USD\",\"cpm\":16,\"pricing_model\":\"fixed_cpm\"}]},{\"product_id\":\"prod_fb_marketplace\",\"name\":\"Facebook Marketplace Ads\",\"description\":\"Native ad placements within Facebook Marketplace, reaching users with high purchase intent as they browse listings\",\"category\":\"Social/Commerce\",\"platform\":\"facebook_ads\",\"pricing_options\":[{\"pricing_option_id\":\"po_fb_marketplace_standard\",\"currency\":\"USD\",\"cpm\":6,\"pricing_model\":\"fixed_cpm\"},{\"pricing_option_id\":\"po_fb_marketplace_premium\",\"currency\":\"USD\",\"cpm\":10,\"pricing_model\":\"fixed_cpm\"}]},{\"product_id\":\"prod_fb_audience_network\",\"name\":\"Audience Network\",\"description\":\"Extend Facebook ad campaigns to thousands of third-party apps and websites within the Audience Network for broad reach at lower CPMs\",\"category\":\"Social/Network\",\"platform\":\"facebook_ads\",\"pricing_options\":[{\"pricing_option_id\":\"po_fb_an_standard\",\"currency\":\"USD\",\"cpm\":4,\"pricing_model\":\"fixed_cpm\"},{\"pricing_option_id\":\"po_fb_an_premium\",\"currency\":\"USD\",\"cpm\":8,\"pricing_model\":\"fixed_cpm\"}]},{\"product_id\":\"prod_fb_messenger\",\"name\":\"Messenger Ads\",\"description\":\"Ads placed within the Facebook Messenger inbox and between conversations, driving direct engagement and click-to-message interactions\",\"category\":\"Social/Messaging\",\"platform\":\"facebook_ads\",\"pricing_options\":[{\"pricing_option_id\":\"po_fb_messenger_standard\",\"currency\":\"USD\",\"cpm\":10,\"pricing_model\":\"fixed_cpm\"},{\"pricing_option_id\":\"po_fb_messenger_premium\",\"currency\":\"USD\",\"cpm\":15,\"pricing_model\":\"fixed_cpm\"}]},{\"product_id\":\"prod_fb_ig_feed\",\"name\":\"Instagram Feed Ads\",\"description\":\"Seamless in-feed ad placements on Instagram, blending with organic content for high engagement with visually-driven audiences\",\"category\":\"Social/Feed\",\"platform\":\"facebook_ads\",\"pricing_options\":[{\"pricing_option_id\":\"po_fb_ig_feed_standard\",\"currency\":\"USD\",\"cpm\":14,\"pricing_model\":\"fixed_cpm\"},{\"pricing_option_id\":\"po_fb_ig_feed_premium\",\"currency\":\"USD\",\"cpm\":22,\"pricing_model\":\"fixed_cpm\"}]},{\"product_id\":\"prod_fb_ig_stories\",\"name\":\"Instagram Stories Ads\",\"description\":\"Full-screen immersive ads between Instagram Stories, leveraging vertical video and image formats for maximum impact\",\"category\":\"Social/Stories\",\"platform\":\"facebook_ads\",\"pricing_options\":[{\"pricing_option_id\":\"po_fb_ig_stories_standard\",\"currency\":\"USD\",\"cpm\":10,\"pricing_model\":\"fixed_cpm\"},{\"pricing_option_id\":\"po_fb_ig_stories_premium\",\"currency\":\"USD\",\"cpm\":18,\"pricing_model\":\"fixed_cpm\"}]}],\"count\":8,\"filters_applied\":{\"platform\":\"facebook_ads\"}}"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Here are all **8 Facebook Ads products** available:\n\n## Facebook & Instagram Placements\n\n| Product | Description | Category | Standard CPM | Premium CPM |\n|---------|-------------|----------|--------------|-------------|\n| **Facebook News Feed Ads** | High-visibility in-feed placements within the Facebook News Feed | Social/Feed | $12 | $18 |\n| **Facebook Stories Ads** | Full-screen vertical ads between Facebook Stories with swipe-up CTAs | Social/Stories | $8 | $14 |\n| **Facebook Reels Ads** | Short-form video ads within Facebook Reels | Social/Video | $10 | $16 |\n| **Facebook Marketplace Ads** | Native placements reaching users with high purchase intent | Social/Commerce | $6 | $10 |\n| **Messenger Ads** | Ads within Messenger inbox driving click-to-message interactions | Social/Messaging | $10 | $15 |\n| **Instagram Feed Ads** | Seamless in-feed placements on Instagram | Social/Feed | $14 | $22 |\n| **Instagram Stories Ads** | Full-screen immersive ads between Instagram Stories | Social/Stories | $10 | $18 |\n| **Audience Network** | Extend campaigns to third-party apps and websites | Social/Network | $4 | $8 |\n\n**Key Insights:**\n- **Most Premium:** Instagram Feed Ads ($14-$22 CPM) - highest engagement with visual audiences\n- **Most Affordable:** Audience Network ($4-$8 CPM) - broadest reach at lower cost\n- **Best for Commerce:** Facebook Marketplace ($6-$10 CPM) - high purchase intent\n- **Best for Engagement:** Stories formats on both platforms deliver immersive experiences\n\nAll products support both standard and premium pricing tiers depending on targeting and optimization goals."
+        }
+      ]
+    }
+  ],
+  "createdAt": "2026-02-16T08:36:16.184Z",
+  "updatedAt": "2026-02-16T08:36:16.184Z"
+}
