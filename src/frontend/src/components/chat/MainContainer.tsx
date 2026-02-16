@@ -18,6 +18,14 @@ import { API_BASE_URL } from "@/lib/apiBaseUrl";
 import { useChatHistory, generateConversationId } from "@/hooks/useChatHistory";
 import { useWebSocket } from "@/hooks/useWebSocket";
 
+const DEBUG_CHAT_STREAM_FLOW = process.env.NODE_ENV !== "production";
+
+function logChatStreamFlow(message: string, payload: Record<string, unknown>) {
+  if (DEBUG_CHAT_STREAM_FLOW) {
+    console.debug(`[chat-stream] ${message}`, payload);
+  }
+}
+
 function OpenDashboardButton() {
   const handleOpenDashboard = () => {
     window.open("/dashboard", "_blank", "noopener,noreferrer");
@@ -139,10 +147,25 @@ export default function MainContainer() {
     
     // Only save if messages increased (new message added, not loaded)
     if (messages.length > 0 && messages.length > prevMessagesLength.current) {
-      saveConversationRef.current(conversationIdRef.current, messages);
+      // Keep local history up-to-date immediately, but defer backend sync
+      // until streaming completes to avoid syncing placeholder assistant content.
+      saveConversationRef.current(conversationIdRef.current, messages, false);
     }
     prevMessagesLength.current = messages.length;
   }, [messages, historyLoaded]);
+
+  // Sync to backend only when a streaming response finishes.
+  const wasStreamingRef = useRef(false);
+  useEffect(() => {
+    const justFinishedStreaming = wasStreamingRef.current && !isLoading;
+    wasStreamingRef.current = isLoading;
+
+    if (!justFinishedStreaming) return;
+    if (isLoadingConversation.current || !historyLoaded || !conversationIdRef.current) return;
+    if (messages.length === 0) return;
+
+    saveConversationRef.current(conversationIdRef.current, messages, true);
+  }, [isLoading, historyLoaded, messages]);
 
   // Handler for creating new chat
   const handleNewChat = useCallback(() => {
@@ -224,6 +247,11 @@ export default function MainContainer() {
       conversationIdRef.current = generateConversationId();
       setActiveConversation(conversationIdRef.current);
     }
+
+    logChatStreamFlow("send requested", {
+      conversationId: conversationIdRef.current,
+      contentPreview: content.slice(0, 80),
+    });
 
     // Add user message immediately
     const userMessage: Message = {
@@ -307,7 +335,12 @@ export default function MainContainer() {
 
               // Primary: handle by SSE event type (preferred)
               if (currentEvent === "start" && parsed.conversationId) {
+                const previousConversationId = conversationIdRef.current;
                 conversationIdRef.current = parsed.conversationId;
+                logChatStreamFlow("sse start", {
+                  previousConversationId,
+                  resolvedConversationId: parsed.conversationId,
+                });
               } else if (currentEvent === "text" && parsed.text !== undefined) {
                 assistantContent += parsed.text;
                 setMessages((prev) =>
@@ -341,7 +374,13 @@ export default function MainContainer() {
                 }
               } else if (currentEvent === "done") {
                 if (parsed.conversationId) {
+                  const previousConversationId = conversationIdRef.current;
                   conversationIdRef.current = parsed.conversationId;
+                  logChatStreamFlow("sse done", {
+                    previousConversationId,
+                    resolvedConversationId: parsed.conversationId,
+                    toolCallCount: Array.isArray(parsed.toolCalls) ? parsed.toolCalls.length : 0,
+                  });
                 }
                 // If we have toolCalls in done event, use those instead
                 if (parsed.toolCalls && Array.isArray(parsed.toolCalls)) {
@@ -405,6 +444,10 @@ export default function MainContainer() {
       }
     } catch (error) {
       console.error("Chat error:", error);
+      logChatStreamFlow("request failed", {
+        conversationId: conversationIdRef.current,
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
 
       // Add error message
       setMessages((prev) => {
@@ -423,6 +466,9 @@ export default function MainContainer() {
       });
     } finally {
       setIsLoading(false);
+      logChatStreamFlow("send finished", {
+        conversationId: conversationIdRef.current,
+      });
     }
   }, [selectedModel, setActiveConversation]);
 

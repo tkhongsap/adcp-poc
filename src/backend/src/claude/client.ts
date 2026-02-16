@@ -356,7 +356,7 @@ async function executeTool(toolName: string, toolInput: Record<string, unknown>)
 // Message history type for conversations
 export interface ChatMessage {
   role: 'user' | 'assistant';
-  content: string;
+  content: string | ContentBlock[] | ToolResultBlockParam[];
 }
 
 // Response type for chat endpoint
@@ -367,6 +367,7 @@ export interface ChatResponse {
     input: Record<string, unknown>;
     result: unknown;
   }>;
+  historyEntries?: ChatMessage[];
 }
 
 /**
@@ -456,9 +457,18 @@ export async function processChat(
   );
   const finalMessage = textBlocks.map((block) => block.text).join('\n');
 
+  const historyEntries: ChatMessage[] = [];
+  const newStartIndex = conversationHistory.length;
+  for (let i = newStartIndex; i < messages.length; i++) {
+    const msg = messages[i];
+    historyEntries.push({ role: msg.role, content: msg.content as string | ContentBlock[] | ToolResultBlockParam[] });
+  }
+  historyEntries.push({ role: 'assistant', content: response.content });
+
   return {
     message: finalMessage,
     toolCalls: toolCalls.length > 0 ? toolCalls : undefined,
+    historyEntries,
   };
 }
 
@@ -565,9 +575,18 @@ export async function processChatStream(
     response = await streamResponse();
   }
 
+  const historyEntries: ChatMessage[] = [];
+  const newStartIndex = conversationHistory.length;
+  for (let i = newStartIndex; i < messages.length; i++) {
+    const msg = messages[i];
+    historyEntries.push({ role: msg.role, content: msg.content as string | ContentBlock[] | ToolResultBlockParam[] });
+  }
+  historyEntries.push({ role: 'assistant', content: response.content });
+
   return {
     message: fullMessage,
     toolCalls: toolCalls.length > 0 ? toolCalls : undefined,
+    historyEntries,
   };
 }
 

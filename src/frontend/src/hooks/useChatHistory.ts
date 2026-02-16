@@ -21,6 +21,13 @@ const STORAGE_KEY = "adcp_chat_history";
 const MAX_CONVERSATIONS = 50;
 const MAX_MESSAGES_PER_CONVERSATION = 100;
 const SAVE_DEBOUNCE_MS = 1000;
+const DEBUG_CHAT_HISTORY_FLOW = process.env.NODE_ENV !== "production";
+
+function logChatHistoryFlow(message: string, payload: Record<string, unknown>) {
+  if (DEBUG_CHAT_HISTORY_FLOW) {
+    console.debug(`[chat-history] ${message}`, payload);
+  }
+}
 
 // Helper to serialize dates for localStorage
 function serializeConversation(conv: Conversation): Record<string, unknown> {
@@ -125,6 +132,13 @@ export function useChatHistory() {
   // Sync conversation to backend
   const syncToBackend = useCallback(async (conversation: Conversation) => {
     try {
+      logChatHistoryFlow("syncToBackend request", {
+        conversationId: conversation.id,
+        messageCount: conversation.messages.length,
+        firstRole: conversation.messages[0]?.role ?? null,
+        lastRole: conversation.messages[conversation.messages.length - 1]?.role ?? null,
+      });
+
       await fetch(`${API_BASE_URL}/api/chat/conversations`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -253,7 +267,22 @@ export function useChatHistory() {
     saveTimerRef.current = setTimeout(() => {
       // Verify the active conversation hasn't changed
       if (stateRef.current.activeConversationId !== targetConversationId) {
+        logChatHistoryFlow("skipped stale debounced save", {
+          conversationId: targetConversationId,
+          activeConversationId: stateRef.current.activeConversationId,
+        });
         return; // Skip stale save
+      }
+
+      const lastMessage = messagesToSave[messagesToSave.length - 1];
+      const isIncompleteAssistantMessage =
+        lastMessage?.role === "assistant" && lastMessage.content.trim().length === 0;
+
+      if (isIncompleteAssistantMessage) {
+        logChatHistoryFlow("skipped backend sync for incomplete assistant message", {
+          conversationId: targetConversationId,
+          messageCount: messagesToSave.length,
+        });
       }
       
       setState((prev) => {
@@ -282,7 +311,7 @@ export function useChatHistory() {
         }
 
         // Sync to backend asynchronously
-        if (syncBackend) {
+        if (syncBackend && !isIncompleteAssistantMessage) {
           syncToBackend(conversation);
         }
 
@@ -298,7 +327,10 @@ export function useChatHistory() {
 
         return {
           conversations: sorted,
-          activeConversationId: targetConversationId,
+          activeConversationId:
+            prev.activeConversationId === targetConversationId
+              ? targetConversationId
+              : prev.activeConversationId,
         };
       });
     }, SAVE_DEBOUNCE_MS);

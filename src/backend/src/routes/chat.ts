@@ -11,6 +11,13 @@ import {
 } from '../data/conversationStore.js';
 
 const router = Router();
+const DEBUG_CHAT_FLOW = process.env.NODE_ENV !== 'production';
+
+function logChatFlow(message: string, payload: Record<string, unknown>): void {
+  if (DEBUG_CHAT_FLOW) {
+    console.log(`[chat-flow] ${message}`, payload);
+  }
+}
 
 // Initialize conversations directory
 initConversationsDirectory();
@@ -22,14 +29,26 @@ const conversations: Map<string, ChatMessage[]> = new Map();
 // Load persisted conversations into memory
 const storedConversations = loadAllConversations();
 for (const [id, stored] of storedConversations) {
-  conversations.set(id, stored.messages);
+  conversations.set(id, stored.messages as ChatMessage[]);
 }
 
 // Helper to generate title from first message
+function getContentAsString(content: string | unknown[]): string {
+  if (typeof content === 'string') return content;
+  if (Array.isArray(content)) {
+    const textBlock = content.find((b: unknown) => typeof b === 'object' && b !== null && 'type' in b && (b as { type: string }).type === 'text');
+    if (textBlock && typeof textBlock === 'object' && 'text' in textBlock) {
+      return (textBlock as { text: string }).text;
+    }
+    return '';
+  }
+  return '';
+}
+
 function generateTitle(messages: ChatMessage[]): string {
   const firstUserMessage = messages.find((m) => m.role === 'user');
   if (!firstUserMessage) return 'New conversation';
-  const content = firstUserMessage.content.trim();
+  const content = getContentAsString(firstUserMessage.content).trim();
   return content.length > 40 ? content.substring(0, 37) + '...' : content;
 }
 
@@ -81,9 +100,13 @@ router.post('/', async (req: Request, res: Response) => {
     // Process the chat with optional model
     const response = await processChat(message, history, model);
 
-    // Update conversation history
-    history.push({ role: 'user', content: message });
-    history.push({ role: 'assistant', content: response.message });
+    // Update conversation history with full tool context
+    if (response.historyEntries && response.historyEntries.length > 0) {
+      history.push(...response.historyEntries);
+    } else {
+      history.push({ role: 'user', content: message });
+      history.push({ role: 'assistant', content: response.message });
+    }
     conversations.set(id, history);
 
     // Keep conversation history manageable (last 20 messages)
@@ -127,6 +150,15 @@ router.post('/stream', async (req: Request, res: Response) => {
     const id = conversationId || `conv_${Date.now()}_${Math.random().toString(36).substring(7)}`;
     const history = conversations.get(id) || [];
 
+    logChatFlow('stream request', {
+      requestedConversationId: conversationId || null,
+      resolvedConversationId: id,
+      historyLength: history.length,
+      firstHistoryRole: history[0]?.role ?? null,
+      lastHistoryRole: history[history.length - 1]?.role ?? null,
+      messagePreview: typeof message === 'string' ? message.slice(0, 80) : null,
+    });
+
     // Set up SSE headers
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
@@ -158,10 +190,22 @@ router.post('/stream', async (req: Request, res: Response) => {
       model
     );
 
-    // Update conversation history
-    history.push({ role: 'user', content: message });
-    history.push({ role: 'assistant', content: response.message || fullMessage });
+    // Update conversation history with full tool context
+    if (response.historyEntries && response.historyEntries.length > 0) {
+      history.push(...response.historyEntries);
+    } else {
+      history.push({ role: 'user', content: message });
+      history.push({ role: 'assistant', content: response.message || fullMessage });
+    }
     conversations.set(id, history);
+
+    logChatFlow('stream history updated', {
+      conversationId: id,
+      historyLength: history.length,
+      lastAssistantLength: (response.message || fullMessage).length,
+      toolCallCount: response.toolCalls?.length || 0,
+      hasRichHistory: !!(response.historyEntries && response.historyEntries.length > 0),
+    });
 
     // Keep conversation history manageable
     if (history.length > 40) {
@@ -269,11 +313,53 @@ router.post('/conversations', (req: Request, res: Response) => {
       updatedAt: updatedAt || new Date().toISOString(),
     };
 
+    const existingMessages = conversations.get(id) || [];
+    const previousLength = existingMessages.length;
+    const incomingLength = conversation.messages.length;
+    const existingLastMessage = existingMessages[existingMessages.length - 1];
+    const incomingLastMessage = conversation.messages[conversation.messages.length - 1];
+    const incomingLastContent = incomingLastMessage ? getContentAsString(incomingLastMessage.content) : '';
+    const existingLastContent = existingLastMessage ? getContentAsString(existingLastMessage.content) : '';
+    const incomingLastIsIncompleteAssistant =
+      incomingLastMessage?.role === 'assistant' && incomingLastContent.trim().length === 0;
+
+    // Guard against stale frontend syncs overwriting richer backend history.
+    const shouldIgnoreSync =
+      previousLength > incomingLength ||
+      (previousLength === incomingLength &&
+        incomingLastIsIncompleteAssistant &&
+        existingLastMessage?.role === 'assistant' &&
+        existingLastContent.trim().length > 0);
+
+    if (shouldIgnoreSync) {
+      logChatFlow('frontend sync ignored to protect richer history', {
+        conversationId: id,
+        previousLength,
+        incomingLength,
+        existingLastRole: existingLastMessage?.role ?? null,
+        incomingLastRole: incomingLastMessage?.role ?? null,
+      });
+
+      res.json({
+        success: true,
+        ignored: true,
+        conversation: { id, title: conversation.title },
+      });
+      return;
+    }
+
     // Save to file
     saveConversationToFile(conversation);
 
     // Update in-memory cache
-    conversations.set(id, conversation.messages);
+    conversations.set(id, conversation.messages as ChatMessage[]);
+    logChatFlow('frontend sync applied', {
+      conversationId: id,
+      previousLength,
+      incomingLength,
+      firstRole: conversation.messages[0]?.role ?? null,
+      lastRole: conversation.messages[conversation.messages.length - 1]?.role ?? null,
+    });
 
     res.json({ success: true, conversation: { id, title: conversation.title } });
   } catch (error) {

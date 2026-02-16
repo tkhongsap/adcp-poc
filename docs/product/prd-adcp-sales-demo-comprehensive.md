@@ -1392,7 +1392,8 @@ The backend must broadcast state changes to connected clients:
 ├── data/
 │   └── adcp_demo_complete_data.json    # Mock data (already exists)
 ├── docs/
-│   ├── PRD-AdCP-Sales-Demo-Comprehensive.md  # This document
+│   ├── product/
+│   │   └── prd-adcp-sales-demo-comprehensive.md  # This document
 │   └── ...
 └── README.md
 ```
