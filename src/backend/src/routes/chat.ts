@@ -29,14 +29,26 @@ const conversations: Map<string, ChatMessage[]> = new Map();
 // Load persisted conversations into memory
 const storedConversations = loadAllConversations();
 for (const [id, stored] of storedConversations) {
-  conversations.set(id, stored.messages);
+  conversations.set(id, stored.messages as ChatMessage[]);
 }
 
 // Helper to generate title from first message
+function getContentAsString(content: string | unknown[]): string {
+  if (typeof content === 'string') return content;
+  if (Array.isArray(content)) {
+    const textBlock = content.find((b: unknown) => typeof b === 'object' && b !== null && 'type' in b && (b as { type: string }).type === 'text');
+    if (textBlock && typeof textBlock === 'object' && 'text' in textBlock) {
+      return (textBlock as { text: string }).text;
+    }
+    return '';
+  }
+  return '';
+}
+
 function generateTitle(messages: ChatMessage[]): string {
   const firstUserMessage = messages.find((m) => m.role === 'user');
   if (!firstUserMessage) return 'New conversation';
-  const content = firstUserMessage.content.trim();
+  const content = getContentAsString(firstUserMessage.content).trim();
   return content.length > 40 ? content.substring(0, 37) + '...' : content;
 }
 
@@ -88,9 +100,13 @@ router.post('/', async (req: Request, res: Response) => {
     // Process the chat with optional model
     const response = await processChat(message, history, model);
 
-    // Update conversation history
-    history.push({ role: 'user', content: message });
-    history.push({ role: 'assistant', content: response.message });
+    // Update conversation history with full tool context
+    if (response.historyEntries && response.historyEntries.length > 0) {
+      history.push(...response.historyEntries);
+    } else {
+      history.push({ role: 'user', content: message });
+      history.push({ role: 'assistant', content: response.message });
+    }
     conversations.set(id, history);
 
     // Keep conversation history manageable (last 20 messages)
@@ -174,9 +190,13 @@ router.post('/stream', async (req: Request, res: Response) => {
       model
     );
 
-    // Update conversation history
-    history.push({ role: 'user', content: message });
-    history.push({ role: 'assistant', content: response.message || fullMessage });
+    // Update conversation history with full tool context
+    if (response.historyEntries && response.historyEntries.length > 0) {
+      history.push(...response.historyEntries);
+    } else {
+      history.push({ role: 'user', content: message });
+      history.push({ role: 'assistant', content: response.message || fullMessage });
+    }
     conversations.set(id, history);
 
     logChatFlow('stream history updated', {
@@ -184,6 +204,7 @@ router.post('/stream', async (req: Request, res: Response) => {
       historyLength: history.length,
       lastAssistantLength: (response.message || fullMessage).length,
       toolCallCount: response.toolCalls?.length || 0,
+      hasRichHistory: !!(response.historyEntries && response.historyEntries.length > 0),
     });
 
     // Keep conversation history manageable
@@ -297,8 +318,10 @@ router.post('/conversations', (req: Request, res: Response) => {
     const incomingLength = conversation.messages.length;
     const existingLastMessage = existingMessages[existingMessages.length - 1];
     const incomingLastMessage = conversation.messages[conversation.messages.length - 1];
+    const incomingLastContent = incomingLastMessage ? getContentAsString(incomingLastMessage.content) : '';
+    const existingLastContent = existingLastMessage ? getContentAsString(existingLastMessage.content) : '';
     const incomingLastIsIncompleteAssistant =
-      incomingLastMessage?.role === 'assistant' && incomingLastMessage.content.trim().length === 0;
+      incomingLastMessage?.role === 'assistant' && incomingLastContent.trim().length === 0;
 
     // Guard against stale frontend syncs overwriting richer backend history.
     const shouldIgnoreSync =
@@ -306,7 +329,7 @@ router.post('/conversations', (req: Request, res: Response) => {
       (previousLength === incomingLength &&
         incomingLastIsIncompleteAssistant &&
         existingLastMessage?.role === 'assistant' &&
-        existingLastMessage.content.trim().length > 0);
+        existingLastContent.trim().length > 0);
 
     if (shouldIgnoreSync) {
       logChatFlow('frontend sync ignored to protect richer history', {
@@ -329,7 +352,7 @@ router.post('/conversations', (req: Request, res: Response) => {
     saveConversationToFile(conversation);
 
     // Update in-memory cache
-    conversations.set(id, conversation.messages);
+    conversations.set(id, conversation.messages as ChatMessage[]);
     logChatFlow('frontend sync applied', {
       conversationId: id,
       previousLength,

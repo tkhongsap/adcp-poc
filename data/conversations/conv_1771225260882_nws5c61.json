@@ -1,0 +1,16 @@
+{
+  "id": "conv_1771225260882_nws5c61",
+  "title": "Show me an overview of all active cam...",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Show me an overview of all active campaigns"
+    },
+    {
+      "role": "assistant",
+      "content": "## Campaign Overview - All Active Campaigns\n\nHere's a summary of your 5 active campaigns:\n\n| Campaign | Budget | Spend | % Spent | Pacing | Health | CTR | CPA | Conversions |\n|----------|--------|-------|---------|--------|--------|-----|-----|-------------|\n| **Apex Motors** | $50,000 | $32,450 | 65% | Behind | ⚠️ Poor | 0.12% | $721.11 | 45 |\n| **TechFlow SaaS** | $25,000 | $28,200 | 113% | Overspend | ⚠️ Warning | 0.60% | $316.85 | 89 |\n| **SportMax Apparel** | $35,000 | $29,800 | 85% | On Track | ✅ Good | 0.35% | $234.65 | 127 |\n| **FinanceFirst Bank** | $40,000 | $22,100 | 55% | On Track | ✅ Good | 0.35% | $613.89 | 36 |\n| **GreenEnergy Co** | $20,000 | $14,900 | 75% | On Track | ✅ Good | 0.35% | $266.07 | 56 |\n\n### Key Insights:\n\n**🚨 Needs Attention:**\n- **Apex Motors**: Behind pace with poor health. Low CTR (0.12%), especially on mobile (0.08%). Germany performing poorly at 0.04% CTR.\n- **TechFlow SaaS**: Overspending at 113% of budget. Need to set daily caps, though CTR is strong at 0.60%.\n\n**✅ Performing Well:**\n- **SportMax Apparel**: On track with good health, strong video completion rate (85%)\n- **FinanceFirst Bank**: On track with excellent viewability (85%)\n- **GreenEnergy Co**: On track with California outperforming other regions\n\n**Top Recommendations:**\n1. **Apex Motors**: Reduce mobile bid and consider pausing Germany targeting\n2. **TechFlow**: Set daily budget caps to prevent continued overspending\n3. **SportMax**: Maintain current strategy - it's working well\n4. **GreenEnergy**: Increase budget allocation to California (best performer)\n\nWould you like me to take action on any of these campaigns?"
+    }
+  ],
+  "createdAt": "2026-02-16T07:01:15.309Z",
+  "updatedAt": "2026-02-16T07:01:15.309Z"
+}

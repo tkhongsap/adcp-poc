@@ -1,0 +1,104 @@
+{
+  "id": "test_sequential_001",
+  "title": "Pause the Apex Motors campaign",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Pause the Apex Motors campaign"
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "I'll pause the Apex Motors campaign for you."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_01WXcxKDd7DtjbJjHn4Xsxau",
+          "name": "update_media_buy",
+          "input": {
+            "media_buy_id": "mb_apex_motors_q1",
+            "updates": {
+              "set_status": {
+                "status": "paused"
+              }
+            }
+          },
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_01WXcxKDd7DtjbJjHn4Xsxau",
+          "content": "{\"success\":true,\"result\":{\"media_buy_id\":\"mb_apex_motors_q1\",\"success\":true,\"changes_applied\":[{\"operation\":\"set_status\",\"details\":\"Changed campaign status from active to paused\",\"previous_value\":\"active\",\"new_value\":\"paused\"}],\"estimated_impact\":{\"reach_change_percent\":-100,\"description\":\"Campaign paused - delivery stopped\"},\"notifications\":{\"slack\":{\"sent\":true,\"message\":\"Slack notification sent to #adcp-demo\",\"channelName\":\"#adcp-demo\"},\"email\":{\"draftGenerated\":true,\"draft\":{\"mediaBuyId\":\"mb_apex_motors_q1\",\"to\":[\"jasonliew@signal42.ai\"],\"from\":\"onboarding@resend.dev\",\"subject\":\"Campaign Update: Apex Motors - Campaign Paused\",\"brandName\":\"Apex Motors\",\"clientName\":\"Team\",\"changes\":[{\"operation\":\"set_status\",\"details\":\"Changed campaign status from active to paused\",\"previous_value\":\"active\",\"new_value\":\"paused\"}],\"expectedImpact\":\"Campaign has been paused. No further spend will occur until resumed.\",\"id\":\"draft_1771225781560_hsqh4xaoe\",\"htmlBody\":\"<!DOCTYPE html>\\n<html>\\n<head>\\n  <meta charset=\\\"utf-8\\\">\\n  <style>\\n    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }\\n    .header { border-bottom: 2px solid #0066cc; padding-bottom: 10px; margin-bottom: 20px; }\\n    .header h2 { color: #0066cc; margin: 0; }\\n    .section-title { color: #0066cc; font-weight: bold; margin-top: 25px; margin-bottom: 10px; text-transform: uppercase; font-size: 13px; letter-spacing: 0.5px; }\\n    .divider { border-top: 1px solid #e0e0e0; margin: 15px 0; }\\n    .changes-box { background: #f8f9fa; border-left: 3px solid #0066cc; padding: 15px; margin: 10px 0; white-space: pre-line; }\\n    .impact-box { background: #e8f4fd; border-radius: 4px; padding: 15px; margin: 10px 0; }\\n    .footer { color: #666; font-size: 12px; margin-top: 30px; border-top: 1px solid #e0e0e0; padding-top: 15px; }\\n    .signature { margin-top: 20px; }\\n  </style>\\n</head>\\n<body>\\n  <div class=\\\"header\\\">\\n    <h2>Campaign Update: Apex Motors</h2>\\n  </div>\\n\\n  <p>Hi Team,</p>\\n\\n  <p>We've made the following optimisation to your <strong>Apex Motors</strong> campaign:</p>\\n\\n  <div class=\\\"section-title\\\">Change Summary</div>\\n  <div class=\\\"changes-box\\\">• Changed campaign status from active to paused\\n• active → paused</div>\\n\\n  <div class=\\\"section-title\\\">Expected Impact</div>\\n  <div class=\\\"impact-box\\\">Campaign has been paused. No further spend will occur until resumed.</div>\\n\\n  <p>We'll continue monitoring performance and recommend further adjustments as needed.</p>\\n\\n  <div class=\\\"signature\\\">\\n    <p>Best regards,<br><strong>AdCP Account Team</strong></p>\\n  </div>\\n\\n  <div class=\\\"footer\\\">\\n    <p>This update was made via AdCP Sales Agent<br>16 February 2026 at 07:09</p>\\n  </div>\\n</body>\\n</html>\",\"textBody\":\"Campaign Update: Apex Motors\\n\\nHi Team,\\n\\nWe've made the following optimisation to your Apex Motors campaign:\\n\\nCHANGE SUMMARY\\n─────────────────────────────────\\n• Changed campaign status from active to paused\\n• active → paused\\n\\nEXPECTED IMPACT\\n─────────────────────────────────\\nCampaign has been paused. No further spend will occur until resumed.\\n\\nWe'll continue monitoring performance and recommend further adjustments as needed.\\n\\nBest regards,\\nAdCP Account Team\\n\\n---\\nThis update was made via AdCP Sales Agent\\n16 February 2026 at 07:09\",\"createdAt\":\"2026-02-16T07:09:41.561Z\",\"status\":\"draft\"},\"message\":\"Email draft generated for Apex Motors\"},\"timestamp\":\"2026-02-16T07:09:41.064Z\"}}}"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "✅ **Apex Motors campaign has been paused successfully.**\n\n**Changes Applied:**\n- Campaign status changed from **active** to **paused**\n\n**Impact:**\n- Campaign delivery has stopped - no further spend will occur until resumed\n- Reach change: -100%\n\n**Notifications:**\n- ✓ Slack notification sent to #adcp-demo\n- ✓ Email draft generated for jasonliew@signal42.ai\n\nThe campaign is now paused and will not serve any ads or incur any additional costs. When you're ready to resume, just let me know!"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": "Now resume the Apex Motors campaign"
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "I'll resume the Apex Motors campaign for you."
+        },
+        {
+          "type": "tool_use",
+          "id": "toolu_0126R2nJotNwHs9NNuRPXRqs",
+          "name": "update_media_buy",
+          "input": {
+            "media_buy_id": "mb_apex_motors_q1",
+            "updates": {
+              "set_status": {
+                "status": "active"
+              }
+            }
+          },
+          "caller": {
+            "type": "direct"
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "tool_result",
+          "tool_use_id": "toolu_0126R2nJotNwHs9NNuRPXRqs",
+          "content": "{\"success\":true,\"result\":{\"media_buy_id\":\"mb_apex_motors_q1\",\"success\":true,\"changes_applied\":[{\"operation\":\"set_status\",\"details\":\"Changed campaign status from paused to active\",\"previous_value\":\"paused\",\"new_value\":\"active\"}],\"estimated_impact\":{\"description\":\"Campaign resumed - delivery active\"},\"notifications\":{\"slack\":{\"sent\":true,\"message\":\"Slack notification sent to #adcp-demo\",\"channelName\":\"#adcp-demo\"},\"email\":{\"draftGenerated\":true,\"draft\":{\"mediaBuyId\":\"mb_apex_motors_q1\",\"to\":[\"jasonliew@signal42.ai\"],\"from\":\"onboarding@resend.dev\",\"subject\":\"Campaign Update: Apex Motors - Campaign Resumed\",\"brandName\":\"Apex Motors\",\"clientName\":\"Team\",\"changes\":[{\"operation\":\"set_status\",\"details\":\"Changed campaign status from paused to active\",\"previous_value\":\"paused\",\"new_value\":\"active\"}],\"expectedImpact\":\"Campaign has been resumed and will begin delivering immediately.\",\"id\":\"draft_1771225797093_fitfxik5g\",\"htmlBody\":\"<!DOCTYPE html>\\n<html>\\n<head>\\n  <meta charset=\\\"utf-8\\\">\\n  <style>\\n    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }\\n    .header { border-bottom: 2px solid #0066cc; padding-bottom: 10px; margin-bottom: 20px; }\\n    .header h2 { color: #0066cc; margin: 0; }\\n    .section-title { color: #0066cc; font-weight: bold; margin-top: 25px; margin-bottom: 10px; text-transform: uppercase; font-size: 13px; letter-spacing: 0.5px; }\\n    .divider { border-top: 1px solid #e0e0e0; margin: 15px 0; }\\n    .changes-box { background: #f8f9fa; border-left: 3px solid #0066cc; padding: 15px; margin: 10px 0; white-space: pre-line; }\\n    .impact-box { background: #e8f4fd; border-radius: 4px; padding: 15px; margin: 10px 0; }\\n    .footer { color: #666; font-size: 12px; margin-top: 30px; border-top: 1px solid #e0e0e0; padding-top: 15px; }\\n    .signature { margin-top: 20px; }\\n  </style>\\n</head>\\n<body>\\n  <div class=\\\"header\\\">\\n    <h2>Campaign Update: Apex Motors</h2>\\n  </div>\\n\\n  <p>Hi Team,</p>\\n\\n  <p>We've made the following optimisation to your <strong>Apex Motors</strong> campaign:</p>\\n\\n  <div class=\\\"section-title\\\">Change Summary</div>\\n  <div class=\\\"changes-box\\\">• Changed campaign status from paused to active\\n• paused → active</div>\\n\\n  <div class=\\\"section-title\\\">Expected Impact</div>\\n  <div class=\\\"impact-box\\\">Campaign has been resumed and will begin delivering immediately.</div>\\n\\n  <p>We'll continue monitoring performance and recommend further adjustments as needed.</p>\\n\\n  <div class=\\\"signature\\\">\\n    <p>Best regards,<br><strong>AdCP Account Team</strong></p>\\n  </div>\\n\\n  <div class=\\\"footer\\\">\\n    <p>This update was made via AdCP Sales Agent<br>16 February 2026 at 07:09</p>\\n  </div>\\n</body>\\n</html>\",\"textBody\":\"Campaign Update: Apex Motors\\n\\nHi Team,\\n\\nWe've made the following optimisation to your Apex Motors campaign:\\n\\nCHANGE SUMMARY\\n─────────────────────────────────\\n• Changed campaign status from paused to active\\n• paused → active\\n\\nEXPECTED IMPACT\\n─────────────────────────────────\\nCampaign has been resumed and will begin delivering immediately.\\n\\nWe'll continue monitoring performance and recommend further adjustments as needed.\\n\\nBest regards,\\nAdCP Account Team\\n\\n---\\nThis update was made via AdCP Sales Agent\\n16 February 2026 at 07:09\",\"createdAt\":\"2026-02-16T07:09:57.094Z\",\"status\":\"draft\"},\"message\":\"Email draft generated for Apex Motors\"},\"timestamp\":\"2026-02-16T07:09:56.649Z\"}}}"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "✅ **Apex Motors campaign has been resumed successfully.**\n\n**Changes Applied:**\n- Campaign status changed from **paused** to **active**\n\n**Impact:**\n- Campaign is now live and will begin delivering immediately\n\n**Notifications:**\n- ✓ Slack notification sent to #adcp-demo\n- ✓ Email draft generated for jasonliew@signal42.ai\n\nThe campaign is back up and running! Ads will start serving again and the campaign will continue delivering according to its targeting and budget settings."
+        }
+      ]
+    }
+  ],
+  "createdAt": "2026-02-16T07:09:45.140Z",
+  "updatedAt": "2026-02-16T07:10:00.249Z"
+}

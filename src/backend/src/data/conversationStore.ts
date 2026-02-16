@@ -3,7 +3,7 @@ import * as path from 'path';
 
 export interface StoredMessage {
   role: 'user' | 'assistant';
-  content: string;
+  content: string | unknown[];
 }
 
 export interface StoredConversation {
