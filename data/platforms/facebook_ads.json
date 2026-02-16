@@ -1,0 +1,1719 @@
+{
+  "platform": "facebook_ads",
+  "platform_display_name": "Facebook Ads",
+  "products": [
+    {
+      "product_id": "prod_fb_news_feed",
+      "name": "Facebook News Feed Ads",
+      "description": "High-visibility in-feed placements within the Facebook News Feed, reaching users as they scroll through posts from friends, groups, and pages",
+      "category": "Social/Feed",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_fb_feed_standard",
+          "currency": "USD",
+          "cpm": 12.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_fb_feed_premium",
+          "currency": "USD",
+          "cpm": 18.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_single_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_carousel"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_single_video"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "geo_city",
+        "age_range",
+        "gender",
+        "interests",
+        "behaviors",
+        "custom_audiences",
+        "lookalike_audiences",
+        "device_type"
+      ],
+      "minimum_budget": 5000,
+      "available_inventory": 120000000,
+      "platform": "facebook_ads"
+    },
+    {
+      "product_id": "prod_fb_stories",
+      "name": "Facebook Stories Ads",
+      "description": "Full-screen vertical ads between Facebook Stories, delivering immersive visual experiences with swipe-up CTAs",
+      "category": "Social/Stories",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_fb_stories_standard",
+          "currency": "USD",
+          "cpm": 8.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_fb_stories_premium",
+          "currency": "USD",
+          "cpm": 14.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_single_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_single_video"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "age_range",
+        "gender",
+        "interests",
+        "behaviors",
+        "custom_audiences",
+        "device_type"
+      ],
+      "minimum_budget": 2500,
+      "available_inventory": 85000000,
+      "platform": "facebook_ads"
+    },
+    {
+      "product_id": "prod_fb_reels",
+      "name": "Facebook Reels Ads",
+      "description": "Short-form video ads within Facebook Reels, capturing attention with engaging vertical video content between organic reels",
+      "category": "Social/Video",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_fb_reels_standard",
+          "currency": "USD",
+          "cpm": 10.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_fb_reels_premium",
+          "currency": "USD",
+          "cpm": 16.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_single_video"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "age_range",
+        "gender",
+        "interests",
+        "behaviors",
+        "custom_audiences",
+        "lookalike_audiences",
+        "device_type"
+      ],
+      "minimum_budget": 3000,
+      "available_inventory": 95000000,
+      "platform": "facebook_ads"
+    },
+    {
+      "product_id": "prod_fb_marketplace",
+      "name": "Facebook Marketplace Ads",
+      "description": "Native ad placements within Facebook Marketplace, reaching users with high purchase intent as they browse listings",
+      "category": "Social/Commerce",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_fb_marketplace_standard",
+          "currency": "USD",
+          "cpm": 6.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_fb_marketplace_premium",
+          "currency": "USD",
+          "cpm": 10.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_single_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_carousel"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "geo_city",
+        "age_range",
+        "interests",
+        "purchase_intent",
+        "device_type"
+      ],
+      "minimum_budget": 2000,
+      "available_inventory": 60000000,
+      "platform": "facebook_ads"
+    },
+    {
+      "product_id": "prod_fb_audience_network",
+      "name": "Audience Network",
+      "description": "Extend Facebook ad campaigns to thousands of third-party apps and websites within the Audience Network for broad reach at lower CPMs",
+      "category": "Social/Network",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_fb_an_standard",
+          "currency": "USD",
+          "cpm": 4.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_fb_an_premium",
+          "currency": "USD",
+          "cpm": 8.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_single_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_single_video"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "age_range",
+        "gender",
+        "interests",
+        "behaviors",
+        "custom_audiences",
+        "device_type"
+      ],
+      "minimum_budget": 1500,
+      "available_inventory": 200000000,
+      "platform": "facebook_ads"
+    },
+    {
+      "product_id": "prod_fb_messenger",
+      "name": "Messenger Ads",
+      "description": "Ads placed within the Facebook Messenger inbox and between conversations, driving direct engagement and click-to-message interactions",
+      "category": "Social/Messaging",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_fb_messenger_standard",
+          "currency": "USD",
+          "cpm": 10.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_fb_messenger_premium",
+          "currency": "USD",
+          "cpm": 15.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_single_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_carousel"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "age_range",
+        "gender",
+        "interests",
+        "custom_audiences",
+        "device_type"
+      ],
+      "minimum_budget": 3000,
+      "available_inventory": 45000000,
+      "platform": "facebook_ads"
+    },
+    {
+      "product_id": "prod_fb_ig_feed",
+      "name": "Instagram Feed Ads",
+      "description": "Seamless in-feed ad placements on Instagram, blending with organic content for high engagement with visually-driven audiences",
+      "category": "Social/Feed",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_fb_ig_feed_standard",
+          "currency": "USD",
+          "cpm": 14.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_fb_ig_feed_premium",
+          "currency": "USD",
+          "cpm": 22.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_single_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_carousel"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_single_video"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_collection"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "geo_city",
+        "age_range",
+        "gender",
+        "interests",
+        "behaviors",
+        "custom_audiences",
+        "lookalike_audiences",
+        "device_type"
+      ],
+      "minimum_budget": 5000,
+      "available_inventory": 100000000,
+      "platform": "facebook_ads"
+    },
+    {
+      "product_id": "prod_fb_ig_stories",
+      "name": "Instagram Stories Ads",
+      "description": "Full-screen immersive ads between Instagram Stories, leveraging vertical video and image formats for maximum impact",
+      "category": "Social/Stories",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_fb_ig_stories_standard",
+          "currency": "USD",
+          "cpm": 10.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_fb_ig_stories_premium",
+          "currency": "USD",
+          "cpm": 18.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_single_image"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_single_video"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "fb_instant_experience"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "age_range",
+        "gender",
+        "interests",
+        "behaviors",
+        "custom_audiences",
+        "lookalike_audiences",
+        "device_type"
+      ],
+      "minimum_budget": 3000,
+      "available_inventory": 75000000,
+      "platform": "facebook_ads"
+    }
+  ],
+  "media_buys": [
+    {
+      "media_buy_id": "mb_fb_apex_motors",
+      "buyer_ref": "apex_fb_q1_2026_001",
+      "brand_manifest": {
+        "name": "Apex Motors",
+        "url": "https://apexmotors.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_fb_apex_001",
+          "product_id": "prod_fb_news_feed",
+          "pricing_option_id": "po_fb_feed_standard",
+          "budget": 12000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US",
+              "UK",
+              "DE"
+            ],
+            "device_type": [
+              "mobile",
+              "desktop"
+            ],
+            "interests": [
+              "automotive",
+              "luxury_vehicles",
+              "electric_vehicles"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_fb_apex_002",
+          "product_id": "prod_fb_reels",
+          "pricing_option_id": "po_fb_reels_standard",
+          "budget": 8000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US",
+              "UK"
+            ],
+            "device_type": [
+              "mobile"
+            ],
+            "age_range": "25-54"
+          }
+        },
+        {
+          "package_id": "pkg_fb_apex_003",
+          "product_id": "prod_fb_audience_network",
+          "pricing_option_id": "po_fb_an_standard",
+          "budget": 15000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US",
+              "UK",
+              "DE"
+            ],
+            "device_type": [
+              "mobile",
+              "desktop"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_fb_apex_004",
+          "product_id": "prod_fb_stories",
+          "pricing_option_id": "po_fb_stories_standard",
+          "budget": 10000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US",
+              "UK"
+            ],
+            "device_type": [
+              "mobile"
+            ]
+          }
+        }
+      ],
+      "start_time": "2026-01-01T00:00:00Z",
+      "end_time": "2026-03-31T23:59:59Z",
+      "status": "active",
+      "created_at": "2025-12-18T09:00:00Z",
+      "platform": "facebook_ads"
+    },
+    {
+      "media_buy_id": "mb_fb_sportmax",
+      "buyer_ref": "sportmax_fb_spring_2026",
+      "brand_manifest": {
+        "name": "SportMax Apparel",
+        "url": "https://sportmax.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_fb_sm_001",
+          "product_id": "prod_fb_reels",
+          "pricing_option_id": "po_fb_reels_premium",
+          "budget": 12000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "age_range": "18-34",
+            "interests": [
+              "fitness",
+              "fashion",
+              "sportswear",
+              "running"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_fb_sm_002",
+          "product_id": "prod_fb_ig_feed",
+          "pricing_option_id": "po_fb_ig_feed_premium",
+          "budget": 15000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "age_range": "18-34",
+            "interests": [
+              "fitness",
+              "fashion",
+              "athleisure"
+            ],
+            "gender": "all"
+          }
+        },
+        {
+          "package_id": "pkg_fb_sm_003",
+          "product_id": "prod_fb_ig_stories",
+          "pricing_option_id": "po_fb_ig_stories_standard",
+          "budget": 8000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "age_range": "18-34"
+          }
+        }
+      ],
+      "start_time": "2026-01-15T00:00:00Z",
+      "end_time": "2026-04-30T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-08T11:30:00Z",
+      "platform": "facebook_ads"
+    },
+    {
+      "media_buy_id": "mb_fb_greenenergy",
+      "buyer_ref": "ge_fb_sustainability_2026",
+      "brand_manifest": {
+        "name": "GreenEnergy Co",
+        "url": "https://greenenergy.co"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_fb_ge_001",
+          "product_id": "prod_fb_news_feed",
+          "pricing_option_id": "po_fb_feed_standard",
+          "budget": 10000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "geo_region_any_of": [
+              "California",
+              "Texas",
+              "Florida",
+              "Arizona"
+            ],
+            "interests": [
+              "sustainability",
+              "solar_energy",
+              "green_living"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_fb_ge_002",
+          "product_id": "prod_fb_marketplace",
+          "pricing_option_id": "po_fb_marketplace_standard",
+          "budget": 8000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "geo_region_any_of": [
+              "California",
+              "Texas",
+              "Arizona"
+            ],
+            "interests": [
+              "home_improvement",
+              "solar_panels"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_fb_ge_003",
+          "product_id": "prod_fb_messenger",
+          "pricing_option_id": "po_fb_messenger_standard",
+          "budget": 7000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "geo_region_any_of": [
+              "California",
+              "Florida"
+            ]
+          }
+        }
+      ],
+      "start_time": "2026-01-10T00:00:00Z",
+      "end_time": "2026-03-10T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-06T14:00:00Z",
+      "platform": "facebook_ads"
+    },
+    {
+      "media_buy_id": "mb_fb_luxebeauty",
+      "buyer_ref": "luxebeauty_fb_spring_2026",
+      "brand_manifest": {
+        "name": "LuxeBeauty",
+        "url": "https://luxebeauty.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_fb_lb_001",
+          "product_id": "prod_fb_ig_feed",
+          "pricing_option_id": "po_fb_ig_feed_premium",
+          "budget": 20000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US",
+              "UK",
+              "FR"
+            ],
+            "age_range": "25-54",
+            "gender": "female",
+            "interests": [
+              "beauty",
+              "skincare",
+              "luxury_cosmetics",
+              "fashion"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_fb_lb_002",
+          "product_id": "prod_fb_ig_stories",
+          "pricing_option_id": "po_fb_ig_stories_premium",
+          "budget": 18000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US",
+              "UK",
+              "FR"
+            ],
+            "age_range": "25-54",
+            "gender": "female",
+            "interests": [
+              "beauty",
+              "skincare",
+              "makeup_tutorials"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_fb_lb_003",
+          "product_id": "prod_fb_reels",
+          "pricing_option_id": "po_fb_reels_premium",
+          "budget": 17000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US",
+              "UK"
+            ],
+            "age_range": "25-44",
+            "gender": "female"
+          }
+        }
+      ],
+      "start_time": "2026-01-20T00:00:00Z",
+      "end_time": "2026-04-20T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-15T10:00:00Z",
+      "platform": "facebook_ads"
+    },
+    {
+      "media_buy_id": "mb_fb_freshbite",
+      "buyer_ref": "freshbite_fb_q1_2026",
+      "brand_manifest": {
+        "name": "FreshBite Foods",
+        "url": "https://freshbitefoods.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_fb_fbf_001",
+          "product_id": "prod_fb_news_feed",
+          "pricing_option_id": "po_fb_feed_premium",
+          "budget": 12000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "interests": [
+              "healthy_eating",
+              "organic_food",
+              "family_meals",
+              "cooking"
+            ],
+            "behaviors": [
+              "parents",
+              "grocery_shoppers"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_fb_fbf_002",
+          "product_id": "prod_fb_stories",
+          "pricing_option_id": "po_fb_stories_premium",
+          "budget": 8000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "interests": [
+              "healthy_eating",
+              "meal_prep"
+            ],
+            "behaviors": [
+              "parents"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_fb_fbf_003",
+          "product_id": "prod_fb_marketplace",
+          "pricing_option_id": "po_fb_marketplace_premium",
+          "budget": 10000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "interests": [
+              "grocery_delivery",
+              "organic_food"
+            ]
+          }
+        }
+      ],
+      "start_time": "2026-01-05T00:00:00Z",
+      "end_time": "2026-03-31T23:59:59Z",
+      "status": "active",
+      "created_at": "2025-12-28T16:00:00Z",
+      "platform": "facebook_ads"
+    }
+  ],
+  "delivery_metrics": {
+    "mb_fb_apex_motors": {
+      "media_buy_id": "mb_fb_apex_motors",
+      "brand": "Apex Motors",
+      "total_budget": 45000,
+      "total_spend": 31250,
+      "pacing": "behind",
+      "health": "warning",
+      "summary": {
+        "impressions": 4850000,
+        "clicks": 38800,
+        "conversions": 142,
+        "ctr": 0.8,
+        "cpm": 6.44,
+        "cpa": 220.07,
+        "viewability": 0.64,
+        "completion_rate": 0.68
+      },
+      "by_product": {
+        "prod_fb_news_feed": {
+          "impressions": 850000,
+          "clicks": 15300,
+          "ctr": 1.8,
+          "spend": 10200,
+          "cpm": 12.0,
+          "viewability": 0.78,
+          "conversions": 68
+        },
+        "prod_fb_reels": {
+          "impressions": 620000,
+          "clicks": 13020,
+          "ctr": 2.1,
+          "spend": 6200,
+          "cpm": 10.0,
+          "viewability": 0.82,
+          "conversions": 52
+        },
+        "prod_fb_audience_network": {
+          "impressions": 2800000,
+          "clicks": 8400,
+          "ctr": 0.3,
+          "spend": 11200,
+          "cpm": 4.0,
+          "viewability": 0.42,
+          "conversions": 12
+        },
+        "prod_fb_stories": {
+          "impressions": 580000,
+          "clicks": 2080,
+          "ctr": 0.36,
+          "spend": 3650,
+          "cpm": 6.29,
+          "viewability": 0.71,
+          "conversions": 10
+        }
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 3395000,
+          "clicks": 23660,
+          "ctr": 0.7,
+          "spend": 21875,
+          "cpm": 6.44
+        },
+        "desktop": {
+          "impressions": 1455000,
+          "clicks": 15140,
+          "ctr": 1.04,
+          "spend": 9375,
+          "cpm": 6.44
+        }
+      },
+      "by_geo": {
+        "US": {
+          "impressions": 2425000,
+          "clicks": 21340,
+          "ctr": 0.88,
+          "spend": 15625
+        },
+        "UK": {
+          "impressions": 1455000,
+          "clicks": 11640,
+          "ctr": 0.8,
+          "spend": 9375
+        },
+        "DE": {
+          "impressions": 970000,
+          "clicks": 5820,
+          "ctr": 0.6,
+          "spend": 6250
+        }
+      },
+      "platform_specific_metrics": {
+        "roas": 2.8,
+        "cost_per_lead": 18.42,
+        "frequency": 4.2,
+        "reach": 1154762,
+        "engagement_rate": 1.9
+      },
+      "current_bids": {
+        "feed_cpm": 12.0,
+        "reels_cpm": 10.0,
+        "audience_network_cpm": 4.0,
+        "stories_cpm": 8.0
+      },
+      "recommendations": [
+        "CRITICAL: Audience Network consuming 36% of budget ($11,200) with only 0.3% CTR and 8.5% of conversions — shift budget to Feed (1.8% CTR) and Reels (2.1% CTR)",
+        "Feed and Reels driving 84% of conversions on only 52% of spend — increase allocation",
+        "Audience Network viewability at 42% vs 78-82% on Feed/Reels — quality concern",
+        "Consider reallocating $8,000 from Audience Network: $5,000 to Feed, $3,000 to Reels"
+      ]
+    },
+    "mb_fb_sportmax": {
+      "media_buy_id": "mb_fb_sportmax",
+      "brand": "SportMax Apparel",
+      "total_budget": 35000,
+      "total_spend": 18900,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 1420000,
+        "clicks": 27380,
+        "conversions": 198,
+        "ctr": 1.93,
+        "cpm": 13.31,
+        "cpa": 95.45,
+        "viewability": 0.81,
+        "completion_rate": 0.88
+      },
+      "by_product": {
+        "prod_fb_reels": {
+          "impressions": 480000,
+          "clicks": 11520,
+          "ctr": 2.4,
+          "spend": 7680,
+          "cpm": 16.0,
+          "viewability": 0.85,
+          "conversions": 92
+        },
+        "prod_fb_ig_feed": {
+          "impressions": 560000,
+          "clicks": 9520,
+          "ctr": 1.7,
+          "spend": 7280,
+          "cpm": 13.0,
+          "viewability": 0.8,
+          "conversions": 72
+        },
+        "prod_fb_ig_stories": {
+          "impressions": 380000,
+          "clicks": 6340,
+          "ctr": 1.67,
+          "spend": 3940,
+          "cpm": 10.37,
+          "viewability": 0.78,
+          "conversions": 34
+        }
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 1136000,
+          "clicks": 22704,
+          "ctr": 2.0,
+          "spend": 15120,
+          "cpm": 13.31
+        },
+        "desktop": {
+          "impressions": 284000,
+          "clicks": 4676,
+          "ctr": 1.65,
+          "spend": 3780,
+          "cpm": 13.31
+        }
+      },
+      "by_geo": {
+        "US": {
+          "impressions": 1420000,
+          "clicks": 27380,
+          "ctr": 1.93,
+          "spend": 18900
+        }
+      },
+      "platform_specific_metrics": {
+        "roas": 5.2,
+        "cost_per_lead": 8.75,
+        "frequency": 3.1,
+        "reach": 458065,
+        "engagement_rate": 4.5
+      },
+      "current_bids": {
+        "reels_cpm": 16.0,
+        "ig_feed_cpm": 22.0,
+        "ig_stories_cpm": 10.0
+      },
+      "recommendations": [
+        "Strong performance across all placements — Reels leading with 2.4% CTR",
+        "Mobile engagement significantly outperforming desktop — 80% of budget well-placed",
+        "Instagram Feed + Reels combination driving 83% of conversions",
+        "Consider increasing Reels budget for 18-24 age cohort"
+      ]
+    },
+    "mb_fb_greenenergy": {
+      "media_buy_id": "mb_fb_greenenergy",
+      "brand": "GreenEnergy Co",
+      "total_budget": 25000,
+      "total_spend": 17850,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 2180000,
+        "clicks": 24852,
+        "conversions": 87,
+        "ctr": 1.14,
+        "cpm": 8.19,
+        "cpa": 205.17,
+        "viewability": 0.72,
+        "completion_rate": null
+      },
+      "by_product": {
+        "prod_fb_news_feed": {
+          "impressions": 780000,
+          "clicks": 10920,
+          "ctr": 1.4,
+          "spend": 9360,
+          "cpm": 12.0,
+          "viewability": 0.76,
+          "conversions": 42
+        },
+        "prod_fb_marketplace": {
+          "impressions": 950000,
+          "clicks": 9500,
+          "ctr": 1.0,
+          "spend": 5700,
+          "cpm": 6.0,
+          "viewability": 0.68,
+          "conversions": 28
+        },
+        "prod_fb_messenger": {
+          "impressions": 450000,
+          "clicks": 4432,
+          "ctr": 0.98,
+          "spend": 2790,
+          "cpm": 6.2,
+          "viewability": 0.71,
+          "conversions": 17
+        }
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 1526000,
+          "clicks": 17396,
+          "ctr": 1.14,
+          "spend": 12495,
+          "cpm": 8.19
+        },
+        "desktop": {
+          "impressions": 654000,
+          "clicks": 7456,
+          "ctr": 1.14,
+          "spend": 5355,
+          "cpm": 8.19
+        }
+      },
+      "by_geo": {
+        "California": {
+          "impressions": 763000,
+          "clicks": 9918,
+          "ctr": 1.3,
+          "spend": 6248
+        },
+        "Texas": {
+          "impressions": 654000,
+          "clicks": 7194,
+          "ctr": 1.1,
+          "spend": 5355
+        },
+        "Florida": {
+          "impressions": 436000,
+          "clicks": 4360,
+          "ctr": 1.0,
+          "spend": 3570
+        },
+        "Arizona": {
+          "impressions": 327000,
+          "clicks": 3380,
+          "ctr": 1.03,
+          "spend": 2677
+        }
+      },
+      "platform_specific_metrics": {
+        "roas": 3.4,
+        "cost_per_lead": 14.22,
+        "frequency": 2.8,
+        "reach": 778571,
+        "engagement_rate": 2.6
+      },
+      "current_bids": {
+        "feed_cpm": 12.0,
+        "marketplace_cpm": 6.0,
+        "messenger_cpm": 10.0
+      },
+      "recommendations": [
+        "California outperforming other regions — consider increasing allocation",
+        "Marketplace providing cost-efficient conversions at $6 CPM",
+        "Messenger driving strong lead generation for solar consultations",
+        "Feed CTR 1.4% significantly above benchmark — expand budget"
+      ]
+    },
+    "mb_fb_luxebeauty": {
+      "media_buy_id": "mb_fb_luxebeauty",
+      "brand": "LuxeBeauty",
+      "total_budget": 55000,
+      "total_spend": 24750,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 1580000,
+        "clicks": 25280,
+        "conversions": 315,
+        "ctr": 1.6,
+        "cpm": 15.66,
+        "cpa": 78.57,
+        "viewability": 0.84,
+        "completion_rate": 0.91
+      },
+      "by_product": {
+        "prod_fb_ig_feed": {
+          "impressions": 620000,
+          "clicks": 11160,
+          "ctr": 1.8,
+          "spend": 11000,
+          "cpm": 17.74,
+          "viewability": 0.87,
+          "conversions": 155
+        },
+        "prod_fb_ig_stories": {
+          "impressions": 520000,
+          "clicks": 7800,
+          "ctr": 1.5,
+          "spend": 7500,
+          "cpm": 14.42,
+          "viewability": 0.82,
+          "conversions": 98
+        },
+        "prod_fb_reels": {
+          "impressions": 440000,
+          "clicks": 6320,
+          "ctr": 1.44,
+          "spend": 6250,
+          "cpm": 14.2,
+          "viewability": 0.83,
+          "conversions": 62
+        }
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 1343000,
+          "clicks": 21488,
+          "ctr": 1.6,
+          "spend": 21038,
+          "cpm": 15.66
+        },
+        "desktop": {
+          "impressions": 237000,
+          "clicks": 3792,
+          "ctr": 1.6,
+          "spend": 3712,
+          "cpm": 15.66
+        }
+      },
+      "by_geo": {
+        "US": {
+          "impressions": 790000,
+          "clicks": 13430,
+          "ctr": 1.7,
+          "spend": 12375
+        },
+        "UK": {
+          "impressions": 474000,
+          "clicks": 7110,
+          "ctr": 1.5,
+          "spend": 7425
+        },
+        "FR": {
+          "impressions": 316000,
+          "clicks": 4740,
+          "ctr": 1.5,
+          "spend": 4950
+        }
+      },
+      "platform_specific_metrics": {
+        "roas": 7.8,
+        "cost_per_lead": 6.25,
+        "frequency": 3.5,
+        "reach": 451429,
+        "engagement_rate": 5.2
+      },
+      "current_bids": {
+        "ig_feed_cpm": 22.0,
+        "ig_stories_cpm": 18.0,
+        "reels_cpm": 16.0
+      },
+      "recommendations": [
+        "Exceptional ROAS of 7.8x — top performer in portfolio",
+        "Instagram Feed driving highest conversion volume — maintain premium bid",
+        "France showing strong engagement at 1.5% CTR — consider expanding EU targeting",
+        "Video completion rate of 91% on Reels indicates strong creative resonance"
+      ]
+    },
+    "mb_fb_freshbite": {
+      "media_buy_id": "mb_fb_freshbite",
+      "brand": "FreshBite Foods",
+      "total_budget": 30000,
+      "total_spend": 19500,
+      "pacing": "slightly_ahead",
+      "health": "good",
+      "summary": {
+        "impressions": 1650000,
+        "clicks": 18810,
+        "conversions": 165,
+        "ctr": 1.14,
+        "cpm": 11.82,
+        "cpa": 118.18,
+        "viewability": 0.74,
+        "completion_rate": null
+      },
+      "by_product": {
+        "prod_fb_news_feed": {
+          "impressions": 580000,
+          "clicks": 9280,
+          "ctr": 1.6,
+          "spend": 10440,
+          "cpm": 18.0,
+          "viewability": 0.79,
+          "conversions": 82
+        },
+        "prod_fb_stories": {
+          "impressions": 420000,
+          "clicks": 4200,
+          "ctr": 1.0,
+          "spend": 4200,
+          "cpm": 10.0,
+          "viewability": 0.72,
+          "conversions": 35
+        },
+        "prod_fb_marketplace": {
+          "impressions": 650000,
+          "clicks": 5330,
+          "ctr": 0.82,
+          "spend": 4860,
+          "cpm": 7.48,
+          "viewability": 0.7,
+          "conversions": 48
+        }
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 1320000,
+          "clicks": 15048,
+          "ctr": 1.14,
+          "spend": 15600,
+          "cpm": 11.82
+        },
+        "desktop": {
+          "impressions": 330000,
+          "clicks": 3762,
+          "ctr": 1.14,
+          "spend": 3900,
+          "cpm": 11.82
+        }
+      },
+      "by_geo": {
+        "US": {
+          "impressions": 1650000,
+          "clicks": 18810,
+          "ctr": 1.14,
+          "spend": 19500
+        }
+      },
+      "platform_specific_metrics": {
+        "roas": 4.1,
+        "cost_per_lead": 11.50,
+        "frequency": 3.8,
+        "reach": 434211,
+        "engagement_rate": 3.2
+      },
+      "current_bids": {
+        "feed_cpm": 18.0,
+        "stories_cpm": 14.0,
+        "marketplace_cpm": 10.0
+      },
+      "recommendations": [
+        "Slightly ahead on pacing — consider reducing daily budget cap by 5%",
+        "News Feed driving strongest CTR at 1.6% — family-targeted creative performing well",
+        "Marketplace conversions efficient at $101 CPA vs $127 Feed CPA",
+        "Frequency at 3.8 approaching fatigue threshold — rotate creative"
+      ]
+    }
+  },
+  "creative_formats": [
+    {
+      "format_id": "fb_carousel",
+      "name": "Carousel Ad",
+      "type": "display",
+      "description": "Multi-card scrollable ad format allowing advertisers to showcase up to 10 images or videos, each with its own link",
+      "specs": {
+        "max_cards": 10,
+        "image_size": "1080x1080",
+        "aspect_ratio": "1:1",
+        "headline_max_chars": 40,
+        "primary_text_max_chars": 125,
+        "description_max_chars": 20,
+        "file_types": [
+          "JPG",
+          "PNG"
+        ],
+        "max_file_size": "30MB",
+        "video_per_card": true,
+        "video_max_length": "240min"
+      },
+      "supported_placements": [
+        "facebook_feed",
+        "instagram_feed",
+        "messenger",
+        "audience_network"
+      ],
+      "avg_ctr": 1.4,
+      "platform": "facebook_ads"
+    },
+    {
+      "format_id": "fb_single_image",
+      "name": "Single Image Ad",
+      "type": "display",
+      "description": "Classic single-image ad format with headline, primary text, and call-to-action button",
+      "specs": {
+        "image_size": "1200x628",
+        "aspect_ratio": "1.91:1",
+        "headline_max_chars": 40,
+        "primary_text_max_chars": 125,
+        "description_max_chars": 30,
+        "file_types": [
+          "JPG",
+          "PNG"
+        ],
+        "max_file_size": "30MB"
+      },
+      "supported_placements": [
+        "facebook_feed",
+        "instagram_feed",
+        "facebook_stories",
+        "instagram_stories",
+        "messenger",
+        "audience_network",
+        "marketplace"
+      ],
+      "avg_ctr": 1.1,
+      "platform": "facebook_ads"
+    },
+    {
+      "format_id": "fb_single_video",
+      "name": "Single Video Ad",
+      "type": "video",
+      "description": "Video ad format supporting a wide range of durations, optimized for in-feed and stories placements with autoplay",
+      "specs": {
+        "max_duration": "240min",
+        "recommended_duration": "15-60s",
+        "resolution": "1080p",
+        "aspect_ratios": [
+          "16:9",
+          "1:1",
+          "9:16",
+          "4:5"
+        ],
+        "file_types": [
+          "MP4",
+          "MOV",
+          "GIF"
+        ],
+        "max_file_size": "4GB",
+        "captions": "recommended",
+        "sound": "optional_autoplay_muted"
+      },
+      "supported_placements": [
+        "facebook_feed",
+        "instagram_feed",
+        "facebook_reels",
+        "facebook_stories",
+        "instagram_stories",
+        "instagram_reels",
+        "audience_network"
+      ],
+      "avg_ctr": 1.6,
+      "avg_completion_rate": 0.78,
+      "platform": "facebook_ads"
+    },
+    {
+      "format_id": "fb_collection",
+      "name": "Collection Ad",
+      "type": "display",
+      "description": "Mobile-first ad format featuring a cover image or video with four product images below, opening into a full-screen Instant Experience",
+      "specs": {
+        "cover_media": "image_or_video",
+        "product_images": 4,
+        "cover_image_size": "1200x628",
+        "product_image_size": "1080x1080",
+        "headline_max_chars": 40,
+        "primary_text_max_chars": 125,
+        "requires_product_catalog": true
+      },
+      "supported_placements": [
+        "facebook_feed",
+        "instagram_feed"
+      ],
+      "avg_ctr": 1.8,
+      "platform": "facebook_ads"
+    },
+    {
+      "format_id": "fb_instant_experience",
+      "name": "Instant Experience",
+      "type": "display",
+      "description": "Full-screen mobile ad experience that loads instantly, supporting rich media, carousels, tilt-to-pan images, and product catalogs",
+      "specs": {
+        "type": "fullscreen_mobile",
+        "format": "HTML5",
+        "max_size": "2MB",
+        "components": [
+          "header",
+          "image",
+          "video",
+          "carousel",
+          "product_set",
+          "button",
+          "text_block"
+        ],
+        "load_time": "instant",
+        "supports_tilt_to_pan": true
+      },
+      "supported_placements": [
+        "facebook_feed",
+        "instagram_feed",
+        "facebook_stories",
+        "instagram_stories"
+      ],
+      "avg_ctr": 2.1,
+      "platform": "facebook_ads"
+    },
+    {
+      "format_id": "fb_lead_form",
+      "name": "Lead Form Ad",
+      "type": "native",
+      "description": "Native lead generation format with customizable form fields that auto-fill from user profiles, reducing friction for lead capture",
+      "specs": {
+        "fields": "customizable",
+        "auto_fill": "from_profile",
+        "max_custom_questions": 15,
+        "question_types": [
+          "short_answer",
+          "multiple_choice",
+          "conditional",
+          "appointment_scheduling"
+        ],
+        "privacy_policy_required": true,
+        "thank_you_screen": true,
+        "crm_integration": "available"
+      },
+      "supported_placements": [
+        "facebook_feed",
+        "instagram_feed",
+        "facebook_stories",
+        "instagram_stories",
+        "messenger"
+      ],
+      "avg_ctr": 1.3,
+      "avg_conversion_rate": 12.5,
+      "platform": "facebook_ads"
+    }
+  ],
+  "authorized_properties": [
+    {
+      "property_id": "prop_fb_feed",
+      "name": "Facebook Feed",
+      "url": "https://facebook.com/feed",
+      "category": "Social",
+      "monthly_uniques": "2B+",
+      "description": "Primary Facebook News Feed placement reaching the largest social media audience globally",
+      "authorization_level": "standard",
+      "supported_formats": [
+        "fb_single_image",
+        "fb_carousel",
+        "fb_single_video",
+        "fb_collection",
+        "fb_instant_experience",
+        "fb_lead_form"
+      ],
+      "audience_profile": {
+        "age_distribution": {
+          "18-24": 0.18,
+          "25-34": 0.26,
+          "35-44": 0.22,
+          "45-54": 0.17,
+          "55+": 0.17
+        },
+        "gender_split": {
+          "male": 0.44,
+          "female": 0.56
+        }
+      },
+      "platform": "facebook_ads"
+    },
+    {
+      "property_id": "prop_fb_ig_feed",
+      "name": "Instagram Feed",
+      "url": "https://instagram.com",
+      "category": "Social",
+      "monthly_uniques": "1.4B",
+      "description": "Instagram main feed placement reaching a highly engaged visual-first audience skewing younger and female",
+      "authorization_level": "standard",
+      "supported_formats": [
+        "fb_single_image",
+        "fb_carousel",
+        "fb_single_video",
+        "fb_collection"
+      ],
+      "audience_profile": {
+        "age_distribution": {
+          "18-24": 0.27,
+          "25-34": 0.33,
+          "35-44": 0.2,
+          "45-54": 0.12,
+          "55+": 0.08
+        },
+        "gender_split": {
+          "male": 0.42,
+          "female": 0.58
+        }
+      },
+      "platform": "facebook_ads"
+    },
+    {
+      "property_id": "prop_fb_ig_stories",
+      "name": "Instagram Stories",
+      "url": "https://instagram.com/stories",
+      "category": "Social",
+      "monthly_uniques": "500M",
+      "description": "Full-screen vertical Stories placement on Instagram with high engagement and swipe-up action support",
+      "authorization_level": "standard",
+      "supported_formats": [
+        "fb_single_image",
+        "fb_single_video",
+        "fb_instant_experience"
+      ],
+      "audience_profile": {
+        "age_distribution": {
+          "18-24": 0.32,
+          "25-34": 0.35,
+          "35-44": 0.18,
+          "45-54": 0.1,
+          "55+": 0.05
+        },
+        "gender_split": {
+          "male": 0.4,
+          "female": 0.6
+        }
+      },
+      "platform": "facebook_ads"
+    },
+    {
+      "property_id": "prop_fb_ig_reels",
+      "name": "Instagram Reels",
+      "url": "https://instagram.com/reels",
+      "category": "Social",
+      "monthly_uniques": "700M",
+      "description": "Short-form vertical video placement within Instagram Reels, ideal for immersive brand storytelling",
+      "authorization_level": "standard",
+      "supported_formats": [
+        "fb_single_video"
+      ],
+      "audience_profile": {
+        "age_distribution": {
+          "18-24": 0.35,
+          "25-34": 0.3,
+          "35-44": 0.18,
+          "45-54": 0.11,
+          "55+": 0.06
+        },
+        "gender_split": {
+          "male": 0.45,
+          "female": 0.55
+        }
+      },
+      "platform": "facebook_ads"
+    },
+    {
+      "property_id": "prop_fb_audience_network",
+      "name": "Audience Network",
+      "url": "https://audiencenetwork.com",
+      "category": "Network",
+      "monthly_uniques": "1B+ impressions",
+      "description": "Extended reach across thousands of third-party apps and mobile websites using Facebook targeting data",
+      "authorization_level": "standard",
+      "supported_formats": [
+        "fb_single_image",
+        "fb_single_video"
+      ],
+      "audience_profile": {
+        "age_distribution": {
+          "18-24": 0.22,
+          "25-34": 0.28,
+          "35-44": 0.22,
+          "45-54": 0.16,
+          "55+": 0.12
+        },
+        "gender_split": {
+          "male": 0.52,
+          "female": 0.48
+        }
+      },
+      "platform": "facebook_ads"
+    },
+    {
+      "property_id": "prop_fb_messenger",
+      "name": "Messenger",
+      "url": "https://messenger.com",
+      "category": "Messaging",
+      "monthly_uniques": "1B",
+      "description": "Ad placements within the Messenger inbox and between conversations, enabling direct click-to-message interactions",
+      "authorization_level": "standard",
+      "supported_formats": [
+        "fb_single_image",
+        "fb_carousel",
+        "fb_lead_form"
+      ],
+      "audience_profile": {
+        "age_distribution": {
+          "18-24": 0.2,
+          "25-34": 0.28,
+          "35-44": 0.24,
+          "45-54": 0.16,
+          "55+": 0.12
+        },
+        "gender_split": {
+          "male": 0.48,
+          "female": 0.52
+        }
+      },
+      "platform": "facebook_ads"
+    },
+    {
+      "property_id": "prop_fb_marketplace",
+      "name": "Facebook Marketplace",
+      "url": "https://facebook.com/marketplace",
+      "category": "Commerce",
+      "monthly_uniques": "800M",
+      "description": "Native ad placements within Facebook Marketplace, reaching users with active purchase intent browsing listings",
+      "authorization_level": "standard",
+      "supported_formats": [
+        "fb_single_image",
+        "fb_carousel"
+      ],
+      "audience_profile": {
+        "age_distribution": {
+          "18-24": 0.15,
+          "25-34": 0.28,
+          "35-44": 0.25,
+          "45-54": 0.2,
+          "55+": 0.12
+        },
+        "gender_split": {
+          "male": 0.5,
+          "female": 0.5
+        }
+      },
+      "platform": "facebook_ads"
+    },
+    {
+      "property_id": "prop_fb_watch",
+      "name": "Facebook Watch",
+      "url": "https://facebook.com/watch",
+      "category": "Video",
+      "monthly_uniques": "1.25B",
+      "description": "Video-first destination on Facebook with in-stream ad placements during long-form and live video content",
+      "authorization_level": "standard",
+      "supported_formats": [
+        "fb_single_video"
+      ],
+      "audience_profile": {
+        "age_distribution": {
+          "18-24": 0.2,
+          "25-34": 0.25,
+          "35-44": 0.23,
+          "45-54": 0.18,
+          "55+": 0.14
+        },
+        "gender_split": {
+          "male": 0.47,
+          "female": 0.53
+        }
+      },
+      "platform": "facebook_ads"
+    }
+  ],
+  "performance_feedback_log": [
+    {
+      "feedback_id": "fb_fb_001",
+      "media_buy_id": "mb_fb_apex_motors",
+      "submitted_at": "2026-01-28T10:00:00Z",
+      "feedback_type": "conversion_data",
+      "data": {
+        "conversions": 142,
+        "conversion_value": 398000,
+        "attribution_window": "7_day_click_1_day_view",
+        "by_placement": {
+          "news_feed": {
+            "conversions": 68,
+            "value": 198000
+          },
+          "reels": {
+            "conversions": 52,
+            "value": 148000
+          },
+          "audience_network": {
+            "conversions": 12,
+            "value": 28000
+          },
+          "stories": {
+            "conversions": 10,
+            "value": 24000
+          }
+        }
+      },
+      "status": "processed",
+      "impact": "Conversion data confirms Audience Network underperformance — 8.5% of conversions consuming 36% of budget. Recommend reallocation to Feed and Reels."
+    },
+    {
+      "feedback_id": "fb_fb_002",
+      "media_buy_id": "mb_fb_luxebeauty",
+      "submitted_at": "2026-02-05T14:30:00Z",
+      "feedback_type": "conversion_data",
+      "data": {
+        "conversions": 315,
+        "conversion_value": 193200,
+        "attribution_window": "7_day_click_1_day_view",
+        "average_order_value": 61.33,
+        "repeat_purchase_rate": 0.22,
+        "new_customer_rate": 0.78
+      },
+      "status": "processed",
+      "impact": "Strong new customer acquisition at 78%. ROAS of 7.8x exceeding 5x target. Instagram placements driving highest quality conversions."
+    },
+    {
+      "feedback_id": "fb_fb_003",
+      "media_buy_id": "mb_fb_sportmax",
+      "submitted_at": "2026-02-02T09:15:00Z",
+      "feedback_type": "brand_lift",
+      "data": {
+        "awareness_lift": 0.12,
+        "consideration_lift": 0.09,
+        "purchase_intent_lift": 0.06,
+        "sample_size": 4200,
+        "control_group_size": 2100,
+        "exposed_group_size": 2100,
+        "by_age_group": {
+          "18-24": {
+            "awareness_lift": 0.15,
+            "purchase_intent_lift": 0.08
+          },
+          "25-34": {
+            "awareness_lift": 0.1,
+            "purchase_intent_lift": 0.05
+          }
+        }
+      },
+      "status": "processed",
+      "impact": "Exceptional brand lift results. 18-24 cohort showing strongest lift — validates Reels and Stories creative strategy targeting younger fitness audience."
+    },
+    {
+      "feedback_id": "fb_fb_004",
+      "media_buy_id": "mb_fb_freshbite",
+      "submitted_at": "2026-02-08T11:00:00Z",
+      "feedback_type": "lead_quality",
+      "data": {
+        "leads_submitted": 165,
+        "leads_qualified": 118,
+        "qualification_rate": 0.72,
+        "leads_converted_to_customer": 48,
+        "customer_conversion_rate": 0.29,
+        "average_first_order_value": 47.50,
+        "coupon_redemption_rate": 0.64
+      },
+      "status": "processed",
+      "impact": "Lead quality strong at 72% qualification rate. Coupon redemption rate of 64% indicates high purchase intent from Facebook leads. Feed leads converting at highest rate."
+    }
+  ]
+}

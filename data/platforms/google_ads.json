@@ -1,0 +1,1294 @@
+{
+  "platform": "google_ads",
+  "platform_display_name": "Google Ads",
+  "products": [
+    {
+      "product_id": "prod_gads_search",
+      "name": "Google Search Ads",
+      "description": "Text-based ads appearing at the top of Google Search results, triggered by keyword intent. Highest-intent ad format with direct response focus.",
+      "category": "Search",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_gads_search_standard",
+          "currency": "USD",
+          "cpm": 35.00,
+          "pricing_model": "cpc_equivalent"
+        },
+        {
+          "pricing_option_id": "po_gads_search_premium",
+          "currency": "USD",
+          "cpm": 80.00,
+          "pricing_model": "cpc_equivalent"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "gads_responsive_search"
+        }
+      ],
+      "targeting_capabilities": [
+        "keywords",
+        "geo_country",
+        "geo_region",
+        "geo_city",
+        "device_type",
+        "demographics",
+        "audience_segments",
+        "dayparting",
+        "language",
+        "match_type"
+      ],
+      "minimum_budget": 1000,
+      "available_inventory": 850000000,
+      "platform": "google_ads"
+    },
+    {
+      "product_id": "prod_gads_display_network",
+      "name": "Google Display Network",
+      "description": "Visual banner and responsive display ads served across 2M+ websites and apps in the Google Display Network, ideal for awareness and remarketing.",
+      "category": "Display",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_gads_display_standard",
+          "currency": "USD",
+          "cpm": 3.00,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_gads_display_premium",
+          "currency": "USD",
+          "cpm": 8.00,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "gads_responsive_display"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "geo_city",
+        "device_type",
+        "demographics",
+        "affinity_audiences",
+        "in_market_audiences",
+        "custom_audiences",
+        "topics",
+        "placements",
+        "remarketing",
+        "contextual_keywords"
+      ],
+      "minimum_budget": 500,
+      "available_inventory": 5000000000,
+      "platform": "google_ads"
+    },
+    {
+      "product_id": "prod_gads_youtube_preroll",
+      "name": "YouTube Pre-Roll",
+      "description": "Skippable and non-skippable video ads shown before YouTube videos. Premium video inventory with massive reach across all demographics.",
+      "category": "Video",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_gads_yt_preroll_standard",
+          "currency": "USD",
+          "cpm": 10.00,
+          "pricing_model": "cpv_equivalent"
+        },
+        {
+          "pricing_option_id": "po_gads_yt_preroll_premium",
+          "currency": "USD",
+          "cpm": 20.00,
+          "pricing_model": "cpv_equivalent"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "gads_video_instream"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "device_type",
+        "demographics",
+        "affinity_audiences",
+        "in_market_audiences",
+        "topics",
+        "placements",
+        "youtube_channels",
+        "youtube_videos",
+        "custom_audiences",
+        "remarketing"
+      ],
+      "minimum_budget": 2000,
+      "available_inventory": 2000000000,
+      "platform": "google_ads"
+    },
+    {
+      "product_id": "prod_gads_youtube_discovery",
+      "name": "YouTube Discovery",
+      "description": "Video ads appearing in YouTube search results, related videos, and YouTube homepage feed. User-initiated engagement format.",
+      "category": "Video",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_gads_yt_discovery_standard",
+          "currency": "USD",
+          "cpm": 8.00,
+          "pricing_model": "cpv_equivalent"
+        },
+        {
+          "pricing_option_id": "po_gads_yt_discovery_premium",
+          "currency": "USD",
+          "cpm": 15.00,
+          "pricing_model": "cpv_equivalent"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "gads_video_discovery"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "device_type",
+        "demographics",
+        "affinity_audiences",
+        "in_market_audiences",
+        "topics",
+        "youtube_search_terms",
+        "custom_audiences"
+      ],
+      "minimum_budget": 1500,
+      "available_inventory": 800000000,
+      "platform": "google_ads"
+    },
+    {
+      "product_id": "prod_gads_shopping",
+      "name": "Google Shopping Ads",
+      "description": "Product listing ads with images, prices, and merchant info appearing in Google Search and the Shopping tab. Ideal for e-commerce and retail.",
+      "category": "Commerce",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_gads_shopping_standard",
+          "currency": "USD",
+          "cpm": 15.00,
+          "pricing_model": "cpc_equivalent"
+        },
+        {
+          "pricing_option_id": "po_gads_shopping_premium",
+          "currency": "USD",
+          "cpm": 30.00,
+          "pricing_model": "cpc_equivalent"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "gads_shopping_listing"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "device_type",
+        "product_categories",
+        "product_brands",
+        "custom_labels",
+        "price_range",
+        "remarketing",
+        "new_vs_returning"
+      ],
+      "minimum_budget": 2000,
+      "available_inventory": 500000000,
+      "platform": "google_ads"
+    },
+    {
+      "product_id": "prod_gads_pmax",
+      "name": "Performance Max",
+      "description": "AI-driven cross-channel campaign type spanning Search, Display, YouTube, Gmail, Maps, and Discover. Google's most automated campaign format with machine learning optimization.",
+      "category": "Cross-channel",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_gads_pmax_standard",
+          "currency": "USD",
+          "cpm": 8.00,
+          "pricing_model": "automated_bidding"
+        },
+        {
+          "pricing_option_id": "po_gads_pmax_premium",
+          "currency": "USD",
+          "cpm": 18.00,
+          "pricing_model": "automated_bidding"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "gads_responsive_search"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "gads_responsive_display"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "gads_video_instream"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "geo_city",
+        "device_type",
+        "demographics",
+        "audience_signals",
+        "search_themes",
+        "custom_audiences",
+        "remarketing",
+        "auto_optimized"
+      ],
+      "minimum_budget": 3000,
+      "available_inventory": 8000000000,
+      "platform": "google_ads"
+    },
+    {
+      "product_id": "prod_gads_app",
+      "name": "App Campaigns",
+      "description": "Automated app install and engagement campaigns across Search, Play Store, YouTube, Display, and Discover. Assets auto-generated from app store listings.",
+      "category": "Mobile",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_gads_app_standard",
+          "currency": "USD",
+          "cpm": 5.00,
+          "pricing_model": "cpi_equivalent"
+        },
+        {
+          "pricing_option_id": "po_gads_app_premium",
+          "currency": "USD",
+          "cpm": 12.00,
+          "pricing_model": "cpi_equivalent"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "gads_app_install"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "device_type",
+        "os_version",
+        "demographics",
+        "in_market_audiences",
+        "similar_apps",
+        "auto_optimized"
+      ],
+      "minimum_budget": 1000,
+      "available_inventory": 3000000000,
+      "platform": "google_ads"
+    },
+    {
+      "product_id": "prod_gads_gmail",
+      "name": "Gmail Ads",
+      "description": "Native ad units appearing in Gmail's Promotions and Social tabs. Expandable format with teaser and full HTML creative.",
+      "category": "Email",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_gads_gmail_standard",
+          "currency": "USD",
+          "cpm": 6.00,
+          "pricing_model": "cpc_equivalent"
+        },
+        {
+          "pricing_option_id": "po_gads_gmail_premium",
+          "currency": "USD",
+          "cpm": 12.00,
+          "pricing_model": "cpc_equivalent"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "gads_responsive_display"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "demographics",
+        "affinity_audiences",
+        "in_market_audiences",
+        "life_events",
+        "custom_audiences",
+        "remarketing",
+        "customer_match"
+      ],
+      "minimum_budget": 500,
+      "available_inventory": 1800000000,
+      "platform": "google_ads"
+    },
+    {
+      "product_id": "prod_gads_discover",
+      "name": "Google Discover",
+      "description": "Visually rich native ads in the Google Discover feed on mobile, reaching users browsing personalized content recommendations based on their interests.",
+      "category": "Native",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_gads_discover_standard",
+          "currency": "USD",
+          "cpm": 8.00,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_gads_discover_premium",
+          "currency": "USD",
+          "cpm": 15.00,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "gads_responsive_display"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "device_type",
+        "demographics",
+        "affinity_audiences",
+        "in_market_audiences",
+        "custom_audiences",
+        "remarketing",
+        "interests"
+      ],
+      "minimum_budget": 1000,
+      "available_inventory": 800000000,
+      "platform": "google_ads"
+    }
+  ],
+  "media_buys": [
+    {
+      "media_buy_id": "mb_gads_apex_motors",
+      "buyer_ref": "apex_gads_q1_2026",
+      "brand_manifest": {
+        "name": "Apex Motors",
+        "url": "https://apexmotors.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_gads_apex_001",
+          "product_id": "prod_gads_search",
+          "pricing_option_id": "po_gads_search_premium",
+          "budget": 35000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US", "UK", "DE"],
+            "device_type": ["mobile", "desktop"],
+            "keywords": ["new cars 2026", "luxury SUV", "electric vehicles", "Apex Motors", "best SUV deals", "car financing", "test drive near me"],
+            "match_type": "phrase_and_exact"
+          }
+        },
+        {
+          "package_id": "pkg_gads_apex_002",
+          "product_id": "prod_gads_youtube_preroll",
+          "pricing_option_id": "po_gads_yt_preroll_premium",
+          "budget": 25000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US", "UK", "DE"],
+            "device_type": ["mobile", "desktop", "ctv"],
+            "in_market_audiences": ["autos_and_vehicles", "luxury_vehicles"],
+            "youtube_channels": ["auto_reviews", "car_enthusiasts"]
+          }
+        }
+      ],
+      "start_time": "2026-01-01T00:00:00Z",
+      "end_time": "2026-03-31T23:59:59Z",
+      "status": "active",
+      "created_at": "2025-12-12T09:00:00Z",
+      "platform": "google_ads"
+    },
+    {
+      "media_buy_id": "mb_gads_techflow",
+      "buyer_ref": "techflow_gads_q1_2026",
+      "brand_manifest": {
+        "name": "TechFlow SaaS",
+        "url": "https://techflow.io"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_gads_tf_001",
+          "product_id": "prod_gads_search",
+          "pricing_option_id": "po_gads_search_standard",
+          "budget": 25000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "device_type": ["desktop", "mobile"],
+            "keywords": ["project management software", "SaaS workflow tools", "team collaboration platform", "enterprise task management", "agile project tools", "best PM software"],
+            "match_type": "broad_and_exact",
+            "audience_segments": ["b2b_decision_makers", "technology_professionals"]
+          }
+        },
+        {
+          "package_id": "pkg_gads_tf_002",
+          "product_id": "prod_gads_display_network",
+          "pricing_option_id": "po_gads_display_premium",
+          "budget": 15000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "device_type": ["desktop"],
+            "in_market_audiences": ["business_software", "project_management_tools"],
+            "remarketing": true,
+            "placements": ["techcrunch.com", "producthunt.com", "g2.com"]
+          }
+        }
+      ],
+      "start_time": "2026-01-15T00:00:00Z",
+      "end_time": "2026-03-15T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-08T14:30:00Z",
+      "platform": "google_ads"
+    },
+    {
+      "media_buy_id": "mb_gads_financefirst",
+      "buyer_ref": "ff_gads_q1_2026",
+      "brand_manifest": {
+        "name": "FinanceFirst Bank",
+        "url": "https://financefirst.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_gads_ff_001",
+          "product_id": "prod_gads_search",
+          "pricing_option_id": "po_gads_search_premium",
+          "budget": 25000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "device_type": ["desktop", "mobile"],
+            "keywords": ["high yield savings account", "best checking account", "business banking", "personal loans", "mortgage rates 2026", "financial planning services"],
+            "match_type": "exact_and_phrase"
+          }
+        },
+        {
+          "package_id": "pkg_gads_ff_002",
+          "product_id": "prod_gads_display_network",
+          "pricing_option_id": "po_gads_display_premium",
+          "budget": 15000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "device_type": ["desktop"],
+            "in_market_audiences": ["financial_services", "banking_products"],
+            "affinity_audiences": ["finance_professionals", "investment_enthusiasts"]
+          }
+        },
+        {
+          "package_id": "pkg_gads_ff_003",
+          "product_id": "prod_gads_gmail",
+          "pricing_option_id": "po_gads_gmail_premium",
+          "budget": 10000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "life_events": ["new_job", "home_purchase", "retirement_planning"],
+            "customer_match": true,
+            "demographics": ["25-64", "hhi_75k_plus"]
+          }
+        }
+      ],
+      "start_time": "2026-01-01T00:00:00Z",
+      "end_time": "2026-03-31T23:59:59Z",
+      "status": "active",
+      "created_at": "2025-12-18T10:00:00Z",
+      "platform": "google_ads"
+    },
+    {
+      "media_buy_id": "mb_gads_freshbite",
+      "buyer_ref": "freshbite_gads_q1_2026",
+      "brand_manifest": {
+        "name": "FreshBite Foods",
+        "url": "https://freshbitefoods.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_gads_fb_001",
+          "product_id": "prod_gads_youtube_preroll",
+          "pricing_option_id": "po_gads_yt_preroll_standard",
+          "budget": 15000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "device_type": ["mobile", "desktop", "ctv"],
+            "affinity_audiences": ["cooking_enthusiasts", "foodies", "health_conscious"],
+            "youtube_channels": ["cooking_shows", "food_reviews", "recipe_channels"]
+          }
+        },
+        {
+          "package_id": "pkg_gads_fb_002",
+          "product_id": "prod_gads_youtube_discovery",
+          "pricing_option_id": "po_gads_yt_discovery_standard",
+          "budget": 10000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "device_type": ["mobile", "desktop"],
+            "topics": ["food_and_drink", "cooking", "healthy_eating"],
+            "youtube_search_terms": ["healthy meal prep", "quick recipes", "organic food"]
+          }
+        }
+      ],
+      "start_time": "2026-01-20T00:00:00Z",
+      "end_time": "2026-03-20T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-12T11:15:00Z",
+      "platform": "google_ads"
+    },
+    {
+      "media_buy_id": "mb_gads_urbanliving",
+      "buyer_ref": "urbanliving_gads_q1_2026",
+      "brand_manifest": {
+        "name": "UrbanLiving Real Estate",
+        "url": "https://urbanlivingrealestate.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_gads_ul_001",
+          "product_id": "prod_gads_search",
+          "pricing_option_id": "po_gads_search_premium",
+          "budget": 18000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "geo_region_any_of": ["New York", "California", "Texas", "Florida", "Illinois"],
+            "device_type": ["desktop", "mobile"],
+            "keywords": ["apartments for rent", "luxury condos", "urban living spaces", "downtown real estate", "modern apartments NYC", "loft for sale"],
+            "match_type": "phrase_and_exact"
+          }
+        },
+        {
+          "package_id": "pkg_gads_ul_002",
+          "product_id": "prod_gads_display_network",
+          "pricing_option_id": "po_gads_display_premium",
+          "budget": 10000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "geo_region_any_of": ["New York", "California", "Texas", "Florida", "Illinois"],
+            "in_market_audiences": ["real_estate", "apartments_for_rent", "homes_for_sale"],
+            "remarketing": true
+          }
+        },
+        {
+          "package_id": "pkg_gads_ul_003",
+          "product_id": "prod_gads_discover",
+          "pricing_option_id": "po_gads_discover_premium",
+          "budget": 7000,
+          "targeting_overlay": {
+            "geo_country_any_of": ["US"],
+            "geo_region_any_of": ["New York", "California", "Texas", "Florida", "Illinois"],
+            "affinity_audiences": ["urban_lifestyle", "home_decor", "architecture"],
+            "interests": ["real_estate", "interior_design", "city_living"]
+          }
+        }
+      ],
+      "start_time": "2026-01-10T00:00:00Z",
+      "end_time": "2026-03-31T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-03T16:45:00Z",
+      "platform": "google_ads"
+    }
+  ],
+  "delivery_metrics": {
+    "mb_gads_apex_motors": {
+      "media_buy_id": "mb_gads_apex_motors",
+      "brand": "Apex Motors",
+      "total_budget": 60000,
+      "total_spend": 38750,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 4250000,
+        "clicks": 89200,
+        "conversions": 312,
+        "ctr": 2.1,
+        "cpm": 9.12,
+        "cpa": 124.20,
+        "viewability": 0.74,
+        "completion_rate": 0.22
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 2550000,
+          "clicks": 48960,
+          "ctr": 1.92,
+          "spend": 22425,
+          "cpm": 8.79
+        },
+        "desktop": {
+          "impressions": 1275000,
+          "clicks": 33660,
+          "ctr": 2.64,
+          "spend": 12750,
+          "cpm": 10.00
+        },
+        "ctv": {
+          "impressions": 425000,
+          "clicks": 6580,
+          "ctr": 1.55,
+          "spend": 3575,
+          "cpm": 8.41
+        }
+      },
+      "by_geo": {
+        "US": {
+          "impressions": 2550000,
+          "clicks": 58650,
+          "ctr": 2.3,
+          "spend": 23250
+        },
+        "UK": {
+          "impressions": 1062500,
+          "clicks": 20188,
+          "ctr": 1.9,
+          "spend": 9688
+        },
+        "DE": {
+          "impressions": 637500,
+          "clicks": 10362,
+          "ctr": 1.63,
+          "spend": 5812
+        }
+      },
+      "current_bids": {
+        "search_cpc": 3.20,
+        "youtube_cpv": 0.08,
+        "search_max_cpc": 5.50,
+        "youtube_max_cpv": 0.15
+      },
+      "recommendations": [
+        "Desktop CTR 2.64% outperforming mobile 1.92% - consider bid adjustments",
+        "Germany CTR 1.63% is below average - review German ad copy and landing pages",
+        "YouTube completion rate at 22% - consider testing shorter 15s creatives",
+        "Strong US performance at 2.3% CTR - maintain current keyword strategy"
+      ],
+      "platform": "google_ads",
+      "platform_specific_metrics": {
+        "quality_score": 7.2,
+        "impression_share": 0.68,
+        "cost_per_click": 0.43,
+        "cost_per_conversion": 124.20,
+        "search_impression_share_lost_budget": 0.08,
+        "search_impression_share_lost_rank": 0.24,
+        "average_position": 1.8,
+        "search_ctr": 5.4,
+        "youtube_view_rate": 0.22,
+        "youtube_avg_cpv": 0.08
+      }
+    },
+    "mb_gads_techflow": {
+      "media_buy_id": "mb_gads_techflow",
+      "brand": "TechFlow SaaS",
+      "total_budget": 40000,
+      "total_spend": 24800,
+      "pacing": "behind",
+      "health": "warning",
+      "summary": {
+        "impressions": 3180000,
+        "clicks": 42900,
+        "conversions": 186,
+        "ctr": 1.35,
+        "cpm": 7.80,
+        "cpa": 133.33,
+        "viewability": 0.81,
+        "completion_rate": null
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 954000,
+          "clicks": 9540,
+          "ctr": 1.0,
+          "spend": 7440,
+          "cpm": 7.80
+        },
+        "desktop": {
+          "impressions": 2226000,
+          "clicks": 33360,
+          "ctr": 1.5,
+          "spend": 17360,
+          "cpm": 7.80
+        }
+      },
+      "by_geo": {
+        "US": {
+          "impressions": 3180000,
+          "clicks": 42900,
+          "ctr": 1.35,
+          "spend": 24800
+        }
+      },
+      "current_bids": {
+        "search_broad_match_cpc": 4.80,
+        "search_exact_match_cpc": 2.60,
+        "display_cpm": 8.00,
+        "search_max_cpc": 6.50
+      },
+      "recommendations": [
+        "CRITICAL: Broad match keywords consuming 40% of budget ($9,920) but producing only 15% of conversions (28 conversions at $354 CPA)",
+        "Exact match keywords have quality score 8-9/10 and CPA of $68.50 - significantly outperforming broad match",
+        "Broad match quality scores averaging 3-4/10, dragging down overall campaign quality",
+        "Recommended action: Pause broad match keywords, reallocate budget to exact match and phrase match",
+        "Display remarketing performing well with 0.65% CTR - consider increasing display budget allocation"
+      ],
+      "platform": "google_ads",
+      "platform_specific_metrics": {
+        "quality_score": 5.1,
+        "impression_share": 0.52,
+        "cost_per_click": 0.58,
+        "cost_per_conversion": 133.33,
+        "search_impression_share_lost_budget": 0.22,
+        "search_impression_share_lost_rank": 0.26,
+        "average_position": 2.4,
+        "search_ctr": 3.8,
+        "broad_match_metrics": {
+          "impressions": 1590000,
+          "clicks": 11130,
+          "conversions": 28,
+          "spend": 9920,
+          "ctr": 0.7,
+          "cpa": 354.29,
+          "quality_score_avg": 3.5,
+          "budget_share": 0.40,
+          "conversion_share": 0.15
+        },
+        "exact_match_metrics": {
+          "impressions": 795000,
+          "clicks": 22260,
+          "conversions": 134,
+          "spend": 9180,
+          "ctr": 2.8,
+          "cpa": 68.51,
+          "quality_score_avg": 8.6,
+          "budget_share": 0.37,
+          "conversion_share": 0.72
+        },
+        "phrase_match_metrics": {
+          "impressions": 477000,
+          "clicks": 5730,
+          "conversions": 24,
+          "spend": 3260,
+          "ctr": 1.2,
+          "cpa": 135.83,
+          "quality_score_avg": 6.2,
+          "budget_share": 0.13,
+          "conversion_share": 0.13
+        },
+        "display_remarketing_metrics": {
+          "impressions": 318000,
+          "clicks": 3780,
+          "conversions": 0,
+          "spend": 2440,
+          "ctr": 1.19,
+          "view_through_conversions": 18,
+          "budget_share": 0.10
+        }
+      }
+    },
+    "mb_gads_financefirst": {
+      "media_buy_id": "mb_gads_financefirst",
+      "brand": "FinanceFirst Bank",
+      "total_budget": 50000,
+      "total_spend": 31200,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 5640000,
+        "clicks": 98700,
+        "conversions": 423,
+        "ctr": 1.75,
+        "cpm": 5.53,
+        "cpa": 73.81,
+        "viewability": 0.79,
+        "completion_rate": null
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 2256000,
+          "clicks": 33840,
+          "ctr": 1.5,
+          "spend": 12480,
+          "cpm": 5.53
+        },
+        "desktop": {
+          "impressions": 3384000,
+          "clicks": 64860,
+          "ctr": 1.92,
+          "spend": 18720,
+          "cpm": 5.53
+        }
+      },
+      "by_geo": {
+        "US": {
+          "impressions": 5640000,
+          "clicks": 98700,
+          "ctr": 1.75,
+          "spend": 31200
+        }
+      },
+      "current_bids": {
+        "search_cpc": 4.50,
+        "display_cpm": 8.00,
+        "gmail_cpc": 1.20,
+        "search_max_cpc": 7.00
+      },
+      "recommendations": [
+        "Search campaigns strong with 6.2% CTR on branded terms",
+        "Gmail open rate at 22% - above industry benchmark of 18%",
+        "Desktop outperforming mobile significantly - consider mobile landing page optimization",
+        "Finance keywords highly competitive - maintain quality score focus"
+      ],
+      "platform": "google_ads",
+      "platform_specific_metrics": {
+        "quality_score": 7.8,
+        "impression_share": 0.71,
+        "cost_per_click": 0.32,
+        "cost_per_conversion": 73.81,
+        "search_impression_share_lost_budget": 0.05,
+        "search_impression_share_lost_rank": 0.24,
+        "average_position": 1.6,
+        "search_ctr": 6.2,
+        "display_ctr": 0.45,
+        "gmail_open_rate": 0.22,
+        "gmail_click_rate": 0.038
+      }
+    },
+    "mb_gads_freshbite": {
+      "media_buy_id": "mb_gads_freshbite",
+      "brand": "FreshBite Foods",
+      "total_budget": 25000,
+      "total_spend": 11400,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 1520000,
+        "clicks": 18240,
+        "conversions": 95,
+        "ctr": 1.2,
+        "cpm": 7.50,
+        "cpa": 120.00,
+        "viewability": 0.72,
+        "completion_rate": 0.26
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 912000,
+          "clicks": 12768,
+          "ctr": 1.4,
+          "spend": 6840,
+          "cpm": 7.50
+        },
+        "desktop": {
+          "impressions": 456000,
+          "clicks": 4104,
+          "ctr": 0.9,
+          "spend": 3420,
+          "cpm": 7.50
+        },
+        "ctv": {
+          "impressions": 152000,
+          "clicks": 1368,
+          "ctr": 0.9,
+          "spend": 1140,
+          "cpm": 7.50
+        }
+      },
+      "by_geo": {
+        "US": {
+          "impressions": 1520000,
+          "clicks": 18240,
+          "ctr": 1.2,
+          "spend": 11400
+        }
+      },
+      "current_bids": {
+        "youtube_preroll_cpv": 0.06,
+        "youtube_discovery_cpv": 0.04,
+        "youtube_max_cpv": 0.12
+      },
+      "recommendations": [
+        "YouTube view rate at 26% is strong for food vertical - above 20% benchmark",
+        "Mobile engagement significantly higher than desktop - audience skews mobile",
+        "Discovery ads driving strong engagement at lower CPV - consider shifting more budget here",
+        "Consider seasonal food content alignment for March campaigns"
+      ],
+      "platform": "google_ads",
+      "platform_specific_metrics": {
+        "quality_score": null,
+        "impression_share": 0.45,
+        "cost_per_click": 0.63,
+        "cost_per_conversion": 120.00,
+        "search_impression_share_lost_budget": null,
+        "search_impression_share_lost_rank": null,
+        "youtube_view_rate": 0.26,
+        "youtube_avg_cpv": 0.05,
+        "youtube_earned_views": 42000,
+        "youtube_earned_subscribers": 180,
+        "discovery_ctr": 3.2,
+        "discovery_engagement_rate": 0.048
+      }
+    },
+    "mb_gads_urbanliving": {
+      "media_buy_id": "mb_gads_urbanliving",
+      "brand": "UrbanLiving Real Estate",
+      "total_budget": 35000,
+      "total_spend": 19600,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 3850000,
+        "clicks": 57750,
+        "conversions": 267,
+        "ctr": 1.5,
+        "cpm": 5.09,
+        "cpa": 73.41,
+        "viewability": 0.76,
+        "completion_rate": null
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 2310000,
+          "clicks": 36960,
+          "ctr": 1.6,
+          "spend": 11760,
+          "cpm": 5.09
+        },
+        "desktop": {
+          "impressions": 1540000,
+          "clicks": 20790,
+          "ctr": 1.35,
+          "spend": 7840,
+          "cpm": 5.09
+        }
+      },
+      "by_geo": {
+        "New York": {
+          "impressions": 1155000,
+          "clicks": 19635,
+          "ctr": 1.7,
+          "spend": 5880
+        },
+        "California": {
+          "impressions": 962500,
+          "clicks": 14438,
+          "ctr": 1.5,
+          "spend": 4900
+        },
+        "Texas": {
+          "impressions": 770000,
+          "clicks": 12320,
+          "ctr": 1.6,
+          "spend": 3920
+        },
+        "Florida": {
+          "impressions": 577500,
+          "clicks": 7508,
+          "ctr": 1.3,
+          "spend": 2940
+        },
+        "Illinois": {
+          "impressions": 385000,
+          "clicks": 3850,
+          "ctr": 1.0,
+          "spend": 1960
+        }
+      },
+      "current_bids": {
+        "search_cpc": 3.80,
+        "display_cpm": 8.00,
+        "discover_cpm": 15.00,
+        "search_max_cpc": 6.00
+      },
+      "recommendations": [
+        "New York CTR 1.7% leading all geos - strong market alignment",
+        "Illinois underperforming at 1.0% CTR - review ad copy relevance for Chicago market",
+        "Mobile CTR 1.6% beating desktop 1.35% - real estate audience browsing on mobile",
+        "Discover feed ads showing strong engagement - consider testing carousel format"
+      ],
+      "platform": "google_ads",
+      "platform_specific_metrics": {
+        "quality_score": 7.5,
+        "impression_share": 0.62,
+        "cost_per_click": 0.34,
+        "cost_per_conversion": 73.41,
+        "search_impression_share_lost_budget": 0.10,
+        "search_impression_share_lost_rank": 0.28,
+        "average_position": 2.1,
+        "search_ctr": 4.8,
+        "display_ctr": 0.52,
+        "discover_ctr": 1.8,
+        "discover_engagement_rate": 0.035
+      }
+    }
+  },
+  "creative_formats": [
+    {
+      "format_id": "gads_responsive_search",
+      "name": "Responsive Search Ad",
+      "type": "native",
+      "specs": {
+        "headlines_max_count": 15,
+        "headline_max": 30,
+        "descriptions_max_count": 4,
+        "description_max": 90,
+        "display_url_paths": 2,
+        "path_max": 15,
+        "file_types": ["text"],
+        "notes": "Google automatically tests combinations of headlines and descriptions to find the best performing ad variations"
+      }
+    },
+    {
+      "format_id": "gads_responsive_display",
+      "name": "Responsive Display Ad",
+      "type": "display",
+      "specs": {
+        "image_dimensions": "1200x628, 1200x1200",
+        "logo_dimensions": "1200x1200, 1200x300",
+        "headline_max": 30,
+        "headlines_max_count": 5,
+        "long_headline_max": 90,
+        "description_max": 90,
+        "descriptions_max_count": 5,
+        "business_name_max": 25,
+        "max_file_size": "5MB",
+        "file_types": ["jpg", "png", "gif"],
+        "notes": "Auto-optimized by Google ML to fit any ad slot across the Display Network; supports both landscape (1200x628) and square (1200x1200) images"
+      }
+    },
+    {
+      "format_id": "gads_video_instream",
+      "name": "Video Ad (In-Stream)",
+      "type": "video",
+      "specs": {
+        "max_file_size": "256MB",
+        "file_types": ["mp4", "mov", "avi", "webm"],
+        "max_duration": 180,
+        "recommended_duration": "15-30s",
+        "skip_after": 5,
+        "min_resolution": "640x360",
+        "recommended_resolution": "1920x1080",
+        "aspect_ratios": ["16:9", "9:16", "1:1"],
+        "notes": "Skippable after 5 seconds; max 3 minutes; charged on CPV (cost per view) when viewer watches 30s or interacts"
+      }
+    },
+    {
+      "format_id": "gads_video_discovery",
+      "name": "Video Ad (Discovery)",
+      "type": "video",
+      "specs": {
+        "max_file_size": "256MB",
+        "file_types": ["mp4", "mov", "avi", "webm"],
+        "max_duration": 180,
+        "thumbnail_required": true,
+        "thumbnail_resolution": "1280x720",
+        "headline_max": 100,
+        "description_line_1_max": 35,
+        "description_line_2_max": 35,
+        "notes": "Thumbnail and headline shown in YouTube search results and related videos; user clicks to watch; max 3 minutes; charged when user clicks to watch"
+      }
+    },
+    {
+      "format_id": "gads_shopping_listing",
+      "name": "Shopping Listing",
+      "type": "native",
+      "specs": {
+        "product_image_min": "100x100",
+        "product_image_recommended": "800x800",
+        "title_max": 150,
+        "description_max": 5000,
+        "price_required": true,
+        "merchant_name_required": true,
+        "gtin_or_mpn_required": true,
+        "file_types": ["jpg", "png", "gif", "bmp", "tif"],
+        "max_file_size": "16MB",
+        "notes": "Product data fed from Google Merchant Center; image, title, price, and merchant name displayed; optimized for product comparison shopping"
+      }
+    },
+    {
+      "format_id": "gads_app_install",
+      "name": "App Install Ad",
+      "type": "display",
+      "specs": {
+        "headline_max": 25,
+        "headlines_max_count": 5,
+        "description_max": 90,
+        "descriptions_max_count": 5,
+        "image_dimensions": "1200x628, 1200x1200",
+        "max_file_size": "5MB",
+        "file_types": ["jpg", "png"],
+        "video_max_duration": 30,
+        "notes": "Auto-generated creatives from app store listing assets; Google ML optimizes placement across Search, Play, YouTube, Display, and Discover"
+      }
+    }
+  ],
+  "authorized_properties": [
+    {
+      "property_id": "prop_gads_search",
+      "name": "Google Search",
+      "domain": "google.com",
+      "category": "Search",
+      "monthly_uniques": 8500000000,
+      "authorization_level": "premium",
+      "available_formats": ["gads_responsive_search", "gads_shopping_listing"],
+      "audience_profile": "Highest-intent audience across all digital channels; 8.5 billion daily searches spanning all demographics, interests, and purchase categories",
+      "special_capabilities": ["keyword targeting", "search intent signals", "location extensions", "call extensions", "sitelink extensions", "structured snippets"]
+    },
+    {
+      "property_id": "prop_gads_youtube",
+      "name": "YouTube",
+      "domain": "youtube.com",
+      "category": "Video",
+      "monthly_uniques": 2500000000,
+      "authorization_level": "premium",
+      "available_formats": ["gads_video_instream", "gads_video_discovery", "gads_responsive_display"],
+      "audience_profile": "2.5 billion monthly active users; broad demographics with strong 18-49 reach; 1 billion hours of video watched daily",
+      "special_capabilities": ["channel targeting", "video targeting", "topic targeting", "custom affinity audiences", "YouTube Shorts ads", "bumper ads"]
+    },
+    {
+      "property_id": "prop_gads_gdn",
+      "name": "Google Display Network",
+      "domain": "various",
+      "category": "Display",
+      "monthly_uniques": 2000000000,
+      "authorization_level": "standard",
+      "available_formats": ["gads_responsive_display", "gads_app_install"],
+      "audience_profile": "2M+ websites and apps reaching 90%+ of internet users globally; diverse audience across news, entertainment, lifestyle, and niche verticals",
+      "special_capabilities": ["contextual targeting", "managed placements", "remarketing lists", "similar audiences", "automated bidding"]
+    },
+    {
+      "property_id": "prop_gads_gmail",
+      "name": "Gmail",
+      "domain": "gmail.com",
+      "category": "Email",
+      "monthly_uniques": 1800000000,
+      "authorization_level": "standard",
+      "available_formats": ["gads_responsive_display"],
+      "audience_profile": "1.8 billion active Gmail users; strong professional and personal reach; ads appear in Promotions and Social tabs",
+      "special_capabilities": ["customer match", "life events targeting", "expandable ad units", "competitor domain targeting"]
+    },
+    {
+      "property_id": "prop_gads_maps",
+      "name": "Google Maps",
+      "domain": "maps.google.com",
+      "category": "Local",
+      "monthly_uniques": 1000000000,
+      "authorization_level": "standard",
+      "available_formats": ["gads_responsive_search"],
+      "audience_profile": "1 billion monthly active users; high local purchase intent; users actively searching for nearby businesses and services",
+      "special_capabilities": ["local search ads", "promoted pins", "location extensions", "store visit tracking", "local inventory ads"]
+    },
+    {
+      "property_id": "prop_gads_discover",
+      "name": "Google Discover",
+      "domain": "discover.google.com",
+      "category": "Native",
+      "monthly_uniques": 800000000,
+      "authorization_level": "standard",
+      "available_formats": ["gads_responsive_display"],
+      "audience_profile": "800M+ users browsing personalized content feed on mobile; interest-based discovery behavior; strong mid-funnel engagement",
+      "special_capabilities": ["interest targeting", "carousel ads", "single image ads", "auto-optimized creative", "audience expansion"]
+    },
+    {
+      "property_id": "prop_gads_shopping",
+      "name": "Google Shopping",
+      "domain": "shopping.google.com",
+      "category": "Commerce",
+      "monthly_uniques": 1200000000,
+      "authorization_level": "standard",
+      "available_formats": ["gads_shopping_listing"],
+      "audience_profile": "1.2 billion product searches per month; high purchase intent; product comparison shoppers across all e-commerce categories",
+      "special_capabilities": ["product listing ads", "local inventory ads", "Merchant Center integration", "price competitiveness insights", "free listings alongside paid"]
+    }
+  ],
+  "performance_feedback_log": [
+    {
+      "feedback_id": "fb_gads_001",
+      "media_buy_id": "mb_gads_apex_motors",
+      "submitted_at": "2026-01-25T09:30:00Z",
+      "feedback_type": "conversion_data",
+      "data": {
+        "conversions": 312,
+        "conversion_value": 468000,
+        "attribution_window": "30_day_click",
+        "offline_conversions_included": 45,
+        "test_drive_bookings": 89,
+        "dealer_visit_conversions": 67,
+        "lead_to_sale_rate": 0.04
+      },
+      "status": "processed",
+      "impact": "CPA tracking updated with offline dealer visit data; test drive bookings contributing to 4% lead-to-sale conversion funnel"
+    },
+    {
+      "feedback_id": "fb_gads_002",
+      "media_buy_id": "mb_gads_techflow",
+      "submitted_at": "2026-02-01T14:00:00Z",
+      "feedback_type": "lead_quality",
+      "data": {
+        "leads_submitted": 186,
+        "leads_qualified": 78,
+        "qualification_rate": 0.42,
+        "pipeline_value": 312000,
+        "average_deal_size": 4000,
+        "broad_match_leads_qualified_rate": 0.18,
+        "exact_match_leads_qualified_rate": 0.61,
+        "leads_from_broad_match": 28,
+        "leads_from_exact_match": 134,
+        "leads_from_phrase_match": 24,
+        "sales_cycle_days_avg": 45
+      },
+      "status": "processed",
+      "impact": "Lead quality analysis confirms exact match keywords driving 3.4x higher qualification rate than broad match; broad match generating low-quality leads at 18% qualification vs 61% for exact match"
+    },
+    {
+      "feedback_id": "fb_gads_003",
+      "media_buy_id": "mb_gads_financefirst",
+      "submitted_at": "2026-02-05T11:15:00Z",
+      "feedback_type": "conversion_data",
+      "data": {
+        "conversions": 423,
+        "conversion_value": 845000,
+        "attribution_window": "90_day_click",
+        "new_account_openings": 267,
+        "loan_applications": 89,
+        "financial_planning_consults": 67,
+        "avg_account_value": 12500,
+        "cross_sell_rate": 0.23
+      },
+      "status": "processed",
+      "impact": "Strong new account pipeline; Gmail ads driving highest cross-sell rate at 23% of new customers opening additional products within 30 days"
+    },
+    {
+      "feedback_id": "fb_gads_004",
+      "media_buy_id": "mb_gads_urbanliving",
+      "submitted_at": "2026-02-08T16:30:00Z",
+      "feedback_type": "lead_quality",
+      "data": {
+        "leads_submitted": 267,
+        "leads_qualified": 148,
+        "qualification_rate": 0.55,
+        "pipeline_value": 2960000,
+        "average_deal_size": 20000,
+        "property_tours_booked": 92,
+        "applications_submitted": 41,
+        "search_leads_qualified_rate": 0.68,
+        "display_leads_qualified_rate": 0.35,
+        "discover_leads_qualified_rate": 0.48,
+        "top_market_new_york_conversion_rate": 0.08
+      },
+      "status": "processed",
+      "impact": "Search leads highest quality at 68% qualification rate; New York market showing strongest conversion with 8% lead-to-application rate; 92 property tours booked representing strong mid-funnel engagement"
+    }
+  ]
+}

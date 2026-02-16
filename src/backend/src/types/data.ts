@@ -22,6 +22,7 @@ export interface Product {
   targeting_capabilities: string[];
   minimum_budget: number;
   available_inventory: number;
+  platform?: string;
 }
 
 export interface BrandManifest {
@@ -37,6 +38,12 @@ export interface TargetingOverlay {
   job_function?: string[];
   income_level?: string;
   age_range?: string;
+  custom_audiences?: string[];
+  lookalike_audiences?: string[];
+  interest_categories?: string[];
+  placement_type?: string[];
+  campaign_objective?: string;
+  bid_strategy?: string;
   [key: string]: string | string[] | undefined;
 }
 
@@ -57,6 +64,7 @@ export interface MediaBuy {
   end_time: string;
   status: 'active' | 'paused' | 'completed' | 'submitted';
   created_at: string;
+  platform?: string;
 }
 
 export interface MetricsSummary {
@@ -97,6 +105,8 @@ export interface DeliveryMetrics {
   by_geo: Record<string, GeoMetrics>;
   current_bids: Record<string, number>;
   recommendations: string[];
+  platform?: string;
+  platform_specific_metrics?: Record<string, unknown>;
 }
 
 export interface PortfolioSummary {
@@ -150,6 +160,8 @@ export interface Aggregations {
   spend_by_format: Record<string, SpendCategory>;
   spend_by_device: Record<string, SpendCategory>;
   spend_by_geo: Record<string, SpendCategory>;
+  spend_by_platform?: Record<string, SpendCategory>;
+  spend_by_brand?: Record<string, SpendCategory>;
   top_performing_campaigns: PerformingCampaign[];
   underperforming_campaigns: PerformingCampaign[];
   monthly_trend: Record<string, MonthlyTrend>;
@@ -212,6 +224,17 @@ export interface AuthorizedProperty {
   discount_percent?: number;
   audience_profile?: string;
   special_capabilities?: string[];
+}
+
+export interface PlatformData {
+  platform: string;
+  platform_display_name: string;
+  products: Product[];
+  media_buys: MediaBuy[];
+  delivery_metrics: Record<string, DeliveryMetrics>;
+  creative_formats: CreativeFormat[];
+  authorized_properties: AuthorizedProperty[];
+  performance_feedback_log: PerformanceFeedback[];
 }
 
 export interface AdCPData {

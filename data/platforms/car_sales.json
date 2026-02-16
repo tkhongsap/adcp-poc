@@ -1,0 +1,1283 @@
+{
+  "platform": "car_sales",
+  "platform_display_name": "Car Sales & Dealership",
+  "products": [
+    {
+      "product_id": "prod_car_dealer_listing",
+      "name": "Dealership Listing Ads",
+      "description": "Premium listing placements across automotive marketplace sites featuring dealership inventory with location targeting, pricing display, and click-to-call functionality",
+      "category": "Automotive/Listings",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_car_listing_standard",
+          "currency": "USD",
+          "cpm": 12.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_car_listing_premium",
+          "currency": "USD",
+          "cpm": 20.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_gallery_carousel"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_dealer_locator"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "geo_city",
+        "geo_radius",
+        "device_type",
+        "vehicle_make",
+        "vehicle_type",
+        "price_range",
+        "purchase_intent"
+      ],
+      "minimum_budget": 3000,
+      "available_inventory": 18000000,
+      "platform": "car_sales"
+    },
+    {
+      "product_id": "prod_car_inventory_feed",
+      "name": "Inventory Feed Ads",
+      "description": "Dynamic inventory feed advertisements that automatically pull real-time vehicle data including pricing, availability, photos, and specifications from dealership inventory management systems",
+      "category": "Automotive/Dynamic",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_car_inventory_standard",
+          "currency": "USD",
+          "cpm": 15.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_car_inventory_premium",
+          "currency": "USD",
+          "cpm": 25.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_dynamic_inventory"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_gallery_carousel"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "device_type",
+        "vehicle_make",
+        "vehicle_model",
+        "vehicle_type",
+        "new_vs_used",
+        "price_range",
+        "purchase_timeline",
+        "retargeting"
+      ],
+      "minimum_budget": 5000,
+      "available_inventory": 12000000,
+      "platform": "car_sales"
+    },
+    {
+      "product_id": "prod_car_service",
+      "name": "Service Center Promotions",
+      "description": "Targeted advertising for dealership service centers including oil changes, tire rotations, brake service, and seasonal maintenance offers with geographic and vehicle ownership targeting",
+      "category": "Automotive/Service",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_car_service_standard",
+          "currency": "USD",
+          "cpm": 8.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_car_service_premium",
+          "currency": "USD",
+          "cpm": 14.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_dealer_locator"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_dynamic_inventory"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "geo_radius",
+        "device_type",
+        "vehicle_ownership",
+        "vehicle_age",
+        "service_history",
+        "mileage_estimate"
+      ],
+      "minimum_budget": 2000,
+      "available_inventory": 22000000,
+      "platform": "car_sales"
+    },
+    {
+      "product_id": "prod_car_finance",
+      "name": "Finance/Lease Offer Ads",
+      "description": "High-intent advertising for auto financing and lease specials featuring APR rates, monthly payment calculators, and pre-qualification CTAs targeting in-market buyers with strong credit signals",
+      "category": "Automotive/Finance",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_car_finance_standard",
+          "currency": "USD",
+          "cpm": 18.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_car_finance_premium",
+          "currency": "USD",
+          "cpm": 28.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_configurator"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_comparison"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "device_type",
+        "income_level",
+        "credit_tier",
+        "purchase_intent",
+        "lease_vs_buy",
+        "vehicle_type",
+        "demographics"
+      ],
+      "minimum_budget": 5000,
+      "available_inventory": 8000000,
+      "platform": "car_sales"
+    },
+    {
+      "product_id": "prod_car_tradein",
+      "name": "Trade-In Campaign",
+      "description": "Campaigns targeting current vehicle owners with trade-in value estimates, upgrade incentives, and instant cash offer promotions using vehicle ownership and equity data signals",
+      "category": "Automotive/Trade-In",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_car_tradein_standard",
+          "currency": "USD",
+          "cpm": 10.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_car_tradein_premium",
+          "currency": "USD",
+          "cpm": 18.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_comparison"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_configurator"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "device_type",
+        "vehicle_ownership",
+        "vehicle_age",
+        "vehicle_equity",
+        "purchase_intent",
+        "demographics"
+      ],
+      "minimum_budget": 3000,
+      "available_inventory": 14000000,
+      "platform": "car_sales"
+    },
+    {
+      "product_id": "prod_car_testdrive",
+      "name": "Test Drive Lead Gen",
+      "description": "Lead generation campaigns designed to drive test drive appointments with online scheduling, dealer routing, and follow-up automation for high-intent shoppers actively researching vehicles",
+      "category": "Automotive/Leads",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_car_testdrive_standard",
+          "currency": "USD",
+          "cpm": 20.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_car_testdrive_premium",
+          "currency": "USD",
+          "cpm": 35.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_dealer_locator"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_gallery_carousel"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_configurator"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "geo_radius",
+        "device_type",
+        "purchase_intent",
+        "purchase_timeline",
+        "vehicle_type",
+        "vehicle_make",
+        "demographics",
+        "behavioral_retargeting"
+      ],
+      "minimum_budget": 5000,
+      "available_inventory": 6000000,
+      "platform": "car_sales"
+    },
+    {
+      "product_id": "prod_car_launch",
+      "name": "Vehicle Launch Campaign",
+      "description": "High-impact multi-format campaigns for new vehicle model launches featuring immersive 360-degree views, configurator experiences, and premium placements across top automotive properties",
+      "category": "Automotive/Launch",
+      "pricing_options": [
+        {
+          "pricing_option_id": "po_car_launch_standard",
+          "currency": "USD",
+          "cpm": 25.0,
+          "pricing_model": "fixed_cpm"
+        },
+        {
+          "pricing_option_id": "po_car_launch_premium",
+          "currency": "USD",
+          "cpm": 40.0,
+          "pricing_model": "fixed_cpm"
+        }
+      ],
+      "format_ids": [
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_gallery_carousel"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_configurator"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_comparison"
+        },
+        {
+          "agent_url": "https://creative.adcontextprotocol.org",
+          "id": "car_dynamic_inventory"
+        }
+      ],
+      "targeting_capabilities": [
+        "geo_country",
+        "geo_region",
+        "device_type",
+        "vehicle_type",
+        "purchase_intent",
+        "demographics",
+        "income_level",
+        "lifestyle_segments",
+        "competitive_conquest",
+        "lookalike_audiences"
+      ],
+      "minimum_budget": 10000,
+      "available_inventory": 4000000,
+      "platform": "car_sales"
+    }
+  ],
+  "media_buys": [
+    {
+      "media_buy_id": "mb_car_apex_motors",
+      "buyer_ref": "apex_car_sales_q1_2026",
+      "brand_manifest": {
+        "name": "Apex Motors",
+        "url": "https://apexmotors.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_car_apex_001",
+          "product_id": "prod_car_inventory_feed",
+          "pricing_option_id": "po_car_inventory_premium",
+          "budget": 25000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US",
+              "UK"
+            ],
+            "device_type": [
+              "mobile",
+              "desktop"
+            ],
+            "vehicle_type": [
+              "SUV",
+              "EV"
+            ],
+            "purchase_intent": [
+              "high"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_car_apex_002",
+          "product_id": "prod_car_testdrive",
+          "pricing_option_id": "po_car_testdrive_premium",
+          "budget": 20000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US",
+              "UK"
+            ],
+            "device_type": [
+              "mobile",
+              "desktop"
+            ],
+            "purchase_timeline": [
+              "0-30_days",
+              "30-60_days"
+            ],
+            "vehicle_type": [
+              "SUV",
+              "EV"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_car_apex_003",
+          "product_id": "prod_car_dealer_listing",
+          "pricing_option_id": "po_car_listing_premium",
+          "budget": 10000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US",
+              "UK"
+            ],
+            "geo_radius": "25_miles",
+            "device_type": [
+              "mobile"
+            ]
+          }
+        }
+      ],
+      "start_time": "2026-01-01T00:00:00Z",
+      "end_time": "2026-03-31T23:59:59Z",
+      "status": "active",
+      "created_at": "2025-12-18T09:00:00Z",
+      "platform": "car_sales"
+    },
+    {
+      "media_buy_id": "mb_car_apex_service",
+      "buyer_ref": "apex_service_q1_2026",
+      "brand_manifest": {
+        "name": "Apex Motors Service",
+        "url": "https://apexmotors.com/service"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_car_apex_svc_001",
+          "product_id": "prod_car_service",
+          "pricing_option_id": "po_car_service_premium",
+          "budget": 10000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "geo_radius": "15_miles",
+            "device_type": [
+              "mobile",
+              "desktop"
+            ],
+            "vehicle_ownership": [
+              "apex_owners",
+              "competitive_owners"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_car_apex_svc_002",
+          "product_id": "prod_car_dealer_listing",
+          "pricing_option_id": "po_car_listing_standard",
+          "budget": 5000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "geo_radius": "20_miles",
+            "device_type": [
+              "mobile"
+            ],
+            "service_history": [
+              "due_for_service"
+            ]
+          }
+        }
+      ],
+      "start_time": "2026-01-15T00:00:00Z",
+      "end_time": "2026-04-15T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-10T14:30:00Z",
+      "platform": "car_sales"
+    },
+    {
+      "media_buy_id": "mb_car_urbanliving_partner",
+      "buyer_ref": "urbanliving_auto_collab_2026",
+      "brand_manifest": {
+        "name": "UrbanLiving Real Estate",
+        "url": "https://urbanliving.com"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_car_urban_001",
+          "product_id": "prod_car_launch",
+          "pricing_option_id": "po_car_launch_standard",
+          "budget": 12000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "geo_region_any_of": [
+              "New York",
+              "California",
+              "Illinois",
+              "Texas",
+              "Florida"
+            ],
+            "device_type": [
+              "mobile",
+              "desktop"
+            ],
+            "lifestyle_segments": [
+              "urban_professionals",
+              "new_homeowners",
+              "luxury_lifestyle"
+            ],
+            "income_level": "high"
+          }
+        },
+        {
+          "package_id": "pkg_car_urban_002",
+          "product_id": "prod_car_finance",
+          "pricing_option_id": "po_car_finance_standard",
+          "budget": 8000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "geo_region_any_of": [
+              "New York",
+              "California",
+              "Illinois"
+            ],
+            "demographics": [
+              "25-44",
+              "homeowners"
+            ],
+            "purchase_intent": [
+              "medium",
+              "high"
+            ]
+          }
+        }
+      ],
+      "start_time": "2026-01-20T00:00:00Z",
+      "end_time": "2026-03-20T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-15T11:00:00Z",
+      "platform": "car_sales"
+    },
+    {
+      "media_buy_id": "mb_car_greenenergy_ev",
+      "buyer_ref": "greenenergy_ev_promo_2026",
+      "brand_manifest": {
+        "name": "GreenEnergy Co",
+        "url": "https://greenenergy.co"
+      },
+      "packages": [
+        {
+          "package_id": "pkg_car_ge_001",
+          "product_id": "prod_car_inventory_feed",
+          "pricing_option_id": "po_car_inventory_premium",
+          "budget": 12000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "geo_region_any_of": [
+              "California",
+              "Texas",
+              "Florida"
+            ],
+            "device_type": [
+              "mobile",
+              "desktop"
+            ],
+            "vehicle_type": [
+              "EV",
+              "Hybrid"
+            ],
+            "interest_categories": [
+              "sustainability",
+              "clean_energy",
+              "electric_vehicles"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_car_ge_002",
+          "product_id": "prod_car_launch",
+          "pricing_option_id": "po_car_launch_premium",
+          "budget": 8000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "geo_region_any_of": [
+              "California",
+              "Texas",
+              "Florida"
+            ],
+            "device_type": [
+              "mobile",
+              "desktop",
+              "tablet"
+            ],
+            "competitive_conquest": [
+              "tesla",
+              "rivian",
+              "lucid"
+            ]
+          }
+        },
+        {
+          "package_id": "pkg_car_ge_003",
+          "product_id": "prod_car_testdrive",
+          "pricing_option_id": "po_car_testdrive_standard",
+          "budget": 5000,
+          "targeting_overlay": {
+            "geo_country_any_of": [
+              "US"
+            ],
+            "geo_region_any_of": [
+              "California"
+            ],
+            "purchase_timeline": [
+              "0-30_days"
+            ],
+            "vehicle_type": [
+              "EV"
+            ]
+          }
+        }
+      ],
+      "start_time": "2026-01-10T00:00:00Z",
+      "end_time": "2026-03-31T23:59:59Z",
+      "status": "active",
+      "created_at": "2026-01-05T16:00:00Z",
+      "platform": "car_sales"
+    }
+  ],
+  "delivery_metrics": {
+    "mb_car_apex_motors": {
+      "media_buy_id": "mb_car_apex_motors",
+      "brand": "Apex Motors",
+      "total_budget": 55000,
+      "total_spend": 36850,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 2180000,
+        "clicks": 56680,
+        "conversions": 312,
+        "ctr": 2.6,
+        "cpm": 16.9,
+        "cpa": 118.11,
+        "viewability": 0.76,
+        "completion_rate": null
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 1308000,
+          "clicks": 36624,
+          "ctr": 2.8,
+          "spend": 22110,
+          "cpm": 16.9
+        },
+        "desktop": {
+          "impressions": 872000,
+          "clicks": 20056,
+          "ctr": 2.3,
+          "spend": 14740,
+          "cpm": 16.9
+        }
+      },
+      "by_geo": {
+        "US": {
+          "impressions": 1526000,
+          "clicks": 41202,
+          "ctr": 2.7,
+          "spend": 25795
+        },
+        "UK": {
+          "impressions": 654000,
+          "clicks": 15478,
+          "ctr": 2.37,
+          "spend": 11055
+        }
+      },
+      "current_bids": {
+        "inventory_feed_cpm": 25.0,
+        "testdrive_cpm": 35.0,
+        "dealer_listing_cpm": 20.0
+      },
+      "recommendations": [
+        "Mobile CTR outperforming desktop - consider increasing mobile bid allocation",
+        "US market showing stronger conversion rates - shift 10% budget from UK to US",
+        "Test drive leads converting well at 1.2% - expand geo targeting to additional metros"
+      ],
+      "platform": "car_sales",
+      "platform_specific_metrics": {
+        "cost_per_lead": 42.50,
+        "cost_per_test_drive": 89.25,
+        "cost_per_sale": 1842.50,
+        "inventory_turn_rate": 0.085,
+        "dealer_visit_rate": 0.032,
+        "by_vehicle_category": {
+          "SUV": {
+            "impressions": 980000,
+            "clicks": 27440,
+            "ctr": 2.8,
+            "conversions": 156,
+            "spend": 16200,
+            "cost_per_lead": 38.75,
+            "cost_per_test_drive": 78.50
+          },
+          "EV": {
+            "impressions": 760000,
+            "clicks": 19760,
+            "ctr": 2.6,
+            "conversions": 108,
+            "spend": 13100,
+            "cost_per_lead": 48.20,
+            "cost_per_test_drive": 102.35
+          },
+          "sedan": {
+            "impressions": 280000,
+            "clicks": 6160,
+            "ctr": 2.2,
+            "conversions": 32,
+            "spend": 4800,
+            "cost_per_lead": 52.10,
+            "cost_per_test_drive": 115.00
+          },
+          "truck": {
+            "impressions": 160000,
+            "clicks": 3320,
+            "ctr": 2.08,
+            "conversions": 16,
+            "spend": 2750,
+            "cost_per_lead": 55.80,
+            "cost_per_test_drive": 128.50
+          }
+        }
+      }
+    },
+    "mb_car_apex_service": {
+      "media_buy_id": "mb_car_apex_service",
+      "brand": "Apex Motors Service",
+      "total_budget": 15000,
+      "total_spend": 6420,
+      "pacing": "behind",
+      "health": "warning",
+      "summary": {
+        "impressions": 580000,
+        "clicks": 13340,
+        "conversions": 87,
+        "ctr": 2.3,
+        "cpm": 11.07,
+        "cpa": 73.79,
+        "viewability": 0.71,
+        "completion_rate": null
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 406000,
+          "clicks": 10150,
+          "ctr": 2.5,
+          "spend": 4494,
+          "cpm": 11.07
+        },
+        "desktop": {
+          "impressions": 174000,
+          "clicks": 3190,
+          "ctr": 1.83,
+          "spend": 1926,
+          "cpm": 11.07
+        }
+      },
+      "by_geo": {
+        "US": {
+          "impressions": 580000,
+          "clicks": 13340,
+          "ctr": 2.3,
+          "spend": 6420
+        }
+      },
+      "current_bids": {
+        "service_cpm": 14.0,
+        "dealer_listing_cpm": 12.0
+      },
+      "recommendations": [
+        "Campaign pacing 15% behind schedule - consider increasing daily budget cap",
+        "Mobile strongly outperforming desktop for service bookings - increase mobile allocation",
+        "Add seasonal messaging for spring maintenance specials to improve CTR"
+      ],
+      "platform": "car_sales",
+      "platform_specific_metrics": {
+        "cost_per_lead": 28.35,
+        "cost_per_test_drive": null,
+        "cost_per_sale": null,
+        "inventory_turn_rate": null,
+        "dealer_visit_rate": 0.048,
+        "by_vehicle_category": {
+          "SUV": {
+            "impressions": 210000,
+            "clicks": 5040,
+            "ctr": 2.4,
+            "conversions": 35,
+            "spend": 2325,
+            "cost_per_lead": 26.50,
+            "cost_per_test_drive": null
+          },
+          "sedan": {
+            "impressions": 195000,
+            "clicks": 4290,
+            "ctr": 2.2,
+            "conversions": 28,
+            "spend": 2160,
+            "cost_per_lead": 29.80,
+            "cost_per_test_drive": null
+          },
+          "EV": {
+            "impressions": 105000,
+            "clicks": 2520,
+            "ctr": 2.4,
+            "conversions": 15,
+            "spend": 1163,
+            "cost_per_lead": 30.10,
+            "cost_per_test_drive": null
+          },
+          "truck": {
+            "impressions": 70000,
+            "clicks": 1490,
+            "ctr": 2.13,
+            "conversions": 9,
+            "spend": 772,
+            "cost_per_lead": 32.40,
+            "cost_per_test_drive": null
+          }
+        }
+      }
+    },
+    "mb_car_urbanliving_partner": {
+      "media_buy_id": "mb_car_urbanliving_partner",
+      "brand": "UrbanLiving Real Estate",
+      "total_budget": 20000,
+      "total_spend": 11250,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 520000,
+        "clicks": 11960,
+        "conversions": 68,
+        "ctr": 2.3,
+        "cpm": 21.63,
+        "cpa": 165.44,
+        "viewability": 0.79,
+        "completion_rate": null
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 312000,
+          "clicks": 7488,
+          "ctr": 2.4,
+          "spend": 6750,
+          "cpm": 21.63
+        },
+        "desktop": {
+          "impressions": 208000,
+          "clicks": 4472,
+          "ctr": 2.15,
+          "spend": 4500,
+          "cpm": 21.63
+        }
+      },
+      "by_geo": {
+        "New York": {
+          "impressions": 156000,
+          "clicks": 3900,
+          "ctr": 2.5,
+          "spend": 3375
+        },
+        "California": {
+          "impressions": 140400,
+          "clicks": 3370,
+          "ctr": 2.4,
+          "spend": 3038
+        },
+        "Illinois": {
+          "impressions": 93600,
+          "clicks": 2059,
+          "ctr": 2.2,
+          "spend": 2025
+        },
+        "Texas": {
+          "impressions": 78000,
+          "clicks": 1560,
+          "ctr": 2.0,
+          "spend": 1688
+        },
+        "Florida": {
+          "impressions": 52000,
+          "clicks": 1071,
+          "ctr": 2.06,
+          "spend": 1124
+        }
+      },
+      "current_bids": {
+        "launch_cpm": 25.0,
+        "finance_cpm": 18.0
+      },
+      "recommendations": [
+        "New York and California metros performing strongest - consider concentrating budget",
+        "Co-brand lifestyle messaging resonating well with urban professionals segment",
+        "Finance offer CTR slightly below target - test updated APR messaging"
+      ],
+      "platform": "car_sales",
+      "platform_specific_metrics": {
+        "cost_per_lead": 56.25,
+        "cost_per_test_drive": 140.63,
+        "cost_per_sale": 2812.50,
+        "inventory_turn_rate": 0.042,
+        "dealer_visit_rate": 0.022,
+        "by_vehicle_category": {
+          "SUV": {
+            "impressions": 234000,
+            "clicks": 5616,
+            "ctr": 2.4,
+            "conversions": 34,
+            "spend": 5063,
+            "cost_per_lead": 52.80,
+            "cost_per_test_drive": 132.50
+          },
+          "sedan": {
+            "impressions": 156000,
+            "clicks": 3432,
+            "ctr": 2.2,
+            "conversions": 20,
+            "spend": 3375,
+            "cost_per_lead": 58.40,
+            "cost_per_test_drive": 148.75
+          },
+          "EV": {
+            "impressions": 104000,
+            "clicks": 2288,
+            "ctr": 2.2,
+            "conversions": 11,
+            "spend": 2250,
+            "cost_per_lead": 62.10,
+            "cost_per_test_drive": 155.00
+          },
+          "truck": {
+            "impressions": 26000,
+            "clicks": 624,
+            "ctr": 2.4,
+            "conversions": 3,
+            "spend": 562,
+            "cost_per_lead": 68.50,
+            "cost_per_test_drive": 187.50
+          }
+        }
+      }
+    },
+    "mb_car_greenenergy_ev": {
+      "media_buy_id": "mb_car_greenenergy_ev",
+      "brand": "GreenEnergy Co",
+      "total_budget": 25000,
+      "total_spend": 18750,
+      "pacing": "on_track",
+      "health": "good",
+      "summary": {
+        "impressions": 890000,
+        "clicks": 28480,
+        "conversions": 178,
+        "ctr": 3.2,
+        "cpm": 21.07,
+        "cpa": 105.34,
+        "viewability": 0.81,
+        "completion_rate": null
+      },
+      "by_device": {
+        "mobile": {
+          "impressions": 534000,
+          "clicks": 17622,
+          "ctr": 3.3,
+          "spend": 11250,
+          "cpm": 21.07
+        },
+        "desktop": {
+          "impressions": 267000,
+          "clicks": 8277,
+          "ctr": 3.1,
+          "spend": 5625,
+          "cpm": 21.07
+        },
+        "tablet": {
+          "impressions": 89000,
+          "clicks": 2581,
+          "ctr": 2.9,
+          "spend": 1875,
+          "cpm": 21.07
+        }
+      },
+      "by_geo": {
+        "California": {
+          "impressions": 400500,
+          "clicks": 14018,
+          "ctr": 3.5,
+          "spend": 8438
+        },
+        "Texas": {
+          "impressions": 311500,
+          "clicks": 9345,
+          "ctr": 3.0,
+          "spend": 6563
+        },
+        "Florida": {
+          "impressions": 178000,
+          "clicks": 5117,
+          "ctr": 2.88,
+          "spend": 3749
+        }
+      },
+      "current_bids": {
+        "inventory_feed_cpm": 25.0,
+        "launch_cpm": 40.0,
+        "testdrive_cpm": 20.0
+      },
+      "recommendations": [
+        "California EV interest driving strong CTR at 3.5% - allocate additional budget",
+        "Competitive conquest targeting against Tesla showing high engagement",
+        "Test drive conversion rate 1.4% exceeding benchmark - increase test drive budget allocation"
+      ],
+      "platform": "car_sales",
+      "platform_specific_metrics": {
+        "cost_per_lead": 35.75,
+        "cost_per_test_drive": 72.12,
+        "cost_per_sale": 1562.50,
+        "inventory_turn_rate": 0.095,
+        "dealer_visit_rate": 0.038,
+        "by_vehicle_category": {
+          "EV": {
+            "impressions": 668000,
+            "clicks": 22044,
+            "ctr": 3.3,
+            "conversions": 142,
+            "spend": 14063,
+            "cost_per_lead": 33.50,
+            "cost_per_test_drive": 68.25
+          },
+          "SUV": {
+            "impressions": 133500,
+            "clicks": 4005,
+            "ctr": 3.0,
+            "conversions": 24,
+            "spend": 2813,
+            "cost_per_lead": 42.80,
+            "cost_per_test_drive": 85.50
+          },
+          "sedan": {
+            "impressions": 62300,
+            "clicks": 1682,
+            "ctr": 2.7,
+            "conversions": 8,
+            "spend": 1312,
+            "cost_per_lead": 48.60,
+            "cost_per_test_drive": 98.20
+          },
+          "truck": {
+            "impressions": 26200,
+            "clicks": 749,
+            "ctr": 2.86,
+            "conversions": 4,
+            "spend": 562,
+            "cost_per_lead": 52.10,
+            "cost_per_test_drive": 112.00
+          }
+        }
+      }
+    }
+  },
+  "creative_formats": [
+    {
+      "format_id": "car_gallery_carousel",
+      "name": "Vehicle Gallery Carousel",
+      "type": "display",
+      "dimensions": "600x400",
+      "specs": {
+        "max_file_size": "2MB",
+        "file_types": ["jpg", "png", "webp"],
+        "max_images": 10,
+        "features": ["360-degree view", "pricing overlay", "swipe navigation", "zoom capability"],
+        "image_dimensions": "1200x800"
+      }
+    },
+    {
+      "format_id": "car_comparison",
+      "name": "Comparison Tool Ad",
+      "type": "native",
+      "specs": {
+        "max_file_size": "500KB",
+        "file_types": ["html5", "js"],
+        "max_vehicles": 3,
+        "features": ["side-by-side comparison", "interactive specs", "pricing comparison", "feature highlights"],
+        "interaction": "click_to_compare"
+      }
+    },
+    {
+      "format_id": "car_configurator",
+      "name": "Configurator Interactive Ad",
+      "type": "display",
+      "dimensions": "728x500",
+      "specs": {
+        "max_file_size": "1MB",
+        "file_types": ["html5", "js", "webgl"],
+        "features": ["color selector", "trim selector", "real-time pricing", "monthly payment calculator", "save configuration"],
+        "interaction": "interactive_configurator"
+      }
+    },
+    {
+      "format_id": "car_dealer_locator",
+      "name": "Dealer Locator",
+      "type": "native",
+      "specs": {
+        "max_file_size": "300KB",
+        "file_types": ["html5", "js"],
+        "features": ["map integration", "nearest dealer", "hours and directions", "click-to-call", "appointment scheduling"],
+        "interaction": "location_based"
+      }
+    },
+    {
+      "format_id": "car_dynamic_inventory",
+      "name": "Dynamic Inventory Ad",
+      "type": "display",
+      "dimensions": "300x250",
+      "specs": {
+        "max_file_size": "200KB",
+        "file_types": ["html5", "jpg", "png"],
+        "features": ["real-time inventory feed", "pricing and availability", "auto-updated", "stock countdown", "VIN-level tracking"],
+        "interaction": "dynamic_feed"
+      }
+    }
+  ],
+  "authorized_properties": [
+    {
+      "property_id": "prop_car_autotrader",
+      "name": "AutoTrader",
+      "domain": "autotrader.com",
+      "category": "Automotive Marketplace",
+      "monthly_uniques": 28000000,
+      "authorization_level": "premium",
+      "available_formats": [
+        "car_gallery_carousel",
+        "car_dynamic_inventory",
+        "car_dealer_locator",
+        "car_configurator"
+      ],
+      "discount_percent": 10,
+      "audience_profile": "In-market car buyers, 25-54, 60% male, high purchase intent",
+      "special_capabilities": [
+        "VIN-level inventory targeting",
+        "dealer radius geofencing",
+        "make/model search retargeting"
+      ]
+    },
+    {
+      "property_id": "prop_car_carscom",
+      "name": "Cars.com",
+      "domain": "cars.com",
+      "category": "Automotive Marketplace",
+      "monthly_uniques": 25000000,
+      "authorization_level": "premium",
+      "available_formats": [
+        "car_gallery_carousel",
+        "car_dynamic_inventory",
+        "car_comparison",
+        "car_dealer_locator"
+      ],
+      "discount_percent": 8,
+      "audience_profile": "Active car shoppers, 28-55, balanced gender, mid-to-high income",
+      "special_capabilities": [
+        "dealer review integration",
+        "price comparison widgets",
+        "vehicle history integration"
+      ]
+    },
+    {
+      "property_id": "prop_car_cargurus",
+      "name": "CarGurus",
+      "domain": "cargurus.com",
+      "category": "Automotive Marketplace",
+      "monthly_uniques": 30000000,
+      "authorization_level": "standard",
+      "available_formats": [
+        "car_dynamic_inventory",
+        "car_gallery_carousel",
+        "car_dealer_locator"
+      ],
+      "audience_profile": "Price-conscious car buyers, 22-50, deal-seekers, new and used vehicle shoppers",
+      "special_capabilities": [
+        "deal rating integration",
+        "price drop alerts",
+        "instant market value"
+      ]
+    },
+    {
+      "property_id": "prop_car_edmunds",
+      "name": "Edmunds",
+      "domain": "edmunds.com",
+      "category": "Automotive Research",
+      "monthly_uniques": 20000000,
+      "authorization_level": "premium",
+      "available_formats": [
+        "car_comparison",
+        "car_configurator",
+        "car_gallery_carousel",
+        "car_dynamic_inventory"
+      ],
+      "discount_percent": 12,
+      "audience_profile": "Research-phase car buyers, 30-55, high-income, data-driven decision makers",
+      "special_capabilities": [
+        "expert review integration",
+        "true cost to own calculator",
+        "appraisal tool integration",
+        "editorial content sponsorship"
+      ]
+    },
+    {
+      "property_id": "prop_car_kbb",
+      "name": "Kelley Blue Book",
+      "domain": "kbb.com",
+      "category": "Automotive Valuation",
+      "monthly_uniques": 22000000,
+      "authorization_level": "premium",
+      "available_formats": [
+        "car_comparison",
+        "car_dynamic_inventory",
+        "car_configurator",
+        "car_dealer_locator"
+      ],
+      "discount_percent": 10,
+      "audience_profile": "Trade-in and valuation seekers, 30-60, vehicle owners considering upgrade, balanced income",
+      "special_capabilities": [
+        "trade-in value integration",
+        "fair purchase price display",
+        "ownership cost calculator",
+        "5-year cost to own data"
+      ]
+    }
+  ],
+  "performance_feedback_log": [
+    {
+      "feedback_id": "fb_car_001",
+      "media_buy_id": "mb_car_apex_motors",
+      "submitted_at": "2026-01-25T10:00:00Z",
+      "feedback_type": "conversion_data",
+      "data": {
+        "conversions": 312,
+        "conversion_value": 8424000,
+        "attribution_window": "30_day_click",
+        "test_drives_scheduled": 245,
+        "test_drives_completed": 198,
+        "vehicles_sold": 20,
+        "average_sale_price": 42120,
+        "lead_to_test_drive_rate": 0.786,
+        "test_drive_to_sale_rate": 0.101
+      },
+      "status": "processed",
+      "impact": "CPA and cost-per-sale metrics updated; SUV category showing strongest test-drive-to-sale conversion at 12.3%"
+    },
+    {
+      "feedback_id": "fb_car_002",
+      "media_buy_id": "mb_car_greenenergy_ev",
+      "submitted_at": "2026-02-01T14:30:00Z",
+      "feedback_type": "lead_quality",
+      "data": {
+        "leads_submitted": 178,
+        "leads_qualified": 142,
+        "qualification_rate": 0.798,
+        "pipeline_value": 5680000,
+        "ev_specific_interest": 0.89,
+        "charging_infrastructure_inquiries": 67,
+        "test_drives_from_leads": 96,
+        "lead_to_test_drive_rate": 0.676
+      },
+      "status": "processed",
+      "impact": "Lead scoring model updated for EV buyer signals; California leads showing 85% qualification rate vs 72% in Texas/Florida"
+    },
+    {
+      "feedback_id": "fb_car_003",
+      "media_buy_id": "mb_car_urbanliving_partner",
+      "submitted_at": "2026-02-05T09:15:00Z",
+      "feedback_type": "conversion_data",
+      "data": {
+        "conversions": 68,
+        "conversion_value": 1632000,
+        "attribution_window": "14_day_click",
+        "cross_brand_lift": 0.12,
+        "real_estate_to_auto_conversion": 0.045,
+        "lifestyle_segment_match_rate": 0.82,
+        "co_brand_awareness_lift": 0.09
+      },
+      "status": "processed",
+      "impact": "Co-brand campaign demonstrating 12% cross-brand lift; urban professional segment showing highest engagement with luxury SUV inventory"
+    }
+  ]
+}

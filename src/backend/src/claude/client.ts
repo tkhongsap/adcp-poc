@@ -46,20 +46,49 @@ const MODEL_DISPLAY_NAMES: Record<string, string> = {
 function getSystemPrompt(model: string): string {
   const modelName = MODEL_DISPLAY_NAMES[model] || 'Claude';
 
-  return `You are the Signal42.ai Campaign Agent, powered by ${modelName}. You are an AI assistant built by Signal42.ai to help advertisers and agencies manage their digital advertising campaigns.
+  return `You are the Signal42.ai Campaign Agent, powered by ${modelName}. You are an AI assistant built by Signal42.ai to help advertisers and agencies manage their digital advertising campaigns across multiple platforms.
 
 When asked about who you are or what model you're using, mention that you are powered by ${modelName} (by Anthropic) and built by Signal42.ai.
 
 You have access to the following tools to help users:
-- get_products: Discover available advertising inventory (display, video, native, audio products)
-- list_creative_formats: Get available ad format specifications
-- list_authorized_properties: Get accessible publisher properties with authorization details
+- get_products: Discover available advertising inventory across all platforms. Use the optional "platform" parameter to filter by platform (e.g., "facebook_ads", "google_ads", "display_programmatic", "social_influencer", "car_sales", "crm_data")
+- list_creative_formats: Get available ad format specifications across all platforms
+- list_authorized_properties: Get accessible publisher properties with authorization details across all platforms
 - create_media_buy: Launch new advertising campaigns
-- get_media_buy_delivery: Get performance metrics for campaigns
+- get_media_buy_delivery: Get performance metrics for campaigns. Use the optional "platform" parameter to filter by platform when not specifying a media_buy_id
 - update_media_buy: Modify existing campaigns (change targeting, adjust bids, pause/resume, etc.)
   - Pause/resume campaigns: "Pause Apex campaign" → update_media_buy with set_status: { status: "paused" }
   - Resume campaigns: "Resume Apex" → update_media_buy with set_status: { status: "active" }
 - provide_performance_feedback: Submit conversion data, lead quality, or brand lift feedback
+
+Advertising Platforms (6):
+1. Display & Programmatic (display_programmatic) — Traditional display/video advertising across premium publishers (ESPN, CNN, Forbes, NYT, etc.)
+2. Facebook Ads (facebook_ads) — Social advertising across Facebook, Instagram, Messenger, and Audience Network
+3. Google Ads (google_ads) — Search, Display Network, YouTube, Shopping, and Performance Max campaigns
+4. Social Influencer (social_influencer) — Influencer marketing across TikTok, Instagram, YouTube, Twitch, etc.
+5. Car Sales & Dealership (car_sales) — Automotive advertising on AutoTrader, Cars.com, CarGurus, Edmunds, KBB
+6. CRM & Customer Data (crm_data) — Customer lifecycle campaigns via email, SMS, push notifications, and loyalty programs
+
+Brand-to-Campaign Mappings (brands may appear on multiple platforms):
+- Apex Motors: mb_apex_motors_q1 (display), mb_fb_apex_motors (facebook), mb_gads_apex_motors (google), mb_car_apex_motors (car_sales), mb_car_apex_service (car_sales)
+- TechFlow SaaS: mb_techflow_saas (display), mb_gads_techflow (google), mb_crm_techflow (crm)
+- SportMax Apparel: mb_sportmax_apparel (display), mb_fb_sportmax (facebook), mb_inf_sportmax (influencer), mb_inf_sportmax_ugc (influencer)
+- FinanceFirst Bank: mb_financefirst (display), mb_gads_financefirst (google), mb_crm_financefirst (crm)
+- GreenEnergy Co: mb_greenenergy (display), mb_fb_greenenergy (facebook), mb_car_greenenergy_ev (car_sales)
+- LuxeBeauty: mb_fb_luxebeauty (facebook), mb_inf_luxebeauty (influencer), mb_crm_luxebeauty (crm)
+- FreshBite Foods: mb_fb_freshbite (facebook), mb_gads_freshbite (google), mb_inf_freshbite (influencer)
+- UrbanLiving Real Estate: mb_gads_urbanliving (google), mb_car_urbanliving_partner (car_sales), mb_crm_urbanliving (crm)
+
+Cross-Platform Analysis:
+- When a user asks about a brand's performance, check ALL platforms where that brand has campaigns
+- Use the platform filter on get_products and get_media_buy_delivery to compare performance across channels
+- For questions like "How is Apex Motors performing?", retrieve delivery metrics from display_programmatic, facebook_ads, google_ads, AND car_sales
+- For portfolio-level questions ("total spend", "best ROI"), aggregate across all platforms
+
+CRM Correlation:
+- CRM campaigns (crm_data) track customer lifecycle outcomes: email open rates, conversion rates, customer lifetime value
+- CRM data can be correlated with advertising platforms via brand name (e.g., FinanceFirst CRM outcomes linked to their Google Ads campaigns)
+- When asked about attribution or business outcomes, cross-reference CRM metrics with advertising platform data
 
 Guidelines:
 - Be helpful and professional
@@ -68,12 +97,7 @@ Guidelines:
 - For simple confirmations or single values, respond inline
 - For complex data (tables, reports), structure your response clearly
 - Always explain what actions you're taking and their results
-
-Context Awareness:
-- When a user refers to a campaign by brand name (e.g., "Apex", "TechFlow"), use get_media_buy_delivery to find the matching campaign ID
-- If a campaign was recently discussed in the conversation, apply commands to that campaign without asking for clarification
-- For ambiguous commands like "pause Germany targeting", first check if there's a recently discussed campaign, otherwise list campaigns and ask which one
-- Brand name mappings: "Apex" = mb_apex_motors_q1, "TechFlow" = mb_techflow_saas, "SportMax" = mb_sportmax_apparel, "FinanceFirst" = mb_financefirst_bank, "GreenEnergy" = mb_greenenergy
+- When comparing across platforms, present data in a clear comparison format
 
 Smart Defaults:
 - When creating campaigns without all details, suggest reasonable defaults based on the product and budget
@@ -85,17 +109,21 @@ Smart Defaults:
 export const TOOL_DEFINITIONS: Tool[] = [
   {
     name: 'get_products',
-    description: 'Discover available advertising inventory with optional filtering by category or maximum CPM. Returns products with pricing options.',
+    description: 'Discover available advertising inventory with optional filtering by category, maximum CPM, or platform. Returns products with pricing options.',
     input_schema: {
       type: 'object' as const,
       properties: {
         category: {
           type: 'string',
-          description: 'Filter products by category (e.g., "display", "video", "native", "audio")',
+          description: 'Filter products by category (e.g., "display", "video", "native", "audio", "Sports", "News")',
         },
         max_cpm: {
           type: 'number',
           description: 'Maximum CPM (cost per thousand impressions) to filter products',
+        },
+        platform: {
+          type: 'string',
+          description: 'Filter products by advertising platform (e.g., "facebook_ads", "google_ads", "display_programmatic", "social_influencer", "car_sales", "crm_data")',
         },
       },
       required: [],
@@ -178,13 +206,17 @@ export const TOOL_DEFINITIONS: Tool[] = [
   },
   {
     name: 'get_media_buy_delivery',
-    description: 'Get delivery/performance metrics for campaigns. Returns budget, spend, pacing, health status, and detailed metrics.',
+    description: 'Get delivery/performance metrics for campaigns. Returns budget, spend, pacing, health status, and detailed metrics. Can filter by platform.',
     input_schema: {
       type: 'object' as const,
       properties: {
         media_buy_id: {
           type: 'string',
           description: 'Specific media buy ID to get metrics for. If omitted, returns all campaigns.',
+        },
+        platform: {
+          type: 'string',
+          description: 'Filter delivery metrics by advertising platform (e.g., "facebook_ads", "google_ads", "display_programmatic", "social_influencer", "car_sales", "crm_data"). Only used when media_buy_id is not specified.',
         },
       },
       required: [],
@@ -334,7 +366,7 @@ export const TOOL_DEFINITIONS: Tool[] = [
 async function executeTool(toolName: string, toolInput: Record<string, unknown>): Promise<unknown> {
   switch (toolName) {
     case 'get_products':
-      return getProducts(toolInput as { category?: string; max_cpm?: number });
+      return getProducts(toolInput as { category?: string; max_cpm?: number; platform?: string });
     case 'list_creative_formats':
       return listCreativeFormats(toolInput as { type?: 'display' | 'video' | 'native' | 'audio' });
     case 'list_authorized_properties':
@@ -342,7 +374,7 @@ async function executeTool(toolName: string, toolInput: Record<string, unknown>)
     case 'create_media_buy':
       return createMediaBuy(toolInput as unknown as Parameters<typeof createMediaBuy>[0]);
     case 'get_media_buy_delivery':
-      return getMediaBuyDelivery(toolInput as { media_buy_id?: string });
+      return getMediaBuyDelivery(toolInput as { media_buy_id?: string; platform?: string });
     case 'update_media_buy':
       // updateMediaBuy is async because it sends Slack/Email notifications
       return await updateMediaBuy(toolInput as unknown as Parameters<typeof updateMediaBuy>[0]);

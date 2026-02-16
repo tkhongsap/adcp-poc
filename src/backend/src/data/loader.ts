@@ -1,7 +1,8 @@
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync, readdirSync } from 'fs';
 import { join } from 'path';
 import type {
   AdCPData,
+  PlatformData,
   Product,
   MediaBuy,
   DeliveryMetrics,
@@ -9,285 +10,125 @@ import type {
   PerformanceFeedback,
   CreativeFormat,
   AuthorizedProperty,
+  SpendCategory,
 } from '../types/data.js';
 
 // In-memory state for the demo data
 let data: AdCPData | null = null;
 
-// Creative formats are static reference data
-const creativeFormats: CreativeFormat[] = [
-  // Display formats
-  {
-    format_id: 'display_300x250_image',
-    name: 'Medium Rectangle',
-    type: 'display',
-    dimensions: '300x250',
-    specs: {
-      max_file_size: '150KB',
-      file_types: ['jpg', 'png', 'gif'],
-    },
-  },
-  {
-    format_id: 'display_728x90_image',
-    name: 'Leaderboard',
-    type: 'display',
-    dimensions: '728x90',
-    specs: {
-      max_file_size: '150KB',
-      file_types: ['jpg', 'png', 'gif'],
-    },
-  },
-  {
-    format_id: 'display_970x250_image',
-    name: 'Billboard',
-    type: 'display',
-    dimensions: '970x250',
-    specs: {
-      max_file_size: '200KB',
-      file_types: ['jpg', 'png', 'gif'],
-    },
-  },
-  {
-    format_id: 'display_300x600_image',
-    name: 'Half Page',
-    type: 'display',
-    dimensions: '300x600',
-    specs: {
-      max_file_size: '200KB',
-      file_types: ['jpg', 'png', 'gif'],
-    },
-  },
-  {
-    format_id: 'display_320x50_image',
-    name: 'Mobile Leaderboard',
-    type: 'display',
-    dimensions: '320x50',
-    specs: {
-      max_file_size: '100KB',
-      file_types: ['jpg', 'png', 'gif'],
-    },
-  },
-  {
-    format_id: 'display_320x480_image',
-    name: 'Mobile Interstitial',
-    type: 'display',
-    dimensions: '320x480',
-    specs: {
-      max_file_size: '200KB',
-      file_types: ['jpg', 'png', 'gif'],
-    },
-  },
-  {
-    format_id: 'rich_media_expandable',
-    name: 'Expandable Rich Media',
-    type: 'display',
-    dimensions: '300x250 -> 600x400',
-    specs: {
-      max_file_size: '500KB',
-      file_types: ['html5', 'js'],
-      interaction: 'click_to_expand',
-    },
-  },
-  // Video formats
-  {
-    format_id: 'video_preroll_15s',
-    name: 'Pre-roll 15s',
-    type: 'video',
-    specs: {
-      max_file_size: '10MB',
-      file_types: ['mp4', 'webm'],
-      max_duration: 15,
-    },
-  },
-  {
-    format_id: 'video_preroll_30s',
-    name: 'Pre-roll 30s',
-    type: 'video',
-    specs: {
-      max_file_size: '20MB',
-      file_types: ['mp4', 'webm'],
-      max_duration: 30,
-      skip_after: 5,
-    },
-  },
-  {
-    format_id: 'video_outstream_15s',
-    name: 'Outstream 15s',
-    type: 'video',
-    specs: {
-      max_file_size: '10MB',
-      file_types: ['mp4', 'webm'],
-      max_duration: 15,
-    },
-  },
-  {
-    format_id: 'video_ctv_30s',
-    name: 'CTV 30s',
-    type: 'video',
-    specs: {
-      max_file_size: '50MB',
-      file_types: ['mp4'],
-      max_duration: 30,
-    },
-  },
-  // Native formats
-  {
-    format_id: 'native_article_card',
-    name: 'Native Article Card',
-    type: 'native',
-    specs: {
-      headline_max: 50,
-      description_max: 150,
-      image_dimensions: '1200x628',
-      cta_max: 15,
-    },
-  },
-  {
-    format_id: 'native_content_rec',
-    name: 'Content Recommendation',
-    type: 'native',
-    specs: {
-      headline_max: 70,
-      image_dimensions: '400x300',
-    },
-  },
-  // Audio formats
-  {
-    format_id: 'audio_30s',
-    name: 'Audio 30s',
-    type: 'audio',
-    specs: {
-      max_file_size: '5MB',
-      file_types: ['mp3', 'wav', 'ogg'],
-      max_duration: 30,
-    },
-  },
-];
-
-// Authorized properties are static reference data
-const authorizedProperties: AuthorizedProperty[] = [
-  {
-    property_id: 'prop_espn',
-    name: 'ESPN',
-    domain: 'espn.com',
-    category: 'Sports',
-    monthly_uniques: 85000000,
-    authorization_level: 'premium',
-    available_formats: ['display_300x250_image', 'display_728x90_image', 'video_preroll_15s', 'video_preroll_30s'],
-    discount_percent: 15,
-    audience_profile: 'Sports enthusiasts, 18-54, male-skewing',
-  },
-  {
-    property_id: 'prop_cnn',
-    name: 'CNN Digital',
-    domain: 'cnn.com',
-    category: 'News',
-    monthly_uniques: 120000000,
-    authorization_level: 'standard',
-    available_formats: ['display_970x250_image', 'display_300x600_image', 'display_300x250_image', 'video_ctv_30s'],
-    audience_profile: 'News consumers, broad demographics, high-income skew on business sections',
-  },
-  {
-    property_id: 'prop_weather',
-    name: 'Weather.com',
-    domain: 'weather.com',
-    category: 'Weather/Local',
-    monthly_uniques: 150000000,
-    authorization_level: 'standard',
-    available_formats: ['display_300x250_image', 'display_320x50_image'],
-    audience_profile: 'Broad reach, location-based targeting',
-    special_capabilities: ['weather-triggered creative swap', 'real-time temperature targeting', 'severe weather exclusion'],
-  },
-  {
-    property_id: 'prop_techcrunch',
-    name: 'TechCrunch',
-    domain: 'techcrunch.com',
-    category: 'Technology',
-    monthly_uniques: 25000000,
-    authorization_level: 'premium',
-    available_formats: ['display_300x250_image', 'native_article_card'],
-    discount_percent: 12,
-    audience_profile: 'Tech professionals, startup founders, developers',
-  },
-  {
-    property_id: 'prop_si',
-    name: 'Sports Illustrated',
-    domain: 'si.com',
-    category: 'Sports',
-    monthly_uniques: 40000000,
-    authorization_level: 'standard',
-    available_formats: ['display_300x250_image', 'display_728x90_image'],
-    audience_profile: 'Sports fans, classic sports journalism audience',
-  },
-  {
-    property_id: 'prop_bleacher',
-    name: 'Bleacher Report',
-    domain: 'bleacherreport.com',
-    category: 'Sports',
-    monthly_uniques: 60000000,
-    authorization_level: 'standard',
-    available_formats: ['display_300x250_image', 'video_outstream_15s'],
-    audience_profile: 'Younger sports fans 18-34, strong mobile engagement',
-  },
-  {
-    property_id: 'prop_forbes',
-    name: 'Forbes',
-    domain: 'forbes.com',
-    category: 'Business',
-    monthly_uniques: 70000000,
-    authorization_level: 'premium',
-    available_formats: ['display_300x250_image', 'native_article_card'],
-    discount_percent: 8,
-    audience_profile: '58% HHI $100K+, 72% college educated, business decision-makers',
-  },
-  {
-    property_id: 'prop_auto_news',
-    name: 'Automotive News Network',
-    domain: 'autonews.com',
-    category: 'Automotive',
-    monthly_uniques: 15000000,
-    authorization_level: 'premium',
-    available_formats: ['display_300x250_image', 'display_970x250_image', 'video_preroll_30s'],
-    discount_percent: 10,
-    audience_profile: 'Auto enthusiasts, in-market car buyers',
-  },
-  {
-    property_id: 'prop_spotify',
-    name: 'Spotify',
-    domain: 'spotify.com',
-    category: 'Audio/Music',
-    monthly_uniques: 220000000,
-    authorization_level: 'exclusive',
-    available_formats: ['audio_30s', 'video_preroll_15s'],
-    audience_profile: 'Music streamers, broad demographics, high engagement',
-    special_capabilities: ['podcast advertising', 'music genre targeting', 'playlist targeting'],
-  },
-  {
-    property_id: 'prop_nyt',
-    name: 'New York Times',
-    domain: 'nytimes.com',
-    category: 'News',
-    monthly_uniques: 90000000,
-    authorization_level: 'premium',
-    available_formats: ['display_300x250_image', 'display_970x250_image', 'native_article_card'],
-    discount_percent: 5,
-    audience_profile: '85% college educated, high-income, opinion leaders',
-    special_capabilities: ['section sponsorship', 'creative approval required (48h lead time)'],
-  },
-];
+// Creative formats and authorized properties loaded from platform files
+let creativeFormats: CreativeFormat[] = [];
+let authorizedProperties: AuthorizedProperty[] = [];
 
 /**
- * Load the demo data from the JSON file
- * This should be called on server startup
+ * Load platform data from data/platforms/*.json files and merge into a single AdCPData object.
+ * Falls back to legacy adcp_demo_complete_data.json if no platform directory exists.
  */
 export function loadData(): void {
-  const dataPath = join(process.cwd(), '../../data/adcp_demo_complete_data.json');
+  const platformsDir = join(process.cwd(), '../../data/platforms');
+  const legacyPath = join(process.cwd(), '../../data/adcp_demo_complete_data.json');
 
+  if (existsSync(platformsDir)) {
+    try {
+      loadFromPlatformFiles(platformsDir);
+      return;
+    } catch (error) {
+      console.warn('Failed to load platform files, falling back to legacy data:', error);
+    }
+  }
+
+  // Fallback to legacy single file
+  loadFromLegacyFile(legacyPath);
+}
+
+/**
+ * Load and merge data from per-platform JSON files in data/platforms/
+ */
+function loadFromPlatformFiles(platformsDir: string): void {
+  const files = readdirSync(platformsDir).filter(f => f.endsWith('.json'));
+
+  if (files.length === 0) {
+    throw new Error('No platform JSON files found in data/platforms/');
+  }
+
+  const allProducts: Product[] = [];
+  const allMediaBuys: MediaBuy[] = [];
+  const allDeliveryMetrics: Record<string, DeliveryMetrics> = {};
+  const allFeedback: PerformanceFeedback[] = [];
+  const allCreativeFormats: CreativeFormat[] = [];
+  const allAuthorizedProperties: AuthorizedProperty[] = [];
+
+  for (const file of files) {
+    const filePath = join(platformsDir, file);
+    const rawData = readFileSync(filePath, 'utf-8');
+    const platformData: PlatformData = JSON.parse(rawData);
+
+    // Merge products (ensure platform field is set)
+    if (platformData.products) {
+      for (const product of platformData.products) {
+        product.platform = product.platform || platformData.platform;
+        allProducts.push(product);
+      }
+    }
+
+    // Merge media buys
+    if (platformData.media_buys) {
+      for (const mb of platformData.media_buys) {
+        mb.platform = mb.platform || platformData.platform;
+        allMediaBuys.push(mb);
+      }
+    }
+
+    // Merge delivery metrics
+    if (platformData.delivery_metrics) {
+      for (const [id, metrics] of Object.entries(platformData.delivery_metrics)) {
+        metrics.platform = metrics.platform || platformData.platform;
+        allDeliveryMetrics[id] = metrics;
+      }
+    }
+
+    // Merge performance feedback
+    if (platformData.performance_feedback_log) {
+      allFeedback.push(...platformData.performance_feedback_log);
+    }
+
+    // Merge creative formats
+    if (platformData.creative_formats) {
+      allCreativeFormats.push(...platformData.creative_formats);
+    }
+
+    // Merge authorized properties
+    if (platformData.authorized_properties) {
+      allAuthorizedProperties.push(...platformData.authorized_properties);
+    }
+  }
+
+  // Store creative formats and authorized properties
+  creativeFormats = allCreativeFormats;
+  authorizedProperties = allAuthorizedProperties;
+
+  // Compute aggregations across all platforms
+  const aggregations = computeAggregations(allMediaBuys, allDeliveryMetrics);
+
+  data = {
+    products: allProducts,
+    media_buys: allMediaBuys,
+    delivery_metrics: allDeliveryMetrics,
+    aggregations,
+    performance_feedback_log: allFeedback,
+  };
+
+  console.log(`Loaded multi-platform data: ${files.length} platforms, ${allProducts.length} products, ${allMediaBuys.length} media buys, ${Object.keys(allDeliveryMetrics).length} delivery metrics`);
+}
+
+/**
+ * Load from the legacy single JSON file (backward compatibility)
+ */
+function loadFromLegacyFile(dataPath: string): void {
   try {
     const rawData = readFileSync(dataPath, 'utf-8');
     const parsed = JSON.parse(rawData);
 
-    // Extract only the data we need (excluding query_examples and _metadata)
     data = {
       products: parsed.products,
       media_buys: parsed.media_buys,
@@ -296,11 +137,132 @@ export function loadData(): void {
       performance_feedback_log: parsed.performance_feedback_log,
     };
 
-    console.log(`Loaded AdCP demo data: ${data.products.length} products, ${data.media_buys.length} media buys`);
+    console.log(`Loaded AdCP demo data (legacy): ${data.products.length} products, ${data.media_buys.length} media buys`);
   } catch (error) {
     console.error('Failed to load AdCP demo data:', error);
     throw error;
   }
+}
+
+/**
+ * Compute portfolio aggregations across all platforms
+ */
+function computeAggregations(
+  mediaBuys: MediaBuy[],
+  deliveryMetrics: Record<string, DeliveryMetrics>
+): Aggregations {
+  const metrics = Object.values(deliveryMetrics);
+  const activeCampaigns = mediaBuys.filter(mb => mb.status === 'active');
+
+  const totalBudget = metrics.reduce((sum, m) => sum + m.total_budget, 0);
+  const totalSpend = metrics.reduce((sum, m) => sum + m.total_spend, 0);
+  const totalImpressions = metrics.reduce((sum, m) => sum + m.summary.impressions, 0);
+  const totalClicks = metrics.reduce((sum, m) => sum + m.summary.clicks, 0);
+  const totalConversions = metrics.reduce((sum, m) => sum + m.summary.conversions, 0);
+
+  // Spend by platform
+  const spendByPlatform: Record<string, SpendCategory> = {};
+  for (const m of metrics) {
+    const platform = m.platform || 'unknown';
+    if (!spendByPlatform[platform]) {
+      spendByPlatform[platform] = { spend: 0, share: 0 };
+    }
+    spendByPlatform[platform].spend += m.total_spend;
+  }
+  for (const key of Object.keys(spendByPlatform)) {
+    spendByPlatform[key].share = totalSpend > 0 ? Math.round((spendByPlatform[key].spend / totalSpend) * 100) / 100 : 0;
+  }
+
+  // Spend by brand
+  const spendByBrand: Record<string, SpendCategory> = {};
+  for (const m of metrics) {
+    const brand = m.brand;
+    if (!spendByBrand[brand]) {
+      spendByBrand[brand] = { spend: 0, share: 0 };
+    }
+    spendByBrand[brand].spend += m.total_spend;
+  }
+  for (const key of Object.keys(spendByBrand)) {
+    spendByBrand[key].share = totalSpend > 0 ? Math.round((spendByBrand[key].spend / totalSpend) * 100) / 100 : 0;
+  }
+
+  // Spend by device
+  const spendByDevice: Record<string, SpendCategory> = {};
+  for (const m of metrics) {
+    for (const [device, deviceMetrics] of Object.entries(m.by_device)) {
+      if (!spendByDevice[device]) {
+        spendByDevice[device] = { spend: 0, share: 0 };
+      }
+      spendByDevice[device].spend += deviceMetrics.spend;
+    }
+  }
+  for (const key of Object.keys(spendByDevice)) {
+    spendByDevice[key].share = totalSpend > 0 ? Math.round((spendByDevice[key].spend / totalSpend) * 100) / 100 : 0;
+  }
+
+  // Spend by geo
+  const spendByGeo: Record<string, SpendCategory> = {};
+  for (const m of metrics) {
+    for (const [geo, geoMetrics] of Object.entries(m.by_geo)) {
+      if (!spendByGeo[geo]) {
+        spendByGeo[geo] = { spend: 0, share: 0 };
+      }
+      spendByGeo[geo].spend += geoMetrics.spend;
+    }
+  }
+  for (const key of Object.keys(spendByGeo)) {
+    spendByGeo[key].share = totalSpend > 0 ? Math.round((spendByGeo[key].spend / totalSpend) * 100) / 100 : 0;
+  }
+
+  // Top and underperforming campaigns
+  const sortedByCtr = [...metrics].sort((a, b) => b.summary.ctr - a.summary.ctr);
+  const topPerforming = sortedByCtr.slice(0, 3).map(m => ({
+    media_buy_id: m.media_buy_id,
+    brand: m.brand,
+    metric: 'ctr',
+    value: m.summary.ctr,
+    reason: `CTR ${m.summary.ctr}%` + (m.platform ? ` (${m.platform})` : ''),
+  }));
+
+  const underperforming = metrics
+    .filter(m => m.health === 'poor' || m.health === 'warning')
+    .map(m => ({
+      media_buy_id: m.media_buy_id,
+      brand: m.brand,
+      metric: m.health === 'poor' ? 'ctr' : 'budget',
+      value: m.health === 'poor' ? m.summary.ctr : m.total_spend / m.total_budget,
+      issue: m.health === 'poor'
+        ? `Low CTR at ${m.summary.ctr}%`
+        : `Spend ${Math.round((m.total_spend / m.total_budget) * 100)}% of budget`,
+    }));
+
+  return {
+    portfolio_summary: {
+      as_of: new Date().toISOString(),
+      total_active_campaigns: activeCampaigns.length,
+      total_budget: totalBudget,
+      total_spend: totalSpend,
+      total_remaining: totalBudget - totalSpend,
+      total_impressions: totalImpressions,
+      total_clicks: totalClicks,
+      total_conversions: totalConversions,
+      overall_ctr: totalImpressions > 0 ? Math.round((totalClicks / totalImpressions) * 10000) / 100 : 0,
+      overall_cpm: totalImpressions > 0 ? Math.round((totalSpend / totalImpressions) * 1000 * 100) / 100 : 0,
+      overall_cpa: totalConversions > 0 ? Math.round((totalSpend / totalConversions) * 100) / 100 : 0,
+      campaigns_on_track: metrics.filter(m => m.pacing === 'on_track').length,
+      campaigns_warning: metrics.filter(m => m.health === 'warning').length,
+      campaigns_poor: metrics.filter(m => m.health === 'poor').length,
+    },
+    spend_by_category: {},
+    spend_by_format: {},
+    spend_by_device: spendByDevice,
+    spend_by_geo: spendByGeo,
+    spend_by_platform: spendByPlatform,
+    spend_by_brand: spendByBrand,
+    top_performing_campaigns: topPerforming,
+    underperforming_campaigns: underperforming,
+    monthly_trend: {},
+  };
 }
 
 /**
@@ -318,12 +280,16 @@ function ensureDataLoaded(): AdCPData {
 // ============================================
 
 /**
- * Get all products, optionally filtered by category and max CPM
+ * Get all products, optionally filtered by category, max CPM, and platform
  */
-export function getProducts(options?: { category?: string; max_cpm?: number }): Product[] {
+export function getProducts(options?: { category?: string; max_cpm?: number; platform?: string }): Product[] {
   const { products } = ensureDataLoaded();
 
   let filtered = [...products];
+
+  if (options?.platform) {
+    filtered = filtered.filter(p => p.platform?.toLowerCase() === options.platform!.toLowerCase());
+  }
 
   if (options?.category) {
     filtered = filtered.filter(p => p.category.toLowerCase() === options.category!.toLowerCase());
@@ -336,6 +302,13 @@ export function getProducts(options?: { category?: string; max_cpm?: number }): 
   }
 
   return filtered;
+}
+
+/**
+ * Get products filtered by platform
+ */
+export function getProductsByPlatform(platform: string): Product[] {
+  return getProducts({ platform });
 }
 
 /**
@@ -431,13 +404,13 @@ export function resolveMediaBuyId(idOrBrandName: string): string | undefined {
   if (exactMatch) {
     return exactMatch.media_buy_id;
   }
-  
+
   // Then try brand name match
   const brandMatch = findMediaBuyByBrandName(idOrBrandName);
   if (brandMatch) {
     return brandMatch.media_buy_id;
   }
-  
+
   return undefined;
 }
 
@@ -473,16 +446,22 @@ export function updateMediaBuy(mediaBuyId: string, updates: Partial<MediaBuy>): 
 // ============================================
 
 /**
- * Get delivery metrics for all media buys or a specific one
+ * Get delivery metrics for all media buys or a specific one, optionally filtered by platform
  */
-export function getDeliveryMetrics(mediaBuyId?: string): DeliveryMetrics | DeliveryMetrics[] | undefined {
+export function getDeliveryMetrics(mediaBuyId?: string, platform?: string): DeliveryMetrics | DeliveryMetrics[] | undefined {
   const { delivery_metrics } = ensureDataLoaded();
 
   if (mediaBuyId) {
     return delivery_metrics[mediaBuyId];
   }
 
-  return Object.values(delivery_metrics);
+  let allMetrics = Object.values(delivery_metrics);
+
+  if (platform) {
+    allMetrics = allMetrics.filter(m => m.platform?.toLowerCase() === platform.toLowerCase());
+  }
+
+  return allMetrics;
 }
 
 /**
