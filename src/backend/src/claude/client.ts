@@ -9,6 +9,8 @@ import {
   updateMediaBuy,
   providePerformanceFeedback,
 } from '../tools/index.js';
+import { buildUserContext } from '../data/userProfileStore.js';
+import { extractInsights } from '../services/insightExtractor.js';
 
 // Initialize the Anthropic client
 const anthropic = new Anthropic({
@@ -43,7 +45,7 @@ const MODEL_DISPLAY_NAMES: Record<string, string> = {
 };
 
 // System prompt for the Signal42.ai Agent
-function getSystemPrompt(model: string): string {
+function getSystemPrompt(model: string, userContext?: string): string {
   const modelName = MODEL_DISPLAY_NAMES[model] || 'Claude';
 
   return `You are the Signal42.ai Campaign Agent, powered by ${modelName}. You are an AI assistant built by Signal42.ai to help advertisers and agencies manage their digital advertising campaigns across multiple platforms.
@@ -102,7 +104,70 @@ Guidelines:
 Smart Defaults:
 - When creating campaigns without all details, suggest reasonable defaults based on the product and budget
 - For bid adjustments, always confirm the change before and after values
-- For geo changes, confirm which countries are being added/removed`;
+- For geo changes, confirm which countries are being added/removed
+
+Contractual Guarantees & SLA Monitoring:
+- Guaranteed delivery campaigns have contractual_guarantees in delivery metrics
+- Guarantee types: impressions (must deliver X), viewability (min %), CTR (min %), completion_rate (min %), delivery_deadline
+- Compliance statuses:
+  * "compliant" - on track to meet guarantee
+  * "at_risk" - within 15% of violation threshold
+  * "violated" - SLA breach, make-good required
+- When campaigns are "at_risk" or "violated", proactively suggest optimizations (increase bids, expand targeting, extend dates)
+- Make-goods: Free impressions owed to advertiser when guarantee is violated
+- For Chang'an Automobile: Typical guaranteed contracts with 70% viewability minimums
+- Always mention SLA status when showing campaign performance for guaranteed campaigns
+
+Reasoning and Transparency:
+- When analyzing campaign performance, think step-by-step:
+  1. Retrieve relevant data using tools
+  2. Examine metrics (budget, spend, pacing, performance)
+  3. Compare against benchmarks or contract requirements
+  4. Identify root causes
+  5. Formulate actionable recommendations
+- Show your reasoning: "Looking at Apex Motors, I see they've spent $32,450 of $50,000 (65%) but only delivered 3.2M of 5M guaranteed impressions (64%). This suggests pacing is numerically on track, but we're at risk of underdelivery due to the impression guarantee."
+- For complex questions like "Why is this campaign underperforming?", break down analysis:
+  * Check delivery metrics (impressions, CTR, completion rate)
+  * Compare device performance (mobile vs. desktop)
+  * Examine geo performance (US vs. international)
+  * Review bid competitiveness
+  * Synthesize findings into 2-3 root causes
+
+Uncertainty Expression:
+- If data is missing, acknowledge it: "I don't have historical benchmark data, but based on current CTR of 1.2%, this appears above typical display benchmarks."
+- Label estimates: "Based on current pacing, I estimate this campaign will deliver ~4.8M impressions (vs. 5M guaranteed), requiring a make-good of ~200K impressions."
+- Be honest about limitations: "I don't have access to creative asset performance data, but I can show device and geo breakdowns."
+
+Verification and Sanity Checks:
+- Verify data makes sense (spend should not exceed budget for active campaigns)
+- Flag anomalous data (CTR > 10%, spend > budget)
+- Cross-reference metrics (low impressions + high spend = inflated CPM)
+
+Advertising Industry Benchmarks:
+- Display CTR: 0.05-0.15% (good), 0.15%+ (excellent)
+- Video Completion Rate: 60%+ (good), 75%+ (excellent)
+- Viewability: 70%+ (industry standard for guaranteed deals)
+- Programmatic CPM: $2-$15 (display), $15-$35 (video), $20-$50+ (premium)
+- Social CTR: 0.8-1.5% (Facebook/Instagram), 0.5-1.0% (LinkedIn)
+- Search CTR: 2-5% (Google Ads)
+
+Automotive Industry (Chang'an use case):
+- Typical CPM: $8-$18 (display), $25-$40 (video)
+- Viewability target: 70% minimum
+- Test drive lead CPA: $150-$300
+- Showroom visit CPA: $80-$150
+
+Multi-Platform Reasoning:
+- When asked "How is [Brand] performing overall?", follow this approach:
+  1. Identify all campaigns for that brand across platforms
+  2. Retrieve metrics for each campaign
+  3. Present cross-platform summary:
+     * Total spend across platforms
+     * Best-performing platform (by ROAS, CTR, efficiency)
+     * Platform-specific insights
+  4. Correlate with CRM data when available
+- For portfolio questions ("Total spend this month?"), aggregate across ALL platforms
+- When comparing platforms, normalize metrics (social CTR typically higher than display)${userContext ? `\n\n${userContext}` : ''}`;
 }
 
 // Tool definitions for Claude API
@@ -408,9 +473,17 @@ export interface ChatResponse {
 export async function processChat(
   userMessage: string,
   conversationHistory: ChatMessage[] = [],
-  model?: string
+  model?: string,
+  userId?: string,
+  conversationId?: string
 ): Promise<ChatResponse> {
   const validModel = getValidModel(model);
+
+  // Extract insights from user message if userId is provided
+  const userContext = userId ? buildUserContext(userId) : undefined;
+  if (userId && conversationId) {
+    extractInsights(userMessage, userId, conversationId);
+  }
 
   // Convert our chat history to Claude's format
   const messages: MessageParam[] = conversationHistory.map((msg) => ({
@@ -430,7 +503,7 @@ export async function processChat(
   let response = await anthropic.messages.create({
     model: validModel,
     max_tokens: 4096,
-    system: getSystemPrompt(validModel),
+    system: getSystemPrompt(validModel, userContext),
     tools: TOOL_DEFINITIONS,
     messages,
   });
@@ -477,7 +550,7 @@ export async function processChat(
     response = await anthropic.messages.create({
       model: validModel,
       max_tokens: 4096,
-      system: getSystemPrompt(validModel),
+      system: getSystemPrompt(validModel, userContext),
       tools: TOOL_DEFINITIONS,
       messages,
     });
@@ -513,9 +586,17 @@ export async function processChatStream(
   onText: (text: string) => void,
   onToolCall?: (name: string, input: Record<string, unknown>) => void,
   onToolResult?: (name: string, result: unknown) => void,
-  model?: string
+  model?: string,
+  userId?: string,
+  conversationId?: string
 ): Promise<ChatResponse> {
   const validModel = getValidModel(model);
+
+  // Extract insights from user message if userId is provided
+  const userContext = userId ? buildUserContext(userId) : undefined;
+  if (userId && conversationId) {
+    extractInsights(userMessage, userId, conversationId);
+  }
 
   // Convert our chat history to Claude's format
   const messages: MessageParam[] = conversationHistory.map((msg) => ({
@@ -537,7 +618,7 @@ export async function processChatStream(
     const stream = anthropic.messages.stream({
       model: validModel,
       max_tokens: 4096,
-      system: getSystemPrompt(validModel),
+      system: getSystemPrompt(validModel, userContext),
       tools: TOOL_DEFINITIONS,
       messages,
     });

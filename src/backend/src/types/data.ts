@@ -226,11 +226,41 @@ export interface AuthorizedProperty {
   special_capabilities?: string[];
 }
 
+// ============================================
+// Contractual Guarantee / SLA types
+// ============================================
+
+export type GuaranteeMetric = 'impressions' | 'clicks' | 'conversions' | 'ctr' | 'viewability' | 'completion_rate' | 'cpm' | 'cpa';
+export type ComplianceStatus = 'compliant' | 'at_risk' | 'violated';
+
+export interface ContractualGuarantee {
+  guarantee_id: string;
+  metric: GuaranteeMetric;
+  operator: 'gte' | 'lte';          // gte = at least, lte = at most
+  guaranteed_value: number;
+  penalty_description: string;
+  current_value?: number;            // populated at runtime by calculateGuaranteeCompliance
+  compliance_status?: ComplianceStatus;
+  percent_to_target?: number;        // e.g. 85 means 85% of the way to target
+}
+
+export interface MediaBuyWithGuarantees extends MediaBuy {
+  contractual_guarantees?: ContractualGuarantee[];
+}
+
+export interface GuaranteeComplianceResult {
+  media_buy_id: string;
+  has_guarantees: boolean;
+  guarantees: ContractualGuarantee[];
+  overall_status: ComplianceStatus;
+  summary: string;
+}
+
 export interface PlatformData {
   platform: string;
   platform_display_name: string;
   products: Product[];
-  media_buys: MediaBuy[];
+  media_buys: (MediaBuy | MediaBuyWithGuarantees)[];
   delivery_metrics: Record<string, DeliveryMetrics>;
   creative_formats: CreativeFormat[];
   authorized_properties: AuthorizedProperty[];
@@ -243,4 +273,33 @@ export interface AdCPData {
   delivery_metrics: Record<string, DeliveryMetrics>;
   aggregations: Aggregations;
   performance_feedback_log: PerformanceFeedback[];
+}
+
+// User Memory & Personalization types
+
+export type InsightCategory =
+  | 'role'
+  | 'brand_focus'
+  | 'metric_preference'
+  | 'platform_preference'
+  | 'concern'
+  | 'goal'
+  | 'communication_style';
+
+export interface UserInsight {
+  id: string;
+  category: InsightCategory;
+  value: string;
+  confidence: number; // 0.0 - 1.0
+  extractedFrom: string; // conversationId where this was learned
+  createdAt: string;
+  lastReinforcedAt: string;
+  reinforcementCount: number;
+}
+
+export interface UserProfile {
+  userId: string;
+  insights: UserInsight[];
+  createdAt: string;
+  updatedAt: string;
 }

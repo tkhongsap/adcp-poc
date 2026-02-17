@@ -5,6 +5,8 @@ import type {
   PlatformData,
   Product,
   MediaBuy,
+  MediaBuyWithGuarantees,
+  ContractualGuarantee,
   DeliveryMetrics,
   Aggregations,
   PerformanceFeedback,
@@ -379,6 +381,14 @@ export function getMediaBuys(): MediaBuy[] {
 export function getMediaBuyById(mediaBuyId: string): MediaBuy | undefined {
   const { media_buys } = ensureDataLoaded();
   return media_buys.find(mb => mb.media_buy_id === mediaBuyId);
+}
+
+/**
+ * Get contractual guarantees for a media buy, if any exist
+ */
+export function getGuaranteesForMediaBuy(mediaBuyId: string): ContractualGuarantee[] | undefined {
+  const mb = getMediaBuyById(mediaBuyId) as MediaBuyWithGuarantees | undefined;
+  return mb?.contractual_guarantees;
 }
 
 /**

@@ -86,7 +86,7 @@ function persistConversation(id: string, messages: ChatMessage[]): void {
  */
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { message, conversationId, model } = req.body;
+    const { message, conversationId, model, userId } = req.body;
 
     if (!message || typeof message !== 'string') {
       res.status(400).json({ error: 'Message is required' });
@@ -97,8 +97,8 @@ router.post('/', async (req: Request, res: Response) => {
     const id = conversationId || `conv_${Date.now()}_${Math.random().toString(36).substring(7)}`;
     const history = conversations.get(id) || [];
 
-    // Process the chat with optional model
-    const response = await processChat(message, history, model);
+    // Process the chat with optional model and userId for personalization
+    const response = await processChat(message, history, model, userId, id);
 
     // Update conversation history with full tool context
     if (response.historyEntries && response.historyEntries.length > 0) {
@@ -139,7 +139,7 @@ router.post('/', async (req: Request, res: Response) => {
  */
 router.post('/stream', async (req: Request, res: Response) => {
   try {
-    const { message, conversationId, model } = req.body;
+    const { message, conversationId, model, userId } = req.body;
 
     if (!message || typeof message !== 'string') {
       res.status(400).json({ error: 'Message is required' });
@@ -187,7 +187,10 @@ router.post('/stream', async (req: Request, res: Response) => {
         res.write(`event: tool_result\ndata: ${JSON.stringify({ name, result })}\n\n`);
       },
       // Model parameter
-      model
+      model,
+      // User personalization
+      userId,
+      id
     );
 
     // Update conversation history with full tool context

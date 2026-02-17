@@ -96,6 +96,21 @@ function isDeliveryData(result: unknown): result is {
   by_device?: unknown;
   by_geo?: unknown;
   recommendations?: string[];
+  guarantee_compliance?: {
+    has_guarantees: boolean;
+    overall_status: string;
+    summary: string;
+    guarantees: Array<{
+      guarantee_id: string;
+      metric: string;
+      operator: string;
+      guaranteed_value: number;
+      current_value?: number;
+      compliance_status?: string;
+      percent_to_target?: number;
+      penalty_description: string;
+    }>;
+  };
 } {
   if (!result || typeof result !== "object") return false;
   const r = result as Record<string, unknown>;
@@ -262,6 +277,21 @@ function createDeliveryReportArtifact(
     by_device?: unknown;
     by_geo?: unknown;
     recommendations?: string[];
+    guarantee_compliance?: {
+      has_guarantees: boolean;
+      overall_status: string;
+      summary: string;
+      guarantees: Array<{
+        guarantee_id: string;
+        metric: string;
+        operator: string;
+        guaranteed_value: number;
+        current_value?: number;
+        compliance_status?: string;
+        percent_to_target?: number;
+        penalty_description: string;
+      }>;
+    };
   }
 ): ReportArtifactData {
   const pacingPercent =
@@ -288,6 +318,47 @@ function createDeliveryReportArtifact(
   const sections: ReportSection[] = [
     { title: "Overview", metrics: overviewMetrics },
   ];
+
+  // Add SLA / Guarantee Compliance section if available
+  if (data.guarantee_compliance?.has_guarantees) {
+    const gc = data.guarantee_compliance;
+    const slaMetrics: ReportMetric[] = gc.guarantees.map((g) => {
+      const operatorLabel = g.operator === "gte" ? ">=" : "<=";
+      const currentDisplay =
+        g.current_value !== undefined ? String(g.current_value) : "N/A";
+      const statusChangeType =
+        g.compliance_status === "compliant"
+          ? "positive"
+          : g.compliance_status === "violated"
+          ? "negative"
+          : "neutral";
+
+      return {
+        label: `${g.metric.toUpperCase()} (${operatorLabel} ${g.guaranteed_value})`,
+        value: currentDisplay,
+        change: g.compliance_status?.toUpperCase() || "UNKNOWN",
+        changeType: statusChangeType as "positive" | "negative" | "neutral",
+      };
+    });
+
+    const overallChangeType =
+      gc.overall_status === "compliant"
+        ? "positive"
+        : gc.overall_status === "violated"
+        ? "negative"
+        : "neutral";
+
+    slaMetrics.unshift({
+      label: "Overall SLA Status",
+      value: gc.overall_status.toUpperCase(),
+      changeType: overallChangeType as "positive" | "negative" | "neutral",
+    });
+
+    sections.push({
+      title: "Contractual Guarantees (SLA)",
+      metrics: slaMetrics,
+    });
+  }
 
   // Add device breakdown if available
   if (data.by_device && typeof data.by_device === "object") {
@@ -441,14 +512,22 @@ export function detectArtifact(
       }
 
       // Single campaign - show as report (unless it's a simple query)
-      if (isDeliveryData(result) && !isSimpleQuery) {
-        const reportData = createDeliveryReportArtifact(result);
+      // The result may be the metrics directly, or wrapped in { success, metrics }
+      const singleMetrics =
+        isDeliveryData(result)
+          ? result
+          : r.metrics && !Array.isArray(r.metrics) && isDeliveryData(r.metrics)
+          ? r.metrics
+          : null;
+
+      if (singleMetrics && !isSimpleQuery) {
+        const reportData = createDeliveryReportArtifact(singleMetrics);
         return {
           shouldShowArtifact: true,
           artifact: {
             id: `artifact_${Date.now()}`,
             type: "report" as ArtifactType,
-            title: `Performance Report: ${result.media_buy_id}`,
+            title: `Performance Report: ${singleMetrics.media_buy_id}`,
             data: reportData,
             timestamp: new Date(),
           },

@@ -443,7 +443,30 @@
       "start_time": "2026-01-01T00:00:00Z",
       "end_time": "2026-03-31T23:59:59Z",
       "status": "active",
-      "created_at": "2025-12-15T10:30:00Z"
+      "created_at": "2025-12-15T10:30:00Z",
+      "contractual_guarantees": [
+        {
+          "guarantee_id": "sla_apex_impressions",
+          "metric": "impressions",
+          "operator": "gte",
+          "guaranteed_value": 5000000,
+          "penalty_description": "15% make-good impressions added to campaign if total impressions fall below 5M by end of flight"
+        },
+        {
+          "guarantee_id": "sla_apex_viewability",
+          "metric": "viewability",
+          "operator": "gte",
+          "guaranteed_value": 0.70,
+          "penalty_description": "Full refund on non-viewable impressions below 70% threshold"
+        },
+        {
+          "guarantee_id": "sla_apex_ctr",
+          "metric": "ctr",
+          "operator": "gte",
+          "guaranteed_value": 0.15,
+          "penalty_description": "Agency must provide creative optimization at no additional cost if CTR falls below 0.15%"
+        }
+      ]
     },
     {
       "media_buy_id": "mb_techflow_saas",
@@ -478,7 +501,30 @@
       "start_time": "2026-01-15T00:00:00Z",
       "end_time": "2026-02-28T23:59:59Z",
       "status": "active",
-      "created_at": "2026-01-10T14:00:00Z"
+      "created_at": "2026-01-10T14:00:00Z",
+      "contractual_guarantees": [
+        {
+          "guarantee_id": "sla_techflow_cpm",
+          "metric": "cpm",
+          "operator": "lte",
+          "guaranteed_value": 30.00,
+          "penalty_description": "Publisher absorbs cost difference for any CPM above $30.00 ceiling"
+        },
+        {
+          "guarantee_id": "sla_techflow_conversions",
+          "metric": "conversions",
+          "operator": "gte",
+          "guaranteed_value": 100,
+          "penalty_description": "Campaign extended at no cost until 100 conversion target is met"
+        },
+        {
+          "guarantee_id": "sla_techflow_viewability",
+          "metric": "viewability",
+          "operator": "gte",
+          "guaranteed_value": 0.75,
+          "penalty_description": "10% bonus impressions if viewability drops below 75%"
+        }
+      ]
     },
     {
       "media_buy_id": "mb_sportmax_apparel",
