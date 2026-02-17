@@ -1,5 +1,14 @@
-import { getDeliveryMetrics, resolveMediaBuyId } from '../data/loader.js';
-import type { DeliveryMetrics, MetricsSummary, DeviceMetrics, GeoMetrics } from '../types/data.js';
+import { getDeliveryMetrics, resolveMediaBuyId, getGuaranteesForMediaBuy } from '../data/loader.js';
+import type {
+  DeliveryMetrics,
+  MetricsSummary,
+  DeviceMetrics,
+  GeoMetrics,
+  ContractualGuarantee,
+  ComplianceStatus,
+  GuaranteeComplianceResult,
+  GuaranteeMetric,
+} from '../types/data.js';
 
 /**
  * Input parameters for the get_media_buy_delivery tool
@@ -25,6 +34,7 @@ export interface DeliveryMetricsOutput {
   by_geo: Record<string, GeoMetrics>;
   recommendations: string[];
   platform_specific_metrics?: Record<string, unknown>;
+  guarantee_compliance?: GuaranteeComplianceResult;
 }
 
 /**
@@ -52,10 +62,141 @@ export interface GetMediaBuyDeliveryAllResult {
 export type GetMediaBuyDeliveryResult = GetMediaBuyDeliverySingleResult | GetMediaBuyDeliveryAllResult;
 
 /**
+ * Extract the current value for a guarantee metric from delivery metrics
+ */
+function getCurrentMetricValue(metric: GuaranteeMetric, summary: MetricsSummary): number | undefined {
+  switch (metric) {
+    case 'impressions': return summary.impressions;
+    case 'clicks': return summary.clicks;
+    case 'conversions': return summary.conversions;
+    case 'ctr': return summary.ctr;
+    case 'viewability': return summary.viewability;
+    case 'completion_rate': return summary.completion_rate ?? undefined;
+    case 'cpm': return summary.cpm;
+    case 'cpa': return summary.cpa;
+    default: return undefined;
+  }
+}
+
+/**
+ * Determine compliance status for a single guarantee given its current value.
+ *
+ * Thresholds:
+ * - For "gte" (at least): violated if <90% of target, at_risk if <100%, compliant otherwise
+ * - For "lte" (at most): violated if >110% of target, at_risk if >100%, compliant otherwise
+ */
+function evaluateGuarantee(
+  guarantee: ContractualGuarantee,
+  currentValue: number
+): { status: ComplianceStatus; percentToTarget: number } {
+  const { operator, guaranteed_value } = guarantee;
+
+  if (operator === 'gte') {
+    // "At least" guarantee — higher is better
+    const percentToTarget = guaranteed_value > 0
+      ? Math.round((currentValue / guaranteed_value) * 100)
+      : 100;
+
+    if (currentValue >= guaranteed_value) {
+      return { status: 'compliant', percentToTarget };
+    } else if (currentValue >= guaranteed_value * 0.9) {
+      return { status: 'at_risk', percentToTarget };
+    } else {
+      return { status: 'violated', percentToTarget };
+    }
+  } else {
+    // "At most" guarantee — lower is better
+    const percentToTarget = guaranteed_value > 0
+      ? Math.round((currentValue / guaranteed_value) * 100)
+      : 100;
+
+    if (currentValue <= guaranteed_value) {
+      return { status: 'compliant', percentToTarget };
+    } else if (currentValue <= guaranteed_value * 1.1) {
+      return { status: 'at_risk', percentToTarget };
+    } else {
+      return { status: 'violated', percentToTarget };
+    }
+  }
+}
+
+/**
+ * Calculate guarantee compliance for a media buy by comparing
+ * contractual guarantees against current delivery metrics.
+ */
+export function calculateGuaranteeCompliance(
+  mediaBuyId: string,
+  deliveryMetrics: DeliveryMetrics
+): GuaranteeComplianceResult {
+  const guarantees = getGuaranteesForMediaBuy(mediaBuyId);
+
+  if (!guarantees || guarantees.length === 0) {
+    return {
+      media_buy_id: mediaBuyId,
+      has_guarantees: false,
+      guarantees: [],
+      overall_status: 'compliant',
+      summary: 'No contractual guarantees on this campaign.',
+    };
+  }
+
+  const evaluatedGuarantees: ContractualGuarantee[] = guarantees.map(g => {
+    const currentValue = getCurrentMetricValue(g.metric, deliveryMetrics.summary);
+    if (currentValue === undefined) {
+      return {
+        ...g,
+        current_value: undefined,
+        compliance_status: 'at_risk' as ComplianceStatus,
+        percent_to_target: 0,
+      };
+    }
+
+    const { status, percentToTarget } = evaluateGuarantee(g, currentValue);
+    return {
+      ...g,
+      current_value: currentValue,
+      compliance_status: status,
+      percent_to_target: percentToTarget,
+    };
+  });
+
+  // Overall status is the worst status across all guarantees
+  const statusPriority: ComplianceStatus[] = ['violated', 'at_risk', 'compliant'];
+  const overallStatus = statusPriority.find(s =>
+    evaluatedGuarantees.some(g => g.compliance_status === s)
+  ) || 'compliant';
+
+  // Build human-readable summary
+  const violated = evaluatedGuarantees.filter(g => g.compliance_status === 'violated');
+  const atRisk = evaluatedGuarantees.filter(g => g.compliance_status === 'at_risk');
+  const compliant = evaluatedGuarantees.filter(g => g.compliance_status === 'compliant');
+
+  const parts: string[] = [];
+  if (violated.length > 0) {
+    parts.push(`${violated.length} VIOLATED (${violated.map(g => g.metric).join(', ')})`);
+  }
+  if (atRisk.length > 0) {
+    parts.push(`${atRisk.length} AT RISK (${atRisk.map(g => g.metric).join(', ')})`);
+  }
+  if (compliant.length > 0) {
+    parts.push(`${compliant.length} compliant`);
+  }
+  const summary = `SLA Status: ${parts.join('; ')} — ${evaluatedGuarantees.length} total guarantees.`;
+
+  return {
+    media_buy_id: mediaBuyId,
+    has_guarantees: true,
+    guarantees: evaluatedGuarantees,
+    overall_status: overallStatus,
+    summary,
+  };
+}
+
+/**
  * Transform DeliveryMetrics to output format (excludes current_bids)
  */
 function toDeliveryMetricsOutput(metrics: DeliveryMetrics): DeliveryMetricsOutput {
-  return {
+  const output: DeliveryMetricsOutput = {
     media_buy_id: metrics.media_buy_id,
     brand: metrics.brand,
     platform: metrics.platform,
@@ -69,6 +210,14 @@ function toDeliveryMetricsOutput(metrics: DeliveryMetrics): DeliveryMetricsOutpu
     recommendations: metrics.recommendations,
     platform_specific_metrics: metrics.platform_specific_metrics,
   };
+
+  // Calculate guarantee compliance if guarantees exist
+  const compliance = calculateGuaranteeCompliance(metrics.media_buy_id, metrics);
+  if (compliance.has_guarantees) {
+    output.guarantee_compliance = compliance;
+  }
+
+  return output;
 }
 
 /**
@@ -84,7 +233,7 @@ export function getMediaBuyDelivery(input: GetMediaBuyDeliveryInput): GetMediaBu
   if (input.media_buy_id) {
     // Resolve brand name or ID to actual media_buy_id
     const resolvedId = resolveMediaBuyId(input.media_buy_id);
-    
+
     if (!resolvedId) {
       return {
         success: false,
@@ -92,7 +241,7 @@ export function getMediaBuyDelivery(input: GetMediaBuyDeliveryInput): GetMediaBu
         error: `Media buy not found: ${input.media_buy_id}`,
       };
     }
-    
+
     const metrics = getDeliveryMetrics(resolvedId);
 
     if (!metrics || Array.isArray(metrics)) {

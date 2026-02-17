@@ -20,6 +20,16 @@ import { useWebSocket } from "@/hooks/useWebSocket";
 
 const DEBUG_CHAT_STREAM_FLOW = process.env.NODE_ENV !== "production";
 
+function getOrCreateUserId(): string {
+  const STORAGE_KEY = "adcp_user_id";
+  if (typeof window === "undefined") return "anonymous";
+  const existing = localStorage.getItem(STORAGE_KEY);
+  if (existing) return existing;
+  const id = `user_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+  localStorage.setItem(STORAGE_KEY, id);
+  return id;
+}
+
 function logChatStreamFlow(message: string, payload: Record<string, unknown>) {
   if (DEBUG_CHAT_STREAM_FLOW) {
     console.debug(`[chat-stream] ${message}`, payload);
@@ -61,11 +71,19 @@ export default function MainContainer() {
   const [isLoading, setIsLoading] = useState(false);
   const [artifact, setArtifact] = useState<Artifact | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [artifactPanelOpen, setArtifactPanelOpen] = useState(false);
   const [campaignPanelOpen, setCampaignPanelOpen] = useState(false);
   const [selectedModel, setSelectedModel] = useState<ClaudeModelId>(DEFAULT_MODEL);
   const [showNotificationCards, setShowNotificationCards] = useState(true);
+  const [connectionError, setConnectionError] = useState<string | null>(null);
   const conversationIdRef = useRef<string | null>(null);
+  const userIdRef = useRef<string | null>(null);
+
+  // Initialize userId from localStorage on mount
+  useEffect(() => {
+    userIdRef.current = getOrCreateUserId();
+  }, []);
 
   // Chat history hook
   const {
@@ -283,12 +301,16 @@ export default function MainContainer() {
           message: content,
           conversationId: conversationIdRef.current,
           model: selectedModel,
+          userId: userIdRef.current,
         }),
       });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+
+      // Clear any previous connection error on successful fetch
+      setConnectionError(null);
 
       // Add empty assistant message that will be populated via streaming
       setMessages((prev) => [
@@ -449,6 +471,19 @@ export default function MainContainer() {
         error: error instanceof Error ? error.message : "Unknown error",
       });
 
+      // Determine user-friendly error message
+      let errorContent: string;
+      if (error instanceof TypeError && error.message === "Failed to fetch") {
+        errorContent =
+          "Unable to connect to the backend server. Please check that the server is running on port 3001 and try again.";
+        setConnectionError("Backend server is unreachable. Check that it is running.");
+      } else if (error instanceof Error && error.message.includes("HTTP error")) {
+        errorContent = `The server returned an error (${error.message}). Please try again.`;
+      } else {
+        errorContent =
+          "Sorry, I encountered an unexpected error. Please try again.";
+      }
+
       // Add error message
       setMessages((prev) => {
         // Remove the empty assistant message if it exists
@@ -458,8 +493,7 @@ export default function MainContainer() {
           {
             id: assistantMessageId,
             role: "assistant",
-            content:
-              "Sorry, I encountered an error processing your request. Please make sure the backend server is running and try again.",
+            content: errorContent,
             timestamp: new Date(),
           },
         ];
@@ -476,16 +510,48 @@ export default function MainContainer() {
 
   return (
     <div className="h-screen bg-background flex overflow-hidden">
-      {/* Sidebar */}
-      <ChatSidebar
-        isCollapsed={sidebarCollapsed}
-        onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
-        conversations={conversations}
-        activeConversationId={activeConversationId}
-        onNewChat={handleNewChat}
-        onSelectConversation={handleSelectConversation}
-        onDeleteConversation={handleDeleteConversation}
-      />
+      {/* Mobile sidebar overlay */}
+      <AnimatePresence>
+        {mobileSidebarOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 bg-black/50 md:hidden"
+            onClick={() => setMobileSidebarOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Sidebar - hidden on mobile, shown via overlay when toggled */}
+      <div
+        className={cn(
+          "hidden md:block",
+          mobileSidebarOpen && "!block fixed inset-y-0 left-0 z-50"
+        )}
+      >
+        <ChatSidebar
+          isCollapsed={sidebarCollapsed && !mobileSidebarOpen}
+          onToggle={() => {
+            if (mobileSidebarOpen) {
+              setMobileSidebarOpen(false);
+            } else {
+              setSidebarCollapsed(!sidebarCollapsed);
+            }
+          }}
+          conversations={conversations}
+          activeConversationId={activeConversationId}
+          onNewChat={() => {
+            handleNewChat();
+            setMobileSidebarOpen(false);
+          }}
+          onSelectConversation={(id) => {
+            handleSelectConversation(id);
+            setMobileSidebarOpen(false);
+          }}
+          onDeleteConversation={handleDeleteConversation}
+        />
+      </div>
 
       {/* Main content area - flexes to share space with artifact panel */}
       <div
@@ -494,6 +560,48 @@ export default function MainContainer() {
           artifactPanelOpen && artifact ? "flex-1" : "flex-1"
         )}
       >
+        {/* Connection error banner */}
+        <AnimatePresence>
+          {connectionError && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="flex-shrink-0 bg-destructive/10 border-b border-destructive/20 px-4 py-2 flex items-center justify-between"
+            >
+              <div className="flex items-center gap-2 text-sm text-destructive">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="w-4 h-4 flex-shrink-0"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span>{connectionError}</span>
+              </div>
+              <button
+                onClick={() => setConnectionError(null)}
+                className="p-1 text-destructive hover:text-destructive/80 transition-colors"
+                aria-label="Dismiss error"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                </svg>
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Header with logo */}
         <motion.header
           initial={{ opacity: 0, y: -10 }}
@@ -504,6 +612,29 @@ export default function MainContainer() {
           )}
         >
           <div className="flex items-center gap-2">
+            {/* Mobile hamburger menu */}
+            <button
+              onClick={() => setMobileSidebarOpen(true)}
+              className={cn(
+                "p-1.5 rounded-lg md:hidden",
+                "text-muted-foreground hover:text-foreground",
+                "hover:bg-muted transition-colors"
+              )}
+              aria-label="Open menu"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="w-5 h-5"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10zm0 5.25a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
           </div>
           <div className="flex items-center gap-3">
             <ThemeToggle />
