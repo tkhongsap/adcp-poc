@@ -12,8 +12,13 @@ interface ConversationViewProps {
   isLoading?: boolean;
 }
 
+function toDisplayText(content: unknown): string {
+  return typeof content === "string" ? content : "";
+}
+
 function MessageBubble({ message, index }: { message: Message; index: number }) {
   const isUser = message.role === "user";
+  const displayContent = toDisplayText(message.content);
 
   if (isUser) {
     // User messages: right-aligned with warm gray bubble
@@ -29,7 +34,7 @@ function MessageBubble({ message, index }: { message: Message; index: number }) 
           "bg-muted"
         )}>
           <div className="text-foreground text-sm leading-relaxed whitespace-pre-wrap">
-            {message.content}
+            {displayContent}
           </div>
         </div>
       </motion.div>
@@ -58,7 +63,7 @@ function MessageBubble({ message, index }: { message: Message; index: number }) 
           "prose-td:border prose-td:border-border prose-td:px-3 prose-td:py-2",
           "dark:prose-invert"
         )}>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{displayContent}</ReactMarkdown>
         </div>
       </div>
     </motion.div>
