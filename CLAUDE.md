@@ -222,8 +222,8 @@ The in-memory data architecture ensures sub-millisecond query performance even w
 When creating commit messages:
 - Use clear, descriptive commit messages in imperative mood (e.g., "Add multi-platform testing suite" not "Added tests")
 - **DO NOT** include `🤖 Generated with [Claude Code](https://claude.com/claude-code)` attribution in commit messages
+- **DO NOT** include `Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>` trailer in commits
 - Follow existing commit style (see `git log` for examples)
-- Include `Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>` trailer when appropriate
 - Keep subject line under 72 characters
 - Use blank line between subject and body if adding details
 
