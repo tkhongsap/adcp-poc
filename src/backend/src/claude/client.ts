@@ -11,6 +11,12 @@ import {
 } from '../tools/index.js';
 import { buildUserContext } from '../data/userProfileStore.js';
 import { extractInsights } from '../services/insightExtractor.js';
+import {
+  applyClaimEvidencePolicy,
+  buildGroundingMetadata,
+  evaluateClaimEvidencePolicy,
+  type GroundingMetadata,
+} from './grounding.js';
 
 // Initialize the Anthropic client
 const anthropic = new Anthropic({
@@ -464,6 +470,7 @@ export interface ChatResponse {
     input: Record<string, unknown>;
     result: unknown;
   }>;
+  grounding?: GroundingMetadata;
   historyEntries?: ChatMessage[];
 }
 
@@ -561,6 +568,9 @@ export async function processChat(
     (block): block is Anthropic.TextBlock => block.type === 'text'
   );
   const finalMessage = textBlocks.map((block) => block.text).join('\n');
+  const evidencePolicy = evaluateClaimEvidencePolicy(finalMessage, toolCalls.length);
+  const groundedMessage = applyClaimEvidencePolicy(finalMessage, evidencePolicy);
+  const grounding = buildGroundingMetadata(toolCalls, evidencePolicy);
 
   const historyEntries: ChatMessage[] = [];
   const newStartIndex = conversationHistory.length;
@@ -568,11 +578,15 @@ export async function processChat(
     const msg = messages[i];
     historyEntries.push({ role: msg.role, content: msg.content as string | ContentBlock[] | ToolResultBlockParam[] });
   }
-  historyEntries.push({ role: 'assistant', content: response.content });
+  historyEntries.push({
+    role: 'assistant',
+    content: groundedMessage === finalMessage ? response.content : groundedMessage,
+  });
 
   return {
-    message: finalMessage,
+    message: groundedMessage,
     toolCalls: toolCalls.length > 0 ? toolCalls : undefined,
+    grounding,
     historyEntries,
   };
 }
@@ -689,16 +703,23 @@ export async function processChatStream(
   }
 
   const historyEntries: ChatMessage[] = [];
+  const evidencePolicy = evaluateClaimEvidencePolicy(fullMessage, toolCalls.length);
+  const groundedMessage = applyClaimEvidencePolicy(fullMessage, evidencePolicy);
+  const grounding = buildGroundingMetadata(toolCalls, evidencePolicy);
   const newStartIndex = conversationHistory.length;
   for (let i = newStartIndex; i < messages.length; i++) {
     const msg = messages[i];
     historyEntries.push({ role: msg.role, content: msg.content as string | ContentBlock[] | ToolResultBlockParam[] });
   }
-  historyEntries.push({ role: 'assistant', content: response.content });
+  historyEntries.push({
+    role: 'assistant',
+    content: groundedMessage === fullMessage ? response.content : groundedMessage,
+  });
 
   return {
-    message: fullMessage,
+    message: groundedMessage,
     toolCalls: toolCalls.length > 0 ? toolCalls : undefined,
+    grounding,
     historyEntries,
   };
 }

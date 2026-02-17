@@ -102,6 +102,27 @@ test.describe('API Endpoints', () => {
       const data = await response.json();
       expect(data.success).toBe(false);
       expect(data.error).toContain('not found');
+      expect(data.error_code).toBe('tool_not_found');
+      expect(data.tool).toBe('invalid_tool');
+    });
+
+    test('POST /api/tools/update_media_buy - should await async handler and return structured result', async ({ request }) => {
+      const response = await request.post(`${API_BASE}/api/tools/update_media_buy`, {
+        data: {
+          media_buy_id: 'mb_apex_motors_q1',
+          updates: {
+            set_status: { status: 'active' }
+          }
+        }
+      });
+      expect(response.status()).toBe(200);
+
+      const data = await response.json();
+      expect(data).not.toEqual({});
+      expect(data.success).toBe(true);
+      expect(data.result).toBeDefined();
+      expect(data.result.media_buy_id).toBe('mb_apex_motors_q1');
+      expect(Array.isArray(data.result.changes_applied)).toBe(true);
     });
   });
 

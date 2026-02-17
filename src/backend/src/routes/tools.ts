@@ -14,7 +14,7 @@ const router = Router();
 /**
  * Tool name to handler mapping
  */
-type ToolHandler = (input: unknown) => unknown;
+type ToolHandler = (input: unknown) => unknown | Promise<unknown>;
 
 const toolHandlers: Record<string, ToolHandler> = {
   get_products: getProducts as ToolHandler,
@@ -25,6 +25,38 @@ const toolHandlers: Record<string, ToolHandler> = {
   update_media_buy: updateMediaBuy as ToolHandler,
   provide_performance_feedback: providePerformanceFeedback as ToolHandler,
 };
+
+interface ToolExecutionErrorPayload {
+  success: false;
+  error: string;
+  error_code: 'tool_not_found' | 'tool_execution_failed';
+  tool: string;
+  available_tools?: string[];
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+/**
+ * Backward-compatible input normalization:
+ * - Preferred payload is direct tool input object.
+ * - If body is wrapped as { data: {...} }, unwrap it.
+ */
+function normalizeToolInput(body: unknown): unknown {
+  if (isRecord(body) && Object.keys(body).length === 1 && 'data' in body) {
+    return body.data;
+  }
+  return body;
+}
+
+function sendToolError(
+  res: Response,
+  status: number,
+  payload: ToolExecutionErrorPayload
+): void {
+  res.status(status).json(payload);
+}
 
 /**
  * Get list of available tools
@@ -42,32 +74,36 @@ router.get('/', (_req: Request, res: Response) => {
  * Execute a tool with the provided input parameters.
  * Request body is passed as the input to the tool.
  */
-router.post('/:toolName', (req: Request, res: Response) => {
+router.post('/:toolName', async (req: Request, res: Response) => {
   const { toolName } = req.params;
 
   // Check if tool exists
   const handler = toolHandlers[toolName];
   if (!handler) {
-    res.status(404).json({
+    sendToolError(res, 404, {
       success: false,
       error: `Tool not found: ${toolName}`,
+      error_code: 'tool_not_found',
+      tool: toolName,
       available_tools: Object.keys(toolHandlers),
     });
     return;
   }
 
   try {
-    // Execute the tool with the request body as input
-    const input = req.body;
-    const result = handler(input);
+    // Execute the tool with normalized request body as input
+    const input = normalizeToolInput(req.body);
+    const result = await handler(input);
 
     res.json(result);
   } catch (error) {
     // Handle unexpected errors
     const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-    res.status(500).json({
+    sendToolError(res, 500, {
       success: false,
       error: `Tool execution failed: ${errorMessage}`,
+      error_code: 'tool_execution_failed',
+      tool: toolName,
     });
   }
 });

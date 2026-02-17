@@ -13,10 +13,27 @@ Use this for running the ADCP demo locally and preparing a clean smoke check.
 From repo root:
 
 ```bash
-npm install
+npm ci
 ```
 
 This resolves workspace dependencies for both `src/frontend` and `src/backend`.
+
+### Playwright/browser preflight (required before UI tests)
+
+```bash
+# Install Playwright browser binaries used by this repo
+npx playwright install firefox
+```
+
+If Playwright reports missing host dependencies on Linux, install them before running UI suites:
+
+```bash
+# Preferred (installs all required host libs)
+sudo npx playwright install-deps
+
+# Minimal known fallback seen in this repo
+sudo apt-get install -y libasound2t64
+```
 
 ## 3) Environment
 
@@ -111,6 +128,18 @@ Use provided Playwright suites:
 npm test
 ```
 
+Recommended order for clean verification:
+
+```bash
+# API/tool tests (no browser runtime needed)
+npm run test:api
+npm run test:tools
+
+# Browser/UI smoke tests (require Playwright browser + host deps)
+npm run test:chat
+npm run test:dashboard
+```
+
 Important test groups:
 - API contract tests: `tests/api.spec.ts`
 - Tool tests: `tests/tools.spec.ts`
@@ -130,6 +159,9 @@ Important test groups:
   - ensure CORS policy allows dev host; backend currently allows origin `true` in Express + Socket.io.
 - **Notification actions seem missing**
   - they require optional env vars; otherwise simulated/disabled behavior is expected.
+- **Playwright UI tests fail at browser launch**
+  - run `npx playwright install firefox`
+  - if host dependency errors appear, run `sudo npx playwright install-deps`
 
 ## 9) Production-oriented notes
 
@@ -151,4 +183,3 @@ Important test groups:
   ```bash
   npm run lint
   ```
-

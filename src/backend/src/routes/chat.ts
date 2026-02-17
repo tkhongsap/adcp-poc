@@ -121,6 +121,7 @@ router.post('/', async (req: Request, res: Response) => {
       message: response.message,
       conversationId: id,
       toolCalls: response.toolCalls,
+      grounding: response.grounding,
     });
   } catch (error) {
     console.error('Chat error:', error);
@@ -223,6 +224,7 @@ router.post('/stream', async (req: Request, res: Response) => {
       `event: done\ndata: ${JSON.stringify({
         conversationId: id,
         toolCalls: response.toolCalls,
+        grounding: response.grounding,
       })}\n\n`
     );
 
